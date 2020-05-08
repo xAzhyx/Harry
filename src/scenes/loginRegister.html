@@ -60,16 +60,101 @@
     <fieldset>
       <h3>Bienvenido la aventura de Harry!</h3>
       <p>Logueate o regístrate.</p>
-      <form action="/phpConection.php" method="POST">
+      <form>
         <label for="name">Nombre:</label><br>
         <input type="text" class="textBox" id="name" name="name"><br>
         <label for="pass">Contraseña:</label><br>
         <input type="text" class="textBox" id="pass" name="pass"><br><br>
-        <input type="submit" class="buttons" id="login" value="Loguear">
-        <input type="submit" class="buttons" id="register" value="Registrar">
+        <input type="button" class="buttons" id="login" value="Loguear">
+        <input type="button" class="buttons" id="register" value="Registrar">
       </form>
     </fieldset>
   </div>
+
+  <script>
+    var login = document.getElementById('login');
+    var register = document.getElementById('register');
+    var db = '';
+    var transaction = '';
+    const users = [
+      { userName: 'Fatima', pass: 1234 }
+    ];
+    const dbName = 'harry';
+
+    // OnError
+    var connection = indexedDB.open(dbName, 3);
+    connection.onerror = (event) => {
+      console.log(`Error:${event}`);
+    };
+    connection.onsuccess = (event) => {
+      db = event.target.result;
+      // transaction = db.transaction(['users'], 'readwrite');
+      // transaction.oncomplete = function (event) {
+      //   alert("All done!");
+      // };
+      // transaction.onerror = function (event) {
+      //   alert("Error");
+      // };
+    };
+
+    // OnSuccess
+    connection.onupgradeneeded = (event) => {
+      db = event.target.result;
+      const userStore = db.createObjectStore('users', { keyPath: 'userName' });
+      userStore.createIndex('pass', 'pass', { unique: false });
+      // transaction = db.transaction(['users'], 'readwrite');
+      userStore.transaction.oncomplete = (event) => {
+        const userObjectStore = db.transaction('users', 'readwrite').objectStore('users');
+        users.forEach((element) => {
+          userObjectStore.add(element);
+        });
+      }
+    }
+
+    login.onpointerdown = () => {
+      var userName = document.getElementById('name').value;
+      var pass = document.getElementById('pass').value;
+      transaction = db.transaction('users');
+      var request = transaction.objectStore('users').openCursor().onsuccess = (event) => {
+        var cursor = event.target.result;
+        if(cursor) {
+          if(cursor.value.userName === userName){
+            
+            alert('usuario econtrado: ' + cursor.value.userName + ', pass:' + cursor.value.pass);
+          } else {
+            cursor.continue();
+          }
+        }
+      }
+    
+      // var request = transaction.objectStore('users').get(document.getElementById('name').value);
+      // request.onsuccess = () => {
+      //   console.log(request.result.pass);
+      // }
+
+
+    };
+    register.onpointerdown = () => {
+      console.log('userName: ' + document.getElementById('name').value);
+      console.log('Pass: ' + document.getElementById('pass').value);
+      const userAdd = [
+        { userName: document.getElementById('name').value, 
+        pass: parseInt(document.getElementById('pass').value)}
+      ];
+      transaction = db.transaction(['users'], 'readwrite');
+      // var userObjectStore = transaction.objectStore('users');
+      var request = transaction.objectStore('users').add(userAdd[0]);
+      request.onsuccess = function (event) {
+        alert("All done!");
+      };
+    };
+
+
+
+
+
+
+  </script>
 </body>
 
 </html>

@@ -12,14 +12,11 @@ class GameScene extends Phaser.Scene {
 
   create() {
     this.text = '';
-    // Trying to log webdb
-    // const query = window.IndexedDB.open('DBgameObjects', 1);
 
     const algo = [
       { nameObject: 'door', picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: false, canOpen: true, isLockedToOpen: true, isOpen: false, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: false, displayWidth: 85, displayHeight: 400, fixed: false, isFull: false, isInScene: true, isInInventory: false },
       { nameObject: 'utilBooks', picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
       { nameObject: 'book', picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
-     
     ];
 
     const dbName = 'harry';
@@ -31,8 +28,7 @@ class GameScene extends Phaser.Scene {
     };
 
     request.onupgradeneeded = (event) => {
-      const db = event.target.result;
-
+      let db = event.target.result;
 
       const objectStore = db.createObjectStore('objects', { keyPath: 'nameObject' });
       objectStore.createIndex('picture', 'picture', { unique: false });
@@ -56,9 +52,9 @@ class GameScene extends Phaser.Scene {
       // haya finalizado antes de añadir los datos en el.
       objectStore.transaction.oncomplete = (event) => {
         // Guarda los datos en el almacén recién creado.
-        const customerObjectStore = db.transaction('objects', 'readwrite').objectStore('objects');
+        const objectsObjectStore = db.transaction('objects', 'readwrite').objectStore('objects');
         algo.forEach((element) => {
-          customerObjectStore.add(element);
+          objectsObjectStore.add(element);
         });
       };
     };
