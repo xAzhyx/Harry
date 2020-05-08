@@ -18,6 +18,7 @@ class GameScene extends Phaser.Scene {
     const algo = [
       { nameObject: 'door', picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: false, canOpen: true, isLockedToOpen: true, isOpen: false, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: false, displayWidth: 85, displayHeight: 400, fixed: false, isFull: false, isInScene: true, isInInventory: false },
       { nameObject: 'utilBooks', picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
+      { nameObject: 'book', picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
      
     ];
 
@@ -50,7 +51,7 @@ class GameScene extends Phaser.Scene {
       objectStore.createIndex('isAcid', 'isAcid', { unique: false });
       objectStore.createIndex('isInScene', 'isInScene', { unique: false });
       objectStore.createIndex('isInInventory', 'isInInventory', { unique: false });
-      
+
       // Se usa transaction.oncomplete para asegurarse que la creación del almacén
       // haya finalizado antes de añadir los datos en el.
       objectStore.transaction.oncomplete = (event) => {
