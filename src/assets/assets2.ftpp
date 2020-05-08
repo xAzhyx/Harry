@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "version": "0.6.5"
+  },
+  "savePath": "",
+  "images": [
+    {
+      "name": "bookIntro0.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro0.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro1.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro1.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro10.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro10.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro11.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro11.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro12.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro12.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro13.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro13.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro14.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro14.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro15.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro15.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro2.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro2.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro3.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro3.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro4.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro4.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro5.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro5.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro6.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro6.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro7.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro7.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro8.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro8.png",
+      "folder": ""
+    },
+    {
+      "name": "bookIntro9.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/bookIntro9.png",
+      "folder": ""
+    },
+    {
+      "name": "openBook.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/openBook.png",
+      "folder": ""
+    },
+    {
+      "name": "page.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/BookIntro/page.png",
+      "folder": ""
+    }
+  ],
+  "folders": [],
+  "packOptions": {
+    "textureName": "assets2",
+    "textureFormat": "png",
+    "removeFileExtension": false,
+    "prependFolderName": true,
+    "base64Export": false,
+    "tinify": false,
+    "tinifyKey": "",
+    "scale": 1,
+    "disableSmoothing": false,
+    "filter": "none",
+    "exporter": "JSON (hash)",
+    "fileName": "pack-result",
+    "savePath": "",
+    "width": 2600,
+    "height": 2600,
+    "fixedSize": false,
+    "powerOfTwo": false,
+    "padding": 0,
+    "extrude": 1,
+    "allowRotation": false,
+    "allowTrim": false,
+    "trimMode": "trim",
+    "alphaThreshold": "0",
+    "detectIdentical": true,
+    "packer": "MaxRectsBin",
+    "packerMethod": "BestShortSideFit"
+  }
+}

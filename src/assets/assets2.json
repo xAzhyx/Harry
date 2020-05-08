@@ -1,0 +1,447 @@
+{
+  "frames": {
+    "bookIntro0.png": {
+      "frame": {
+        "x": 1,
+        "y": 1,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro1.png": {
+      "frame": {
+        "x": 643,
+        "y": 1,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro10.png": {
+      "frame": {
+        "x": 1285,
+        "y": 1,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro11.png": {
+      "frame": {
+        "x": 1927,
+        "y": 1,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro12.png": {
+      "frame": {
+        "x": 1,
+        "y": 502,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro13.png": {
+      "frame": {
+        "x": 1,
+        "y": 1003,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro14.png": {
+      "frame": {
+        "x": 1,
+        "y": 1504,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro15.png": {
+      "frame": {
+        "x": 1,
+        "y": 2005,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro2.png": {
+      "frame": {
+        "x": 643,
+        "y": 502,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro3.png": {
+      "frame": {
+        "x": 1285,
+        "y": 502,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro4.png": {
+      "frame": {
+        "x": 1927,
+        "y": 502,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro5.png": {
+      "frame": {
+        "x": 643,
+        "y": 1003,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro6.png": {
+      "frame": {
+        "x": 643,
+        "y": 1504,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro7.png": {
+      "frame": {
+        "x": 643,
+        "y": 2005,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro8.png": {
+      "frame": {
+        "x": 1285,
+        "y": 1003,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookIntro9.png": {
+      "frame": {
+        "x": 1927,
+        "y": 1003,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "openBook.png": {
+      "frame": {
+        "x": 1285,
+        "y": 1504,
+        "w": 640,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "page.png": {
+      "frame": {
+        "x": 1285,
+        "y": 2005,
+        "w": 293,
+        "h": 499
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 293,
+        "h": 499
+      },
+      "sourceSize": {
+        "w": 293,
+        "h": 499
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.5",
+    "image": "assets2.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2568,
+      "h": 2505
+    },
+    "scale": 1
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "deviceCode": 11111,
+  "intro0": [
+    "Hola, mi nombre es Harry, ",
+    "no recuerdo como he llegado hasta aquí... ",
+    "pero necesito salir de este lugar y creo que tu podrías ayudame.",
+    "Seleccionando los objetos puedes obtener información, cogerlos, abrirlos, cerrarlos o usarlos.",
+    "Para saber qué hacer con ellos tendrás que leer la información que te dan y pensar un poquito!",
+    "Prueba a abrir la ventana a ver que pasa..."
+  ],
+  "phantomConversation": [
+    "Hola, vengo a decirte que los objetos que coges se guardan en el inventario, esa mochila azul.",
+    "Si pulsas la tecla 'i' también accederás al inventario y 'esc' para cerrar en lugar de hacer click en la X.",
+    "La barrita que ves arriba es tu progreso en la partida. A medida que resuelvas cosas se irá rellenando.",
+    "A ver cuánto tardas en salir de aquí!."
+  ],
+  "textInfoVelocity": 50
+}

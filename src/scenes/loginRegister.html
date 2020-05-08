@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+      background-color: black;
+    }
+
+    img {
+      position: absolute;
+      width: 60vw;
+      height: 40vw;
+      left: 18%;
+      top: 5%;
+    }
+
+    fieldset {
+      /* border: 5px solid black;
+      border-radius: 20px; */
+      padding: 3vw;
+      border-style: none;
+      width: 18vw;
+      margin-top: 8%;
+      margin-left: 53vw;
+      /* background-color: white; */
+      position: relative;
+      font-size: 1.6vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .buttons {
+      font-size: 1.4vw;
+      font-weight: bold;
+      text-align: center;
+      width: 8vw;
+      background-color: rgb(190, 1, 1);
+    }
+
+    .textBox {
+      width: 12vw;
+    }
+
+    input {
+      border: 2px solid;
+      border-radius: 5px;
+      font-size: 1.5vw;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <img src="../Images/BookIntro/bookIntro15.png">
+    <fieldset>
+      <h3>Bienvenido la aventura de Harry!</h3>
+      <p>Logueate o regístrate.</p>
+      <form action="/phpConection.php" method="POST">
+        <label for="name">Nombre:</label><br>
+        <input type="text" class="textBox" id="name" name="name"><br>
+        <label for="pass">Contraseña:</label><br>
+        <input type="text" class="textBox" id="pass" name="pass"><br><br>
+        <input type="submit" class="buttons" id="login" value="Loguear">
+        <input type="submit" class="buttons" id="register" value="Registrar">
+      </form>
+    </fieldset>
+  </div>
+</body>
+
+</html>

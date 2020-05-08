@@ -1,0 +1,356 @@
+{
+  "meta": {
+    "version": "0.6.5"
+  },
+  "savePath": "",
+  "images": [
+    {
+      "name": "apparatBrk.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/apparatBrk.png",
+      "folder": ""
+    },
+    {
+      "name": "apparatBrkOp.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/apparatBrkOp.png",
+      "folder": ""
+    },
+    {
+      "name": "apparatFix.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/apparatFix.png",
+      "folder": ""
+    },
+    {
+      "name": "apparatFixOp.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/apparatFixOp.png",
+      "folder": ""
+    },
+    {
+      "name": "arrow.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/arrow.png",
+      "folder": ""
+    },
+    {
+      "name": "bag.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/bag.png",
+      "folder": ""
+    },
+    {
+      "name": "bar.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/bar.png",
+      "folder": ""
+    },
+    {
+      "name": "book.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/book.png",
+      "folder": ""
+    },
+    {
+      "name": "bookBig.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/bookBig.png",
+      "folder": ""
+    },
+    {
+      "name": "books.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/books.png",
+      "folder": ""
+    },
+    {
+      "name": "books2.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/books2.png",
+      "folder": ""
+    },
+    {
+      "name": "booksTaken.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/booksTaken.png",
+      "folder": ""
+    },
+    {
+      "name": "button.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/button.png",
+      "folder": ""
+    },
+    {
+      "name": "buttonGameMenuShadow.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/buttonGameMenuShadow.png",
+      "folder": ""
+    },
+    {
+      "name": "buttonShadow.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/buttonShadow.png",
+      "folder": ""
+    },
+    {
+      "name": "cableBrk.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/cableBrk.png",
+      "folder": ""
+    },
+    {
+      "name": "cableFix.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/cableFix.png",
+      "folder": ""
+    },
+    {
+      "name": "circle.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/circle.png",
+      "folder": ""
+    },
+    {
+      "name": "closet.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/closet.png",
+      "folder": ""
+    },
+    {
+      "name": "closetOp1.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/closetOp1.png",
+      "folder": ""
+    },
+    {
+      "name": "closetOp2.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/closetOp2.png",
+      "folder": ""
+    },
+    {
+      "name": "cloud.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/cloud.png",
+      "folder": ""
+    },
+    {
+      "name": "doorLock.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/doorLock.png",
+      "folder": ""
+    },
+    {
+      "name": "doorOpen.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/doorOpen.png",
+      "folder": ""
+    },
+    {
+      "name": "doorUnlock.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/doorUnlock.png",
+      "folder": ""
+    },
+    {
+      "name": "drawer.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/drawer.png",
+      "folder": ""
+    },
+    {
+      "name": "enter.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/enter.png",
+      "folder": ""
+    },
+    {
+      "name": "exitGame.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/exitGame.png",
+      "folder": ""
+    },
+    {
+      "name": "exitX.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/exitX.png",
+      "folder": ""
+    },
+    {
+      "name": "fly0.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/fly0.png",
+      "folder": ""
+    },
+    {
+      "name": "fly1.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/fly1.png",
+      "folder": ""
+    },
+    {
+      "name": "fly2.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/fly2.png",
+      "folder": ""
+    },
+    {
+      "name": "glass.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/glass.png",
+      "folder": ""
+    },
+    {
+      "name": "glassAcid.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/glassAcid.png",
+      "folder": ""
+    },
+    {
+      "name": "glassWater.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/glassWater.png",
+      "folder": ""
+    },
+    {
+      "name": "harry.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/harry.png",
+      "folder": ""
+    },
+    {
+      "name": "harry0.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/harry0.png",
+      "folder": ""
+    },
+    {
+      "name": "harry1.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/harry1.png",
+      "folder": ""
+    },
+    {
+      "name": "harry2.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/harry2.png",
+      "folder": ""
+    },
+    {
+      "name": "harry3.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/harry3.png",
+      "folder": ""
+    },
+    {
+      "name": "harry4.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/harry4.png",
+      "folder": ""
+    },
+    {
+      "name": "harry5.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/harry5.png",
+      "folder": ""
+    },
+    {
+      "name": "harry6.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/harry6.png",
+      "folder": ""
+    },
+    {
+      "name": "harry7.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/harry7.png",
+      "folder": ""
+    },
+    {
+      "name": "key.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/key.png",
+      "folder": ""
+    },
+    {
+      "name": "keyShadow.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/keyShadow.png",
+      "folder": ""
+    },
+    {
+      "name": "laser.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/laser.png",
+      "folder": ""
+    },
+    {
+      "name": "laserDevice.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/laserDevice.png",
+      "folder": ""
+    },
+    {
+      "name": "laserGreen.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/laserGreen.png",
+      "folder": ""
+    },
+    {
+      "name": "laserRed.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/laserRed.png",
+      "folder": ""
+    },
+    {
+      "name": "load.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/load.png",
+      "folder": ""
+    },
+    {
+      "name": "menu.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/menu.png",
+      "folder": ""
+    },
+    {
+      "name": "newGame.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/newGame.png",
+      "folder": ""
+    },
+    {
+      "name": "osc.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/osc.png",
+      "folder": ""
+    },
+    {
+      "name": "phantom.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/phantom.png",
+      "folder": ""
+    },
+    {
+      "name": "phantom2.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/phantom2.png",
+      "folder": ""
+    },
+    {
+      "name": "phantom3.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/phantom3.png",
+      "folder": ""
+    },
+    {
+      "name": "progressBar.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/progressBar.png",
+      "folder": ""
+    },
+    {
+      "name": "reset.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/reset.png",
+      "folder": ""
+    },
+    {
+      "name": "save.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/save.png",
+      "folder": ""
+    },
+    {
+      "name": "table.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/table.png",
+      "folder": ""
+    },
+    {
+      "name": "window.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/window.png",
+      "folder": ""
+    },
+    {
+      "name": "windowOpen.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/windowOpen.png",
+      "folder": ""
+    }
+  ],
+  "folders": [
+    "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/Information",
+    "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/Numbers",
+    "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/tuto"
+  ],
+  "packOptions": {
+    "textureName": "assets",
+    "textureFormat": "png",
+    "removeFileExtension": false,
+    "prependFolderName": true,
+    "base64Export": false,
+    "tinify": false,
+    "tinifyKey": "",
+    "scale": 1,
+    "disableSmoothing": false,
+    "filter": "none",
+    "exporter": "JSON (hash)",
+    "fileName": "pack-result",
+    "savePath": "",
+    "width": 2048,
+    "height": 2048,
+    "fixedSize": false,
+    "powerOfTwo": false,
+    "padding": 0,
+    "extrude": 1,
+    "allowRotation": false,
+    "allowTrim": false,
+    "trimMode": "trim",
+    "alphaThreshold": "0",
+    "detectIdentical": true,
+    "packer": "MaxRectsBin",
+    "packerMethod": "BestShortSideFit"
+  }
+}

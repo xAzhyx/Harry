@@ -1,0 +1,13 @@
+{
+  "exclude": [
+    "node_modules/**/*",
+    "dist/**/*",
+    "webpack/**/*"
+  ],
+  "typeRoots": [
+    "node_modules/phaser/types"
+  ],
+  "types": [
+    "Phaser"
+  ]
+}
