@@ -16,8 +16,9 @@ class GameScene extends Phaser.Scene {
     // const query = window.IndexedDB.open('DBgameObjects', 1);
 
     const algo = [
-      { nameObject: 'Fatima', picture: 'eso.png', information: '', canTake: true, canOpen: '', isLockedToOpen: false, isOpen: false, objectOpenImg, objectClosedImg, finished, displayWidth, displayHeight, fixed, isFull   },
-      { name: 'Angel', picture: 'aquello.png', canTake: false },
+      { nameObject: 'door', picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: false, canOpen: true, isLockedToOpen: true, isOpen: false, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: false, displayWidth: 85, displayHeight: 400, fixed: false, isFull: false, isInScene: true, isInInventory: false },
+      { nameObject: 'utilBooks', picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
+     
     ];
 
     const dbName = 'harry';
@@ -31,18 +32,25 @@ class GameScene extends Phaser.Scene {
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
 
-      // Se crea un almacén para contener la información de nuestros cliente
-      // Se usará "ssn" como clave ya que es garantizado que es única
-      const objectStore = db.createObjectStore('objects', { keyPath: 'name' });
 
-      // Se crea un índice para buscar clientes por nombre. Se podrían tener duplicados
-      // por lo que no se puede usar un índice único.
+      const objectStore = db.createObjectStore('objects', { keyPath: 'nameObject' });
       objectStore.createIndex('picture', 'picture', { unique: false });
-
-      // Se crea un índice para buscar clientespor email. Se quiere asegurar que
-      // no puedan haberdos clientes con el mismo email, asi que se usa un índice único.
+      objectStore.createIndex('information', 'information', { unique: false });
       objectStore.createIndex('canTake', 'canTake', { unique: false });
-
+      objectStore.createIndex('canOpen', 'canOpen', { unique: false });
+      objectStore.createIndex('isLockedToOpen', 'isLockedToOpen', { unique: false });
+      objectStore.createIndex('isOpen', 'isOpen', { unique: false });
+      objectStore.createIndex('objectOpenImg', 'objectOpenImg', { unique: false });
+      objectStore.createIndex('objectCloseImg', 'objectCloseImg', { unique: false });
+      objectStore.createIndex('finished', 'finished', { unique: false });
+      objectStore.createIndex('displayWidth', 'displayWidth', { unique: false });
+      objectStore.createIndex('displayHeight', 'displayHeight', { unique: false });
+      objectStore.createIndex('fixed', 'fixed', { unique: false });
+      objectStore.createIndex('isFull', 'isFull', { unique: false });
+      objectStore.createIndex('isAcid', 'isAcid', { unique: false });
+      objectStore.createIndex('isInScene', 'isInScene', { unique: false });
+      objectStore.createIndex('isInInventory', 'isInInventory', { unique: false });
+      
       // Se usa transaction.oncomplete para asegurarse que la creación del almacén
       // haya finalizado antes de añadir los datos en el.
       objectStore.transaction.oncomplete = (event) => {
