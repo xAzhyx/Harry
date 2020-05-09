@@ -6,7 +6,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
     this.shadows = [];
     this.setDepth(8);
 
-    console.log('gameMenu');
+    // console.log('gameMenu');
     this.gameMenu = this.scene.add.sprite(980, 160, 'assets', 'menu.png');
     this.gameMenu.displayWidth = 180;
     this.gameMenu.displayHeight = 220;
@@ -45,7 +45,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
     this.each((element) => {
       element.setInteractive({ useHandCursor: true });
     });
-    console.log(this);
+    // console.log(this);
     this.scene.input.enableDebug(this, 0x00ff00);
 
 

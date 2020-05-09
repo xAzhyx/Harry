@@ -13,24 +13,73 @@ class GameScene extends Phaser.Scene {
   create() {
     this.text = '';
 
+
+    const userNameSession = sessionStorage.getItem('userName');
+    const cookieString = document.cookie.split(';', document.cookie.length);
+    let typeOfGame = '';
+    for (let i = 0; i < cookieString.length; i += 1) {
+      const ck = cookieString[i].split('=', cookieString[i].length);
+      if (ck[0].trim() === 'typeOfGame') {
+        typeOfGame = ck[1];
+      }
+    }
+
+
     const algo = [
-      { nameObject: 'door', picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: false, canOpen: true, isLockedToOpen: true, isOpen: false, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: false, displayWidth: 85, displayHeight: 400, fixed: false, isFull: false, isInScene: true, isInInventory: false },
-      { nameObject: 'utilBooks', picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
-      { nameObject: 'book', picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
+      { nameObject: 'door', userName: userNameSession, picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: false, canOpen: true, isLockedToOpen: true, isOpen: false, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: false, displayWidth: 85, displayHeight: 400, fixed: false, isFull: false, isInScene: true, isInInventory: false },
+      { nameObject: 'utilBooks', userName: userNameSession, picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
+      { nameObject: 'book', userName: userNameSession, picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
     ];
 
     const dbName = 'harry';
 
-    const request = indexedDB.open(dbName, 2);
+    const connectionDB = indexedDB.open(dbName, 3);
 
-    request.onerror = (event) => {
+    connectionDB.onerror = (event) => {
       console.log(`Error:${event}`);
     };
 
-    request.onupgradeneeded = (event) => {
-      let db = event.target.result;
 
+    //   if (typeOfGame === 'newGame') {
+    // } else {
+    //   const transaction = db.transaction('objects');
+    //   const request = transaction.objectStore('objects').openCursor();
+    //   request.onsuccess = (event) => {
+    //     const cursor = event.target.result;
+    //     let findIt = 0;
+    //     if (cursor) {
+    //       if (cursor.value.userName === userNameSession) {
+    //         findIt = 1;
+    //       } else {
+    //         cursor.continue();
+    //       }
+    //     } else if (findIt === 0) {
+    //       console.log('Ha habido algún error. No se encuentra la partida en la base de datos.');
+    //     } else {
+    //       findIt = 1;
+    //     }
+    //   };
+    // }
+
+
+    // const request = db.transaction('objects');
+    // request.objectStore('objects').openCursor();
+    // request.onsuccess = (event) => {
+    //   const cursor = event.target.result;
+    //   if (cursor) {
+    //     console.log(cursor.value);
+    //     cursor.continue();
+    //   }
+    // }
+
+    // console.log('nuevo juego');
+
+
+    connectionDB.onsuccess = (event) => {
+      const db = event.target.result;
+      console.log(typeOfGame);
       const objectStore = db.createObjectStore('objects', { keyPath: 'nameObject' });
+      objectStore.createIndex('userName', 'userName', { unique: false });
       objectStore.createIndex('picture', 'picture', { unique: false });
       objectStore.createIndex('information', 'information', { unique: false });
       objectStore.createIndex('canTake', 'canTake', { unique: false });
@@ -58,6 +107,7 @@ class GameScene extends Phaser.Scene {
         });
       };
     };
+
     // Marco
     const border = this.add.graphics();
     border.lineStyle(4, 0xF20F0F, 1);
