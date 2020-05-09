@@ -58,13 +58,17 @@
   <script>
     let objectStore;
     let userStore;
+    let secQuestGet;
+    let secAnswGet;
     // -------------------- Create User Table -------------------------
     function createUsersTable(db) {
       userStore = db.createObjectStore('users', { keyPath: 'userName' });
       userStore.createIndex('pass', 'pass', { unique: false });
+      userStore.createIndex('secQuest', 'secQuest', { unique: false });
+      userStore.createIndex('secAnsw', 'secAnsw', { unique: false });
       // transaction = db.transaction(['users'], 'readwrite');
       const users = [
-        { userName: 'Fatima', pass: 1234 }
+        { userName: 'Fatima', pass: 1234, secQuest: '¿?', secAnsw: 'yes' }
       ];
       userStore.transaction.addEventListener('complete', (event) => {
         const userObjectStore = db.transaction('users', 'readwrite').objectStore('users');
@@ -76,7 +80,7 @@
 
     // ---------------------Create Objects Table ---------------------
     function createObjectsTable(db) {
-      objectStore = db.createObjectStore('objects', {autoIncrement: true});
+      objectStore = db.createObjectStore('objects', { autoIncrement: true });
       objectStore.createIndex('nameObject', 'nameObject', { unique: false });
       objectStore.createIndex('userName', 'userName', { unique: false });
       objectStore.createIndex('picture', 'picture', { unique: false });
@@ -107,7 +111,7 @@
         { nameObject: 'utilBooks', userName: nameParam, picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
         { nameObject: 'book', userName: nameParam, picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
       ];
-     
+
       transaction = db.transaction(['objects'], 'readwrite');
       const objectsObjectStore = transaction.objectStore('objects');
       for (var i in objectsArray) {
@@ -122,6 +126,12 @@
         window.location.href = "http://localhost:3000/index.html";
       }
     }
+    
+    function secQuestFunction() {
+        secQuestGet = document.getElementById("secQuest").value;
+        secAnswGet = document.getElementById("secAnsw").value;
+      }
+
   </script>
   <div>
     <img src="src/Images/BookIntro/bookIntro15.png">
@@ -165,7 +175,7 @@
 
       // fillObjectsTable(db, '');
       document.getElementById('login').outerHTML = '<input type="button" class="buttons" id="login" value="Loguear"'
-        + 'disabled = disabled >';
+        + 'disabled >';
     }
 
 
@@ -174,7 +184,8 @@
       var userName = document.getElementById('name').value;
       var pass = parseInt(document.getElementById('pass').value);
       transaction = db.transaction('users');
-      var request = transaction.objectStore('users').openCursor().onsuccess = (event) => {
+      var request = transaction.objectStore('users').openCursor();
+      request.onsuccess = (event) => {
         var cursor = event.target.result;
         var findIt = 0;
         if (cursor) {
@@ -213,30 +224,35 @@
     register.onpointerdown = () => {
       // console.log('userName: ' + document.getElementById('name').value);
       // console.log('Pass: ' + document.getElementById('pass').value);
-      const userAdd = [
+      var registerName = document.getElementById('name').value;
+      var registerPass = parseInt(document.getElementById('pass').value);
+
+      document.getElementsByTagName('form')[0].outerHTML = '<label for = "secQuest">Introduzca una pregunta:</label><br>'
+        + '<input type="text" class="textBox" id="secQuest" name ="secQuest"><br>'
+        + '<label for = "secAnsw">Introduzca la respuesta:</label><br>'
+        + '<input type="text" class="textBox" id="secAnsw" name ="secAnsw"><br>'
+        + '<input type = "button" id = "send" name = "send" value = "Send" onclick = "secQuestFunction();"><br>';
+       
+       
+       
+        // TODO
+        const userAdd = [
         {
-          userName: document.getElementById('name').value,
-          pass: parseInt(document.getElementById('pass').value)
+          userName: registerName,
+          pass: registerPass,
+          secQuest: secQuestGet,
+          secAnsw: secAnswGet,
+          // secQuest: secQuest, secAnsw: secAnsw
         }
       ];
+      console.log(document.getElementsByTagName('div')[0].outerHTML)
       transaction = db.transaction(['users'], 'readwrite');
       var request = transaction.objectStore('users').add(userAdd[0]);
       request.onsuccess = (event) => {
         alert("All done!");
         fillObjectsTable(db, userAdd[0].userName);
-        document.getElementById('login').outerHTML = '<input type="button" class="buttons" id="login" value="Loguear"'
-        + 'disabled = enabled >';
-      //   transaction = db.transaction('objects');
-      // var request = transaction.objectStore('objects').openCursor().onsuccess = (event) => {
-      //   var cursor = event.target.result;
-      //   if (cursor) {
-      //     if (cursor.value.userName === ) {
-      //     }
-      // }
-
-
-
-        // moidificar
+        // document.getElementById('login').outerHTML = '<input type="button" class="buttons" id="login" value="Loguear" >';
+        // location.reload();
       };
     };
 
