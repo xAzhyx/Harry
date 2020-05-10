@@ -1,10 +1,10 @@
-export default class Connection extends Phaser.GameObjects.Sprite {
+export default class ConnectionDB extends Phaser.GameObjects.Sprite {
   constructor(scene) {
     super(scene);
     this.scene.add.existing(this);
 
-    const userNameSession = sessionStorage.getItem('userName');
-    const objectsToPass = [];
+    this.userNameSession = sessionStorage.getItem('userName');
+    this.objectsToPass = [];
 
     // const cookieString = document.cookie.split(';', document.cookie.length);
     // let typeOfGame = '';
@@ -33,7 +33,7 @@ export default class Connection extends Phaser.GameObjects.Sprite {
       request.onsuccess = (event2) => {
         const cursor = event2.target.result;
         if (cursor) {
-          if (cursor.value.userName === userNameSession) {
+          if (cursor.value.userName === this.userNameSession) {
             const objectProperties = [];
             objectProperties.name = cursor.value.nameObject;
             objectProperties.userName = cursor.value.userName;
@@ -74,23 +74,23 @@ export default class Connection extends Phaser.GameObjects.Sprite {
             if (cursor.value.isInInventory === 0) objectProperties.isInInventory = false;
             else objectProperties.isInInventory = true;
 
-            objectsToPass.push(objectProperties);
+            this.objectsToPass.push(objectProperties);
           }
-          i += 1;
           cursor.continue();
         } else {
-          i = 0;
-          // // console.log(objectsToPass.length);
-          for (i; i < objectsToPass.length; i += 1) {
-            console.log('-------------------');
-            console.log(objectsToPass[i].name);
-            console.log(objectsToPass[i].userName);
-            console.log(objectsToPass[i].picture);
-            console.log(objectsToPass[i].canTake);
-            console.log('-------------------');
-          }
+          this.scene.dbCallback();
         }
+        //   for (i; i < this.objectsToPass.length; i += 1) {
+        //     // console.log('-------------------');
+        //     // console.log(this.objectsToPass[i].name);
+        //     // console.log(this.objectsToPass[i].userName);
+        //     // console.log(this.objectsToPass[i].picture);
+        //     // console.log(this.objectsToPass[i].canTake);
+        //     // console.log('-------------------');
+        //   }
+        // }
       };
     };
+    // console.log(this.scene.arrayObjectsInteractive);
   }
 }

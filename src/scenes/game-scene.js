@@ -4,20 +4,27 @@ import Menu from './objects/menu';
 import Use from './objects/MenuFunctions/use';
 import Code from './gameConfig.json';
 import GameMenuClass from './objects/gameMenu';
-import Connection from './connection';
+import ConnectionDB from './connection';
 
 class GameScene extends Phaser.Scene {
   constructor() {
     super('GameScene');
   }
 
+  dbCallback() {
+    // console.log(this.con.objectsToPass[0].information)
+    // console.log(this.arrayObjectsInteractive.door.information)
+    // for (let i = 0; i < this.con.objectsToPass.length; i += 1) {
+    //   if (this.con.objectsToPass[i].name === 'door') {
+    //     this.arrayObjectsInteractive.door.information = `${this.con.objectsToPass[i].information}. FUNCIONA`;
+    //     this.arrayObjectsInteractive.door.picture.setTexture('assets', this.con.objectsToPass[i].picture);
+    //   }
+    // }
+  }
+
   create() {
     this.text = '';
-    this.objectsDB = [];
-    this.connection = new Connection(this);
-
-
-
+    this.con = new ConnectionDB(this);
     // - First time => Create db
     // - Register => Take userName && pass
     //             -> Ask security question && Security answer
@@ -41,45 +48,6 @@ class GameScene extends Phaser.Scene {
     //            -> Modify objects profile with default values
     //            -> Reliad game page
 
-
-    //   if (typeOfGame === 'newGame') {
-    // } else {
-    //   const transaction = db.transaction('objects');
-    //   const request = transaction.objectStore('objects').openCursor();
-    //   request.onsuccess = (event) => {
-    //     const cursor = event.target.result;
-    //     let findIt = 0;
-    //     if (cursor) {
-    //       if (cursor.value.userName === userNameSession) {
-    //         findIt = 1;
-    //       } else {
-    //         cursor.continue();
-    //       }
-    //     } else if (findIt === 0) {
-    //       console.log('Ha habido algún error. No se encuentra la partida en la base de datos.');
-    //     } else {
-    //       findIt = 1;
-    //     }
-    //   };
-    // }
-
-
-    // const request = db.transaction('objects');
-    // request.objectStore('objects').openCursor();
-    // request.onsuccess = (event) => {
-    //   const cursor = event.target.result;
-    //   if (cursor) {
-    //     console.log(cursor.value);
-    //     cursor.continue();
-    //   }
-    // }
-
-    // console.log('nuevo juego');
-
-
-    // connectionDB.onsuccess = (event) => {
-
-    // };
 
     // Marco
     const border = this.add.graphics();

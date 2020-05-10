@@ -52,7 +52,7 @@
       font-size: 1.5vw;
     }
   </style>
-<!-- 
+  <!-- 
   - First time => Create db
   - Register => Take userName && pass
               -> Ask security question && Security answer
@@ -118,11 +118,11 @@
       objectStore.createIndex('isInInventory', 'isInInventory', { unique: false });
 
       objectStore.transaction.addEventListener('complete', (event) => {
-        fillObjectsTable(db, '');
+        fillDefaultObjects(db, '');
       });
     }
 
-    function fillObjectsTable(db, nameParam) {
+    function fillDefaultObjects(db, nameParam) {
       const objectsArray = [
         { nameObject: 'door', userName: nameParam, picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: 0, canOpen: 1, isLockedToOpen: 1, isOpen: 0, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: 0, displayWidth: 85, displayHeight: 400, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
         { nameObject: 'utilBooks', userName: nameParam, picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
@@ -140,8 +140,13 @@
       if (confirm("¿Está seguro? Perderá todo el progreso y empezará de nuevo.")) {
         // document.cookie = "typeOfGame = newGame";
         // document.cookie = "typeOfGame2 = newGame2";
+        fillDefaultObjects(db, sessionStorage.getItem('userName'));
         window.location.href = "http://localhost:3000/index.html";
       }
+    }
+
+    function loadGameFunction() {
+      window.location.href = "http://localhost:3000/index.html";
     }
 
     function secQuestFunction() {
@@ -160,8 +165,8 @@
       var request = transaction.objectStore('users').add(userAdd[0]);
       request.onsuccess = (event) => {
         alert("All done!");
-        fillObjectsTable(db, userAdd[0].userName);
-        
+        fillDefaultObjects(db, userAdd[0].userName);
+
         location.reload();
       };
     }
@@ -196,7 +201,7 @@
     connection.onerror = (event) => {
       console.log(`Error:${event}`);
     };
-    
+
     // OnSuccess
     connection.onsuccess = (event) => {
       db = event.target.result;
@@ -215,38 +220,43 @@
     // -------------------------- Login Button --------------------------------
     login.onpointerdown = () => {
       var userName = document.getElementById('name').value;
-      var pass = parseInt(document.getElementById('pass').value);
-      transaction = db.transaction('users');
-      var request = transaction.objectStore('users').openCursor();
-      request.onsuccess = (event) => {
-        var cursor = event.target.result;
+      var pass = document.getElementById('pass').value;
+      if (userName === '' || pass === '') {
+        alert('Los campos no pueden quedar en blanco.');
+      } else {
+        pass = parseInt(pass);
+        transaction = db.transaction('users');
+        var request = transaction.objectStore('users').openCursor();
         var findIt = 0;
-        if (cursor) {
-          if (cursor.value.userName === userName) {
-            findIt = 1;
-            if (pass === cursor.value.pass) {
-              // alert('Logueado correctamente');
-              document.getElementById('login').outerHTML = '<input type = "button" class="buttons" id="newGame" value="Nuevo"'
-                + 'onclick = "confirmNewGame();">';
-              document.getElementById('register').outerHTML = '<input type = "button" class="buttons" id="loadGame" value="Cargar"'
-                + 'onclick = "" >';
-              sessionStorage.setItem("userName", cursor.value.userName);
+        request.onsuccess = (event) => {
+          var cursor = event.target.result;
+          if (cursor) {
+            if (cursor.value.userName === userName) {
+              findIt = 1;
+              if (pass === cursor.value.pass) {
+                // alert('Logueado correctamente');
+                document.getElementById('login').outerHTML = '<input type = "button" class="buttons" id="newGame" value="Nuevo"'
+                  + 'onclick = "confirmNewGame();">';
+                document.getElementById('register').outerHTML = '<input type = "button" class="buttons" id="loadGame" value="Cargar"'
+                  + 'onclick = "loadGameFunction();">';
+                sessionStorage.setItem("userName", cursor.value.userName);
+              } else {
+                alert('Contraseña incorrecta');
+                document.getElementById('pass').value = '';
+              }
             } else {
-              alert('Contraseña incorrecta');
-              document.getElementById('pass').value = '';
+              cursor.continue();
             }
+          } else if (findIt === 0) {
+            alert('No se ha encontrado el usuario.');
+            document.getElementById('name').value = '';
+            document.getElementById('pass').value = '';
           } else {
-            cursor.continue();
+            findIt = 0;
           }
-        } else if (findIt === 0) {
-          alert('No se ha encontrado el usuario.');
-          document.getElementById('name').value = '';
-          document.getElementById('pass').value = '';
-        } else {
-          findIt = 0;
         }
-
       }
+
       // var request = transaction.objectStore('users').get(document.getElementById('name').value);
       // request.onsuccess = () => {
       //   console.log(request.result.pass);
@@ -260,11 +270,33 @@
       registerName = document.getElementById('name').value;
       registerPass = parseInt(document.getElementById('pass').value);
 
-      document.getElementsByTagName('form')[0].outerHTML = '<label for = "secQuest">Introduzca una pregunta:</label><br>'
-        + '<input type="text" class="textBox" id="secQuest" name ="secQuest"><br>'
-        + '<label for = "secAnsw">Introduzca la respuesta:</label><br>'
-        + '<input type="text" class="textBox" id="secAnsw" name ="secAnsw"><br>'
-        + '<input type = "button" id = "send" name = "send" value = "Send" onclick = "secQuestFunction();"><br>';
+      transaction = db.transaction('users');
+      var request = transaction.objectStore('users').openCursor();
+      var findIt = 0;
+      request.onsuccess = (event) => {
+        var cursor = event.target.result;
+        if (cursor) {
+          if (cursor.value.userName === registerName) {
+            console.log(cursor.value.userName);
+            console.log(registerName);
+            console.log('-------------------');
+            findIt = 1;
+          }
+          cursor.continue();
+        } else if (findIt === 1) {
+          alert('El nombre que ha escrito ya se encuenta en la base de datos.'
+            + '\nPor favor, inserte otro diferente.');
+          document.getElementById('name').value = '';
+          document.getElementById('pass').value = '';
+          findIt = 0;
+        } else {
+          document.getElementsByTagName('form')[0].outerHTML = '<label for = "secQuest">Introduzca una pregunta:</label><br>'
+            + '<input type="text" class="textBox" id="secQuest" name ="secQuest"><br>'
+            + '<label for = "secAnsw">Introduzca la respuesta:</label><br>'
+            + '<input type="text" class="textBox" id="secAnsw" name ="secAnsw"><br>'
+            + '<input type = "button" class = "buttons" id = "send" name = "send" value = "Send" onclick = "secQuestFunction();"><br>';
+        }
+      };
       // TODO
     };
 
