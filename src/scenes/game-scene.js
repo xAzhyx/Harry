@@ -4,6 +4,7 @@ import Menu from './objects/menu';
 import Use from './objects/MenuFunctions/use';
 import Code from './gameConfig.json';
 import GameMenuClass from './objects/gameMenu';
+import Connection from './connection';
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -12,32 +13,33 @@ class GameScene extends Phaser.Scene {
 
   create() {
     this.text = '';
+    this.objectsDB = [];
+    this.connection = new Connection(this);
 
 
-    const userNameSession = sessionStorage.getItem('userName');
-    const cookieString = document.cookie.split(';', document.cookie.length);
-    let typeOfGame = '';
-    for (let i = 0; i < cookieString.length; i += 1) {
-      const ck = cookieString[i].split('=', cookieString[i].length);
-      if (ck[0].trim() === 'typeOfGame') {
-        typeOfGame = ck[1];
-      }
-    }
 
-
-    const algo = [
-      { nameObject: 'door', userName: userNameSession, picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: false, canOpen: true, isLockedToOpen: true, isOpen: false, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: false, displayWidth: 85, displayHeight: 400, fixed: false, isFull: false, isInScene: true, isInInventory: false },
-      { nameObject: 'utilBooks', userName: userNameSession, picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
-      { nameObject: 'book', userName: userNameSession, picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: true, canOpen: false, isLockedToOpen: false, isOpen: false, objectOpenImg: '', objectClosedImg: '', finished: false, displayWidth: 70, displayHeight: 60, fixed: false, isFull: false, isInScene: true, isInInventory: false },
-    ];
-
-    const dbName = 'harry';
-
-    const connectionDB = indexedDB.open(dbName, 3);
-
-    connectionDB.onerror = (event) => {
-      console.log(`Error:${event}`);
-    };
+    // - First time => Create db
+    // - Register => Take userName && pass
+    //             -> Ask security question && Security answer
+    //             -> Save in users profile
+    //             -> Create new objects profile with userName
+    //             -> Reload page
+    // - Login => Search userName
+    // (game user profile) in objects table ->
+    //                       => New Game => Drop objects profile where this userName
+    //                                   -> Fill new objects profile with userName with default values
+    //                                   -> Start session with userName
+    //                       => Load Game => Start session with userName
+    //                                     -> Go to game
+    //                                     --------------------------------
+    //                                     -> Take userName from session
+    //                                     -> Take data objects userName profile from DB and load game profile or new profile
+    // - Save game => Search userName profile of gameobjects
+    //             -> Modify objects profile with current values
+    // - Load game => Reload game
+    // - New game => Search userName profile of gameobjects
+    //            -> Modify objects profile with default values
+    //            -> Reliad game page
 
 
     //   if (typeOfGame === 'newGame') {
@@ -75,38 +77,9 @@ class GameScene extends Phaser.Scene {
     // console.log('nuevo juego');
 
 
-    connectionDB.onsuccess = (event) => {
-      const db = event.target.result;
-      console.log(typeOfGame);
-      const objectStore = db.createObjectStore('objects', { keyPath: 'nameObject' });
-      objectStore.createIndex('userName', 'userName', { unique: false });
-      objectStore.createIndex('picture', 'picture', { unique: false });
-      objectStore.createIndex('information', 'information', { unique: false });
-      objectStore.createIndex('canTake', 'canTake', { unique: false });
-      objectStore.createIndex('canOpen', 'canOpen', { unique: false });
-      objectStore.createIndex('isLockedToOpen', 'isLockedToOpen', { unique: false });
-      objectStore.createIndex('isOpen', 'isOpen', { unique: false });
-      objectStore.createIndex('objectOpenImg', 'objectOpenImg', { unique: false });
-      objectStore.createIndex('objectCloseImg', 'objectCloseImg', { unique: false });
-      objectStore.createIndex('finished', 'finished', { unique: false });
-      objectStore.createIndex('displayWidth', 'displayWidth', { unique: false });
-      objectStore.createIndex('displayHeight', 'displayHeight', { unique: false });
-      objectStore.createIndex('fixed', 'fixed', { unique: false });
-      objectStore.createIndex('isFull', 'isFull', { unique: false });
-      objectStore.createIndex('isAcid', 'isAcid', { unique: false });
-      objectStore.createIndex('isInScene', 'isInScene', { unique: false });
-      objectStore.createIndex('isInInventory', 'isInInventory', { unique: false });
+    // connectionDB.onsuccess = (event) => {
 
-      // Se usa transaction.oncomplete para asegurarse que la creación del almacén
-      // haya finalizado antes de añadir los datos en el.
-      objectStore.transaction.oncomplete = (event) => {
-        // Guarda los datos en el almacén recién creado.
-        const objectsObjectStore = db.transaction('objects', 'readwrite').objectStore('objects');
-        algo.forEach((element) => {
-          objectsObjectStore.add(element);
-        });
-      };
-    };
+    // };
 
     // Marco
     const border = this.add.graphics();

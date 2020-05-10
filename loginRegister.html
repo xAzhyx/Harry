@@ -52,6 +52,21 @@
       font-size: 1.5vw;
     }
   </style>
+<!-- 
+  - First time => Create db
+  - Register => Take userName && pass
+              -> Ask security question && Security answer
+              -> Save in users profile
+              -> Create new objects profile with userName
+              -> Reload page
+  - Login => Search userName 
+  (game user profile) in objects table -> 
+                        => New Game => Drop objects profile where this userName
+                                    -> Fill new objects profile with userName with default values
+                                    -> Start session with userName
+                        => Load Game => Start session with userName
+                                      -> Go to game
+-->
 </head>
 
 <body>
@@ -60,6 +75,8 @@
     let userStore;
     let secQuestGet;
     let secAnswGet;
+    let registerName;
+    let registerPass;
     // -------------------- Create User Table -------------------------
     function createUsersTable(db) {
       userStore = db.createObjectStore('users', { keyPath: 'userName' });
@@ -121,16 +138,33 @@
 
     function confirmNewGame() {
       if (confirm("¿Está seguro? Perderá todo el progreso y empezará de nuevo.")) {
-        document.cookie = "typeOfGame = newGame";
-        document.cookie = "typeOfGame2 = newGame2";
+        // document.cookie = "typeOfGame = newGame";
+        // document.cookie = "typeOfGame2 = newGame2";
         window.location.href = "http://localhost:3000/index.html";
       }
     }
-    
+
     function secQuestFunction() {
-        secQuestGet = document.getElementById("secQuest").value;
-        secAnswGet = document.getElementById("secAnsw").value;
-      }
+      secQuestGet = document.getElementById("secQuest").value;
+      secAnswGet = document.getElementById("secAnsw").value;
+      const userAdd = [
+        {
+          userName: registerName,
+          pass: registerPass,
+          secQuest: secQuestGet,
+          secAnsw: secAnswGet,
+          // secQuest: secQuest, secAnsw: secAnsw
+        }
+      ];
+      transaction = db.transaction(['users'], 'readwrite');
+      var request = transaction.objectStore('users').add(userAdd[0]);
+      request.onsuccess = (event) => {
+        alert("All done!");
+        fillObjectsTable(db, userAdd[0].userName);
+        
+        location.reload();
+      };
+    }
 
   </script>
   <div>
@@ -162,18 +196,17 @@
     connection.onerror = (event) => {
       console.log(`Error:${event}`);
     };
+    
     // OnSuccess
     connection.onsuccess = (event) => {
       db = event.target.result;
     };
-
     // If is the first time.
     connection.onupgradeneeded = (event) => {
       db = event.target.result;
       createObjectsTable(db);
       createUsersTable(db);
 
-      // fillObjectsTable(db, '');
       document.getElementById('login').outerHTML = '<input type="button" class="buttons" id="login" value="Loguear"'
         + 'disabled >';
     }
@@ -224,36 +257,15 @@
     register.onpointerdown = () => {
       // console.log('userName: ' + document.getElementById('name').value);
       // console.log('Pass: ' + document.getElementById('pass').value);
-      var registerName = document.getElementById('name').value;
-      var registerPass = parseInt(document.getElementById('pass').value);
+      registerName = document.getElementById('name').value;
+      registerPass = parseInt(document.getElementById('pass').value);
 
       document.getElementsByTagName('form')[0].outerHTML = '<label for = "secQuest">Introduzca una pregunta:</label><br>'
         + '<input type="text" class="textBox" id="secQuest" name ="secQuest"><br>'
         + '<label for = "secAnsw">Introduzca la respuesta:</label><br>'
         + '<input type="text" class="textBox" id="secAnsw" name ="secAnsw"><br>'
         + '<input type = "button" id = "send" name = "send" value = "Send" onclick = "secQuestFunction();"><br>';
-       
-       
-       
-        // TODO
-        const userAdd = [
-        {
-          userName: registerName,
-          pass: registerPass,
-          secQuest: secQuestGet,
-          secAnsw: secAnswGet,
-          // secQuest: secQuest, secAnsw: secAnsw
-        }
-      ];
-      console.log(document.getElementsByTagName('div')[0].outerHTML)
-      transaction = db.transaction(['users'], 'readwrite');
-      var request = transaction.objectStore('users').add(userAdd[0]);
-      request.onsuccess = (event) => {
-        alert("All done!");
-        fillObjectsTable(db, userAdd[0].userName);
-        // document.getElementById('login').outerHTML = '<input type="button" class="buttons" id="login" value="Loguear" >';
-        // location.reload();
-      };
+      // TODO
     };
 
   </script>
