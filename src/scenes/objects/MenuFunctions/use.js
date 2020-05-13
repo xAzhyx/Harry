@@ -100,9 +100,11 @@ export default class Use extends Phaser.GameObjects.Sprite {
           obj1.picture.setVisible(false);
           this.scene.gameProgress += 1;
           this.scene.progressFunction();
-          for (let i = 0; i < this.scene.inventory.length; i += 1) {
-            if (this.scene.inventory[i].name === obj1.name) this.scene.inventory.splice(i, 1);
-          }
+          this.deleteFromInventory(obj1);
+          // for (let i = 0; i < this.scene.inventory.length; i += 1) {
+          //   if (this.scene.inventory[i].name === obj1.name) this.scene.inventory.splice(i, 1);
+          //   obj1.isInInventory = 0;
+          // }
           this.scene.menuContainer.generalText('Bien hecho. Hemos arreglado el aparato.');
         }
         break;
@@ -145,11 +147,17 @@ export default class Use extends Phaser.GameObjects.Sprite {
         break;
 
       case 'door': if (obj1.isAcid) {
+        this.scene.menuContainer.generalText('Creo que este líquido corrosivo derretirá la cerradura.');
         obj2.isLockedToOpen = false;
         obj2.picture.setTexture('assets', 'doorUnlock.png');
-        this.scene.menuContainer.generalText('Creo que este líquido corrosivo derretirá la cerradura.');
         this.scene.gameProgress += 1;
         this.scene.progressFunction();
+        obj1.picture.setVisible(false);
+        this.deleteFromInventory(obj1);
+        // for (let i = 0; i < this.scene.inventory.length; i += 1) {
+        //   if (this.scene.inventory[i].name === obj1.name) this.scene.inventory.splice(i, 1);
+        //   obj1.isInInventory = 0;
+        // }
       } else this.scene.menuContainer.generalText('Hay que hacer mas cosas con el vaso aun.');
         break;
       default: this.scene.menuContainer.generalText('No puedo usarlo con eso...');
@@ -165,9 +173,7 @@ export default class Use extends Phaser.GameObjects.Sprite {
       if (obj1.finished === false) {
         obj1.picture.setVisible(false);
         obj1.finished = true;
-        for (let i = 0; i < this.scene.inventory.length; i += 1) {
-          if (this.scene.inventory[i].name === obj1.name) this.scene.inventory.splice(i, 1);
-        }
+        this.deleteFromInventory(obj1);
         obj2.isLockedToOpen = false;
         obj2.information = 'Un libro con información aparentemente valiosa.';
         this.scene.gameProgress += 1;
@@ -181,4 +187,10 @@ export default class Use extends Phaser.GameObjects.Sprite {
     this.scene.objectToCompare = 0;
   }
 
+  deleteFromInventory(obj1) {
+    for (let i = 0; i < this.scene.inventory.length; i += 1) {
+      if (this.scene.inventory[i].name === obj1.name) this.scene.inventory.splice(i, 1);
+      obj1.isInInventory = false;
+    }
+  }
 }

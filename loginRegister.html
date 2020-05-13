@@ -71,21 +71,36 @@
 
 <body>
   <script>
-    let objectStore;
+// const queryString = window.location.search;
+// if(queryString === '') {
+//   console.log('dont have parameters')
+// } else {
+//   console.log(queryString)
+// }
+    // let objectStore;
+    if(sessionStorage.getItem("userName")){
+      sessionStorage.clear();
+      sessionStorage.removeItem("userName");
+    }
     let userStore;
+    let userNameValue;
     let secQuestGet;
     let secAnswGet;
     let registerName;
     let registerPass;
     // -------------------- Create User Table -------------------------
+    // console.log(document.cookie)
     function createUsersTable(db) {
       userStore = db.createObjectStore('users', { keyPath: 'userName' });
       userStore.createIndex('pass', 'pass', { unique: false });
       userStore.createIndex('secQuest', 'secQuest', { unique: false });
       userStore.createIndex('secAnsw', 'secAnsw', { unique: false });
+      userStore.createIndex('gameProgress', 'gameProgress', { unique: false });
+      userStore.createIndex('windowEvent', 'windowEvent', { unique: false });
+      userStore.createIndex('tutorialFirstTime', 'tutorialFirstTime', { unique: false });
       // transaction = db.transaction(['users'], 'readwrite');
       const users = [
-        { userName: 'Fatima', pass: 1234, secQuest: '¿?', secAnsw: 'yes' }
+        { userName: 'Fatima', pass: 1234, secQuest: '¿?', secAnsw: 'yes', gameProgress: 0, windowEvent: 0, tutorialFirstTime: 0 }
       ];
       userStore.transaction.addEventListener('complete', (event) => {
         const userObjectStore = db.transaction('users', 'readwrite').objectStore('users');
@@ -97,6 +112,7 @@
 
     // ---------------------Create Objects Table ---------------------
     function createObjectsTable(db) {
+      let objectstore;
       objectStore = db.createObjectStore('objects', { autoIncrement: true });
       objectStore.createIndex('nameObject', 'nameObject', { unique: false });
       objectStore.createIndex('userName', 'userName', { unique: false });
@@ -117,6 +133,7 @@
       objectStore.createIndex('isInScene', 'isInScene', { unique: false });
       objectStore.createIndex('isInInventory', 'isInInventory', { unique: false });
 
+
       objectStore.transaction.addEventListener('complete', (event) => {
         fillDefaultObjects(db, '');
       });
@@ -126,29 +143,52 @@
       const objectsArray = [
         { nameObject: 'door', userName: nameParam, picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: 0, canOpen: 1, isLockedToOpen: 1, isOpen: 0, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: 0, displayWidth: 85, displayHeight: 400, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
         { nameObject: 'utilBooks', userName: nameParam, picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
-        { nameObject: 'book', userName: nameParam, picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'book', userName: nameParam, picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: 1, canOpen: 1, isLockedToOpen: 1, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 0, isInInventory: 0 },
+        { nameObject: 'brokenCable', userName: nameParam, picture: 'cableBrk.png', information: 'Un cable roto. Si lo arreglara igual podría usarlo para algo.', canTake: 1, canOpen: 0, isLockedToOpen: 1, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 50, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'glass', userName: nameParam, picture: 'glass.png', information: 'Parece un vaso especial para mezclar o tratar líquidos.', canTake: 1, canOpen: 0, isLockedToOpen: 1, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 50, displayHeight: 70, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'osc', userName: nameParam, picture: 'osc.png', information: 'Parece un osciloscopio mejorado con mas funcionalidades. Quizás pueda arreglar algo con él.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 100, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'apparat', userName: nameParam, picture: 'apparatBrk.png', information: 'No se para que sirve este aparato pero tiene una etiqueta que pone "Inserte el líquido que desea transformar".', canTake: 0, canOpen: 1, isLockedToOpen: 0, isOpen: 0, objectOpenImg: 'apparatBrkOp.png', objectClosedImg: 'apparatBrk.png', finished: 0, displayWidth: 100, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'key', userName: nameParam, picture: 'key.png', information: 'Una pequeña llave.', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 80, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'laser', userName: nameParam, picture: 'laserRed.png', information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 145, displayHeight: 500, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
       ];
 
       transaction = db.transaction(['objects'], 'readwrite');
-      const objectsObjectStore = transaction.objectStore('objects');
+      const objStore = transaction.objectStore('objects');
       for (var i in objectsArray) {
-        objectsObjectStore.put(objectsArray[i]);
+        objStore.put(objectsArray[i]);
       }
     }
 
-    function confirmNewGame() {
+    function confirmNewGame(userNameValue) {
       if (confirm("¿Está seguro? Perderá todo el progreso y empezará de nuevo.")) {
         // document.cookie = "typeOfGame = newGame";
         // document.cookie = "typeOfGame2 = newGame2";
+        sessionStorage.setItem("userName", userNameValue);
+        const objStore = db.transaction(["objects"], "readwrite")
+        .objectStore("objects");
+        objStore.openCursor().onsuccess = (event) => {
+          var cursor = event.target.result;
+          if (cursor) {
+            if (cursor.value.userName === userNameValue) {
+              var request = cursor.delete();
+              request.onsuccess = () => {
+                console.log('Deleted')
+              };
+            }
+            cursor.continue();
+          }
+        };
+        
         fillDefaultObjects(db, sessionStorage.getItem('userName'));
         window.location.href = "http://localhost:3000/index.html";
       }
     }
-
+    
     function loadGameFunction() {
+      sessionStorage.setItem("userName", userNameValue);
       window.location.href = "http://localhost:3000/index.html";
     }
-
+    
     function secQuestFunction() {
       secQuestGet = document.getElementById("secQuest").value;
       secAnswGet = document.getElementById("secAnsw").value;
@@ -158,7 +198,9 @@
           pass: registerPass,
           secQuest: secQuestGet,
           secAnsw: secAnswGet,
-          // secQuest: secQuest, secAnsw: secAnsw
+          gameProgress: 0,
+          windowEvent: 0,
+          tutorialFirstTime: 0
         }
       ];
       transaction = db.transaction(['users'], 'readwrite');
@@ -177,7 +219,7 @@
     <fieldset>
       <h3>Bienvenido la aventura de Harry!</h3>
       <p>Logueate o regístrate.</p>
-      <form><label for="name">Nombre:</label><br>
+      <form><label for="name">Usuario:</label><br>
         <input type="text" class="textBox" id="name" name="name"><br>
         <label for="pass">Contraseña:</label><br>
         <input type="text" class="textBox" id="pass" name="pass"><br><br>
@@ -209,8 +251,8 @@
     // If is the first time.
     connection.onupgradeneeded = (event) => {
       db = event.target.result;
-      createObjectsTable(db);
       createUsersTable(db);
+      createObjectsTable(db);
 
       document.getElementById('login').outerHTML = '<input type="button" class="buttons" id="login" value="Loguear"'
         + 'disabled >';
@@ -234,12 +276,12 @@
             if (cursor.value.userName === userName) {
               findIt = 1;
               if (pass === cursor.value.pass) {
+                userNameValue = cursor.value.userName;
                 // alert('Logueado correctamente');
                 document.getElementById('login').outerHTML = '<input type = "button" class="buttons" id="newGame" value="Nuevo"'
-                  + 'onclick = "confirmNewGame();">';
+                  + 'onclick = "confirmNewGame(userNameValue);">';
                 document.getElementById('register').outerHTML = '<input type = "button" class="buttons" id="loadGame" value="Cargar"'
                   + 'onclick = "loadGameFunction();">';
-                sessionStorage.setItem("userName", cursor.value.userName);
               } else {
                 alert('Contraseña incorrecta');
                 document.getElementById('pass').value = '';

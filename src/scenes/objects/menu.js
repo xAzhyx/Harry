@@ -16,8 +16,9 @@ export default class Menu extends Phaser.GameObjects.Container {
     this.objectO = 0;
     this.objectOTexts = 0;
     this.textSum = '';
-    //CAMBIAR
-    this.windowEvent = false;
+
+    // CAMBIAR
+    this.windowEvent = this.scene.con.wEvent;
     this.stay = false;
     this.arrayText = [];
     this.shadows = [];
@@ -123,9 +124,12 @@ export default class Menu extends Phaser.GameObjects.Container {
           this.scene.arrayObjectsInteractive.forEach((element) => {
             if (element.name === 'book') {
               this.scene.inventory.push(element);
+              element.isInInventory = true;
             }
           });
         } else {
+          this.objectO.isInInventory = true;
+          this.objectO.isInScene = false;
           this.objectO.picture.visible = false;
           this.scene.inventory.push(this.objectO);
         }

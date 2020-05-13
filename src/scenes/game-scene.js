@@ -14,17 +14,8 @@ class GameScene extends Phaser.Scene {
   dbCallback() {
     // console.log(this.con.objectsToPass[0].information)
     // console.log(this.arrayObjectsInteractive.door.information)
-    // for (let i = 0; i < this.con.objectsToPass.length; i += 1) {
-    //   if (this.con.objectsToPass[i].name === 'door') {
-    //     this.arrayObjectsInteractive.door.information = `${this.con.objectsToPass[i].information}. FUNCIONA`;
-    //     this.arrayObjectsInteractive.door.picture.setTexture('assets', this.con.objectsToPass[i].picture);
-    //   }
-    // }
-  }
 
-  create() {
-    this.text = '';
-    this.con = new ConnectionDB(this);
+
     // - First time => Create db
     // - Register => Take userName && pass
     //             -> Ask security question && Security answer
@@ -48,7 +39,6 @@ class GameScene extends Phaser.Scene {
     //            -> Modify objects profile with default values
     //            -> Reliad game page
 
-
     // Marco
     const border = this.add.graphics();
     border.lineStyle(4, 0xF20F0F, 1);
@@ -62,11 +52,6 @@ class GameScene extends Phaser.Scene {
     const background = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 52, 'room');
     background.displayWidth = 1223;
     background.displayHeight = 562;
-
-
-    // Datos x, y, buttons
-    this.text = this.add.text(35, 35, '', { fill: '#00ff00' }).setDepth(1);
-
 
     // OBJECTS CLASES
     this.harry = new Harry(this, 300, 500, 'assets', 'harry.png');
@@ -83,11 +68,13 @@ class GameScene extends Phaser.Scene {
     this.phan = false;
     this.using = false;
     this.objectToCompare = 0;
-    this.gameProgress = 0;
+    this.gameProgress = this.con.prog;
+    console.log(this.gameProgress);
     let gameMenuOpen = false;
 
     // CAMBIAR
-    this.tutorialFirstTime = false;
+    this.tutorialFirstTime = this.con.tuto;
+    // this.tutorialFirstTime = false;
 
     // Inventory
     this.inventory = [];
@@ -108,7 +95,7 @@ class GameScene extends Phaser.Scene {
     const bar = this.add.sprite(this.cameras.main.centerX, 65, 'assets', 'bar.png');
     barBg.displayWidth = bar.displayWidth + 100;
     bar.setDepth(2);
-    this.progressBar = this.add.sprite(this.cameras.main.centerX - bar.width / 2 + 3, 65, 'assets', 'progressBar.png');
+    this.progressBar = this.add.sprite(this.cameras.main.centerX - bar.width / 2 + 2, 65, 'assets', 'progressBar.png');
     this.progressBar.setOrigin(0, 0.5);
     // console.log(this.progressBar.displayWidth);
     this.progressFunction();
@@ -126,43 +113,59 @@ class GameScene extends Phaser.Scene {
       }
     }, this);
 
-    // Door
-    const door = {
-      picture: this.add.sprite(this.scale.width - 60, 335, 'assets', 'doorLock.png'),
-      name: 'door',
-      information: 'La salida. Hay que deshacerse de ese candado de alguna forma.',
-      canTake: false,
-      canOpen: true,
-      isLockedToOpen: true,
-      isOpen: false,
-      objectOpenImg: 'doorOpen.png',
-      objectClosedImg: 'doorUnlock.png',
-      setImg: false,
-      imgUsed: '',
-      finished: false,
-    };
+    // --------------------------- Set objects with load profile --------------------------------------
+
+    const door = this.setObjectFunction('door');
+    // console.log(this.con.objectsToPass.length)
+    door.picture.setPosition(this.scale.width - 60, 335);
     door.picture.setOrigin(1, 0.5);
-    door.picture.displayWidth = 85;
-    door.picture.displayHeight = 400;
     door.picture.setDepth(2);
 
+    // door.setImg = false;
+    // door.imgUsed = '';
+    // door.picture.setOrigin(1, 0.5);
+    // door.picture.setDepth(2);   
+    // ------------------------------------------------------------------------------------------------
+    // Door
+    // const door = {
+    //   picture: this.add.sprite(this.scale.width - 60, 335, 'assets', 'doorLock.png'),
+    //   name: 'door',
+    //   information: 'La salida. Hay que deshacerse de ese candado de alguna forma.',
+    //   canTake: false,
+    //   canOpen: true,
+    //   isLockedToOpen: true,
+    //   isOpen: false,
+    //   objectOpenImg: 'doorOpen.png',
+    //   objectClosedImg: 'doorUnlock.png',
+    //   setImg: false,
+    //   imgUsed: '',
+    //   finished: false,
+    // };
+    // door.picture.displayWidth = 85;
+    // door.picture.displayHeight = 400;
+
+    // const utilBooks = {
+    //   picture: this.add.sprite(327, 149, 'assets', 'books.png'),
+    //   name: 'utilBooks',
+    //   information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...',
+    //   canTake: true,
+    //   canOpen: false,
+    //   isLockedToOpen: false,
+    //   isOpen: false,
+    //   objectOpenImg: '',
+    //   objectClosedImg: '',
+    //   setImg: true,
+    //   imgUsed: 'booksTaken.png',
+    //   finished: false,
+    // };
+    // utilBooks.picture.displayWidth = 70;
+    // utilBooks.picture.displayHeight = 60;
+
     // Books
-    const utilBooks = {
-      picture: this.add.sprite(327, 149, 'assets', 'books.png'),
-      name: 'utilBooks',
-      information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...',
-      canTake: true,
-      canOpen: false,
-      isLockedToOpen: false,
-      isOpen: false,
-      objectOpenImg: '',
-      objectClosedImg: '',
-      setImg: true,
-      imgUsed: 'booksTaken.png',
-      finished: false,
-    };
-    utilBooks.picture.displayWidth = 70;
-    utilBooks.picture.displayHeight = 60;
+    const utilBooks = this.setObjectFunction('utilBooks');
+    utilBooks.picture.setPosition(327, 149);
+    utilBooks.setImg = true;
+    utilBooks.imgUsed = 'booksTaken.png';
 
     const notUtilBooks = {
       picture: this.add.sprite(500, 146, 'assets', 'books2.png'),
@@ -181,26 +184,31 @@ class GameScene extends Phaser.Scene {
     notUtilBooks.picture.displayWidth = 120;
     notUtilBooks.picture.displayHeight = 70;
 
+    // const book = {
+    //   picture: this.add.sprite(0, 0, 'assets', 'book.png'),
+    //   name: 'book',
+    //   information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...',
+    //   canTake: false,
+    //   canOpen: true,
+    //   isLockedToOpen: true,
+    //   isOpen: false,
+    //   objectOpenImg: 'openBook.png',
+    //   objectClosedImg: 'book.png',
+    //   setImg: false,
+    //   imgUsed: '',
+    //   finished: true,
+    //   inventoryDisplayW: 55,
+    //   inventoryDisplayH: 75,
+    // };
+    // book.picture.displayWidth = 55;
+    // book.picture.displayHeight = 75;
+
+
     // The taken book
-    const book = {
-      picture: this.add.sprite(0, 0, 'assets', 'book.png'),
-      name: 'book',
-      information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...',
-      canTake: false,
-      canOpen: true,
-      isLockedToOpen: true,
-      isOpen: false,
-      objectOpenImg: 'openBook.png',
-      objectClosedImg: 'book.png',
-      setImg: false,
-      imgUsed: '',
-      finished: true,
-      inventoryDisplayW: 55,
-      inventoryDisplayH: 75,
-    };
-    book.picture.displayWidth = 55;
-    book.picture.displayHeight = 75;
-    book.picture.visible = false;
+    const book = this.setObjectFunction('book');
+    book.inventoryDisplayW = 55;
+    book.inventoryDisplayH = 75;
+    // book.picture.visible = false;
 
     // Table
     this.table = {
@@ -215,46 +223,58 @@ class GameScene extends Phaser.Scene {
     this.table.picture.setOrigin(0.5, 0);
 
 
+    // const brokenCable = {
+    //   picture: this.add.sprite(500, 350, 'assets', 'cableBrk.png'),
+    //   name: 'brokenCable',
+    //   information: 'Un cable roto. Si lo arreglara igual podría usarlo para algo.',
+    //   canTake: true,
+    //   canOpen: false,
+    //   isLockedToOpen: true,
+    //   isOpen: false,
+    //   objectOpenImg: '',
+    //   objectClosedImg: '',
+    //   setImg: false,
+    //   imgUsed: 'cableFix.png',
+    //   finished: false,
+    //   inventoryDisplayW: 60,
+    //   inventoryDisplayH: 40,
+    //   angle: 30,
+    //   fixed: false,
+    // };
+    // brokenCable.picture.displayWidth = 70;
+    // brokenCable.picture.displayHeight = 50;
+
     // Cable
-    const brokenCable = {
-      picture: this.add.sprite(500, 350, 'assets', 'cableBrk.png'),
-      name: 'brokenCable',
-      information: 'Un cable roto. Si lo arreglara igual podría usarlo para algo.',
-      canTake: true,
-      canOpen: false,
-      isLockedToOpen: true,
-      isOpen: false,
-      objectOpenImg: '',
-      objectClosedImg: '',
-      setImg: false,
-      imgUsed: 'cableFix.png',
-      finished: false,
-      inventoryDisplayW: 60,
-      inventoryDisplayH: 40,
-      angle: 30,
-      fixed: false,
-    };
-    brokenCable.picture.displayWidth = 70;
-    brokenCable.picture.displayHeight = 50;
+    const brokenCable = this.setObjectFunction('brokenCable');
+    brokenCable.picture.setPosition(500, 350);
+    brokenCable.angle = 30;
+    brokenCable.inventoryDisplayW = 60;
+    brokenCable.inventoryDisplayH = 40;
+
+    // const glass = {
+    //   picture: this.add.sprite(438, 320, 'assets', 'glass.png'),
+    //   name: 'glass',
+    //   isFull: false,
+    //   isAcid: false,
+    //   inventoryDisplayW: 40,
+    //   inventoryDisplayH: 60,
+    //   information: 'Parece un vaso especial para mezclar o tratar líquidos.',
+    //   canTake: true,
+    //   canOpen: false,
+    //   isLockedToOpen: true,
+    //   setImg: false,
+    //   imgUsed: 'glassWater.png',
+    //   finished: false,
+    // };
+    // glass.picture.displayWidth = 50;
+    // glass.picture.displayHeight = 70;
 
     // Glass
-    const glass = {
-      picture: this.add.sprite(438, 320, 'assets', 'glass.png'),
-      name: 'glass',
-      isFull: false,
-      isAcid: false,
-      inventoryDisplayW: 40,
-      inventoryDisplayH: 60,
-      information: 'Parece un vaso especial para mezclar o tratar líquidos.',
-      canTake: true,
-      canOpen: false,
-      isLockedToOpen: true,
-      setImg: false,
-      imgUsed: 'glassWater.png',
-      finished: false,
-    };
-    glass.picture.displayWidth = 50;
-    glass.picture.displayHeight = 70;
+    const glass = this.setObjectFunction('glass');
+    glass.picture.setPosition(438, 320);
+    glass.inventoryDisplayW = 40;
+    glass.inventoryDisplayH = 60;
+
 
     // Window
     const window = {
@@ -275,39 +295,47 @@ class GameScene extends Phaser.Scene {
     window.picture.displayWidth = 180;
     window.picture.displayHeight = 200;
 
+    // const osc = {
+    //   picture: this.add.sprite(550, 270, 'assets', 'osc.png'),
+    //   name: 'osc',
+    //   information: 'Parece un osciloscopio mejorado con mas funcionalidades. Quizás pueda arreglar algo con él.',
+    //   canTake: false,
+    //   canOpen: false,
+    //   isLockedToOpen: false,
+    //   setImg: false,
+    //   finished: false,
+    // };
+    // osc.picture.setOrigin(0, 0);
+    // osc.picture.displayWidth = 100;
+    // osc.picture.displayHeight = 100;
+
     // osc
-    const osc = {
-      picture: this.add.sprite(550, 270, 'assets', 'osc.png'),
-      name: 'osc',
-      information: 'Parece un osciloscopio mejorado con mas funcionalidades. Quizás pueda arreglar algo con él.',
-      canTake: false,
-      canOpen: false,
-      isLockedToOpen: false,
-      setImg: false,
-      finished: false,
-    };
+    const osc = this.setObjectFunction('osc');
     osc.picture.setOrigin(0, 0);
-    osc.picture.displayWidth = 100;
-    osc.picture.displayHeight = 100;
+    osc.picture.setPosition(550, 270);
+
+    // const apparat = {
+    //   picture: this.add.sprite(660, 270, 'assets', 'apparatBrk.png'),
+    //   name: 'apparat',
+    //   fixed: false,
+    //   information: 'No se para que sirve este aparato pero tiene una etiqueta que pone "Inserte el líquido que desea transformar".',
+    //   canTake: false,
+    //   canOpen: true,
+    //   isOpen: false,
+    //   isLockedToOpen: false,
+    //   objectOpenImg: 'apparatBrkOp.png',
+    //   objectClosedImg: 'apparatBrk.png',
+    //   setImg: false,
+    //   finished: false,
+    // };
+    // apparat.picture.setOrigin(0, 0);
+    // apparat.picture.displayWidth = 100;
+    // apparat.picture.displayHeight = 100;
 
     // apparat
-    const apparat = {
-      picture: this.add.sprite(660, 270, 'assets', 'apparatBrk.png'),
-      name: 'apparat',
-      fixed: false,
-      information: 'No se para que sirve este aparato pero tiene una etiqueta que pone "Inserte el líquido que desea transformar".',
-      canTake: false,
-      canOpen: true,
-      isOpen: false,
-      isLockedToOpen: false,
-      objectOpenImg: 'apparatBrkOp.png',
-      objectClosedImg: 'apparatBrk.png',
-      setImg: false,
-      finished: false,
-    };
+    const apparat = this.setObjectFunction('apparat');
     apparat.picture.setOrigin(0, 0);
-    apparat.picture.displayWidth = 100;
-    apparat.picture.displayHeight = 100;
+    apparat.picture.setPosition(660, 270);
 
 
     // closet
@@ -357,21 +385,29 @@ class GameScene extends Phaser.Scene {
     this.exit.visible = false;
     this.exit.setInteractive();
 
-    this.keyObj = {
-      picture: this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'assets', 'key.png'),
-      inventoryDisplayW: 40,
-      inventoryDisplayH: 60,
-      name: 'key',
-      information: 'Una pequeña llave.',
-      canTake: true,
-      canOpen: false,
-      isLockedToOpen: false,
-      setImg: false,
-      imgUsed: '',
-      finished: false,
-    };
+    // this.keyObj = {
+    //   picture: this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'assets', 'key.png'),
+    //   inventoryDisplayW: 40,
+    //   inventoryDisplayH: 60,
+    //   name: 'key',
+    //   information: 'Una pequeña llave.',
+    //   canTake: true,
+    //   canOpen: false,
+    //   isLockedToOpen: false,
+    //   setImg: false,
+    //   imgUsed: '',
+    //   finished: false,
+    // };
+    // this.keyObj.picture.displayWidth = 80;
+    // this.keyObj.picture.displayHeight = 100;
+
+    // Key
+    this.keyObj = this.setObjectFunction('key');
+    this.keyObj.picture.setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
     this.keyObj.picture.setDepth(4);
     this.keyObj.picture.setVisible(false);
+    this.keyObj.inventoryDisplayW = 40;
+    this.keyObj.inventoryDisplayH = 60;
 
     this.drawer = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 50, 'assets', 'drawer.png');
     this.drawer.setOrigin(0.5);
@@ -402,20 +438,25 @@ class GameScene extends Phaser.Scene {
     this.code.setVisible(false);
 
 
-    this.laser = {
-      picture: this.add.sprite(this.scale.width - 30, 40, 'assets', 'laserRed.png'),
-      information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.',
-      name: 'laser',
-      canTake: false,
-      canOpen: false,
-      setImg: true,
-      imgUsed: 'greenLaser.png',
-      finished: false,
-    };
+    // this.laser = {
+    //   picture: this.add.sprite(this.scale.width - 30, 40, 'assets', 'laserRed.png'),
+    //   information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.',
+    //   name: 'laser',
+    //   canTake: false,
+    //   canOpen: false,
+    //   setImg: true,
+    //   imgUsed: 'greenLaser.png',
+    //   finished: false,
+    // };
+    // this.laser.picture.displayHeight = 500;
+    // this.laser.picture.displayWidth = 145;
+
+    this.laser = this.setObjectFunction('laser');
+    this.laser.picture.setPosition(this.scale.width - 30, 40);
     this.laser.picture.setDepth(2);
     this.laser.picture.setOrigin(1, 0);
-    this.laser.picture.displayHeight = 500;
-    this.laser.picture.displayWidth = 145;
+    // this.laser.picture.setVisible(false);
+
 
     this.laserDevice = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 50, 'assets', 'laserDevice.png');
     this.laserDevice.displayWidth = 300;
@@ -502,16 +543,9 @@ class GameScene extends Phaser.Scene {
     }, this);
 
 
-    // ---------------------------------- Menu --------------------------------------
     this.arrayObjectsInteractive = [door, utilBooks, notUtilBooks, book, closet, brokenCable, glass, window, osc, apparat, this.keyObj, this.laser];
+    this.arrayObjectsToSave = [door, utilBooks, book, brokenCable, glass, osc, apparat, this.keyObj, this.laser];
     this.setObjectsInteractive();
-
-    // ---------------------------------- End menu --------------------------------------
-
-    // this.input.on('pointerdow', (pointer) => {
-
-    // }, this);
-    // ----------------------------------------------------
 
     this.arrayObjectsInteractive.forEach((element) => {
       element.picture.on('pointerdown', (pointer) => {
@@ -562,6 +596,47 @@ class GameScene extends Phaser.Scene {
       // }, this);
       this.tutorialFirstTime = false;
     }
+  }
+
+  create() {
+    this.con = new ConnectionDB(this);
+
+    this.text = '';
+    // Datos x, y, buttons
+    this.text = this.add.text(35, 35, '', { fill: '#00ff00' }).setDepth(1);
+  }
+
+  setObjectFunction(nameObject) {
+    let obj = {};
+    for (let j = 0; j < this.con.objectsToPass.length; j += 1) {
+      if (this.con.objectsToPass[j].userName === this.con.userNameSession && this.con.objectsToPass[j].name === nameObject) {
+        // console.log(this.con.objectsToPass[j]);
+        obj = {
+          name: nameObject,
+          picture: this.add.sprite(0, 0, 'assets', this.con.objectsToPass[j].picture),
+          information: this.con.objectsToPass[j].information,
+          canTake: this.con.objectsToPass[j].canTake,
+          canOpen: this.con.objectsToPass[j].canOpen,
+          isLockedToOpen: this.con.objectsToPass[j].isLockedToOpen,
+          isOpen: this.con.objectsToPass[j].isOpen,
+          objectOpenImg: this.con.objectsToPass[j].objectOpenImg,
+          objectClosedImg: this.con.objectsToPass[j].objectClosedImg,
+          finished: this.con.objectsToPass[j].finished,
+          displayWidth: this.con.objectsToPass[j].displayWidth,
+          displayHeight: this.con.objectsToPass[j].displayHeight,
+          fixed: this.con.objectsToPass[j].fixed,
+          isFull: this.con.objectsToPass[j].isFull,
+          isAcid: this.con.objectsToPass[j].isAcid,
+          isInScene: this.con.objectsToPass[j].isInScene,
+          isInInventory: this.con.objectsToPass[j].isInInventory,
+        };
+        if (this.con.objectsToPass[j].isInScene === false) obj.picture.setVisible(false);
+        if (this.con.objectsToPass[j].isInInventory === true) this.inventory.push(obj);
+        obj.picture.displayWidth = this.con.objectsToPass[j].displayWidth;
+        obj.picture.displayHeight = this.con.objectsToPass[j].displayHeight;
+      }
+    }
+    return obj;
   }
 
   setObjectsInteractive() {
@@ -631,6 +706,7 @@ class GameScene extends Phaser.Scene {
           this.inventory[k].picture.displayWidth = this.inventory[k].inventoryDisplayW;
           this.inventory[k].picture.displayHeight = this.inventory[k].inventoryDisplayH;
           this.inventory[k].picture.visible = true;
+          console.log(this.inventory[k]);
           this.inventory[k].picture.setDepth(3);
         }
         k += 1;
@@ -665,10 +741,12 @@ class GameScene extends Phaser.Scene {
       case 2: this.progressBar.displayWidth = 81.14;
         break;
       case 3: this.progressBar.displayWidth = 121.71;
+        this.progressBar.setPosition(this.progressBar.x - 1, this.progressBar.y, 65);
         break;
       case 4: this.progressBar.displayWidth = 162.28;
         break;
       case 5: this.progressBar.displayWidth = 202.85;
+        this.progressBar.setPosition(this.progressBar.x - 1, this.progressBar.y, 65);
         break;
       case 6: this.progressBar.displayWidth = 243.42;
         break;

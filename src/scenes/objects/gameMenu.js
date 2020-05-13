@@ -52,23 +52,159 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
     this.newGame.on('pointerdown', () => {
       this.buttonGameTween(this.newGame);
       this.scene.stop = true;
+      const objectsArray = [
+        { nameObject: 'door', userName: this.scene.con.userNameSession, picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: 0, canOpen: 1, isLockedToOpen: 1, isOpen: 0, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: 0, displayWidth: 85, displayHeight: 400, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'utilBooks', userName: this.scene.con.userNameSession, picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'book', userName: this.scene.con.userNameSession, picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: 1, canOpen: 1, isLockedToOpen: 1, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 0, isInInventory: 0 },
+        { nameObject: 'brokenCable', userName: this.scene.con.userNameSession, picture: 'cableBrk.png', information: 'Un cable roto. Si lo arreglara igual podría usarlo para algo.', canTake: 1, canOpen: 0, isLockedToOpen: 1, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 50, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'glass', userName: this.scene.con.userNameSession, picture: 'glass.png', information: 'Parece un vaso especial para mezclar o tratar líquidos.', canTake: 1, canOpen: 0, isLockedToOpen: 1, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 50, displayHeight: 70, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'osc', userName: this.scene.con.userNameSession, picture: 'osc.png', information: 'Parece un osciloscopio mejorado con mas funcionalidades. Quizás pueda arreglar algo con él.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 100, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'apparat', userName: this.scene.con.userNameSession, picture: 'apparatBrk.png', information: 'No se para que sirve este aparato pero tiene una etiqueta que pone "Inserte el líquido que desea transformar".', canTake: 0, canOpen: 1, isLockedToOpen: 0, isOpen: 0, objectOpenImg: 'apparatBrkOp.png', objectClosedImg: 'apparatBrk.png', finished: 0, displayWidth: 100, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'key', userName: this.scene.con.userNameSession, picture: 'key.png', information: 'Una pequeña llave.', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 80, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'laser', userName: this.scene.con.userNameSession, picture: 'laserRed.png', information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 145, displayHeight: 500, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+      ];
+      const arrayNewGameState = [0, 0, 0];
+      this.saveGameState(arrayNewGameState);
+      this.deleteDBObjects(objectsArray);
     }, this);
 
     this.load.on('pointerdown', () => {
       this.buttonGameTween(this.load);
       this.scene.stop = true;
+      this.resetGame();
     }, this);
 
     this.save.on('pointerdown', () => {
       this.buttonGameTween(this.save);
       this.scene.stop = true;
+      const arrayGameState = [this.scene.tutorialFirstTime, this.scene.menuContainer.windowEvent, this.scene.gameProgress];
+      const arraySavedGameState = [];
+      arrayGameState.forEach((element) => {
+        if (element === false) arraySavedGameState.push(0);
+        else if (element === true) arraySavedGameState.push(1);
+        else arraySavedGameState.push(element);
+      });
+      console.log(arraySavedGameState)
+      const arraySavedObjects = this.setArraySavedObjects();
+      this.saveGameState(arraySavedGameState);
+      this.deleteDBObjects(arraySavedObjects);
     }, this);
 
     this.exitGame.on('pointerdown', () => {
       this.buttonGameTween(this.exitGame);
       this.scene.stop = true;
+      window.location.href = 'http://localhost:3000/loginRegister.html';
+
     }, this);
   }
+
+  setArraySavedObjects() {
+    let obj = {};
+    const arraySavedObjects = [];
+    function trueOrFalse(val) {
+      let valueRet = 0;
+      if (val === false) valueRet = 0;
+      else valueRet = 1;
+      return valueRet;
+    }
+    for (let i = 0; i < this.scene.arrayObjectsToSave.length; i += 1) {
+      // console.log();
+      obj = {
+        nameObject: this.scene.arrayObjectsToSave[i].name,
+        userName: this.scene.con.userNameSession,
+        picture: this.scene.arrayObjectsToSave[i].picture.frame.name,
+        information: this.scene.arrayObjectsToSave[i].information,
+        canTake: trueOrFalse(this.scene.arrayObjectsToSave[i].canTake),
+        canOpen: trueOrFalse(this.scene.arrayObjectsToSave[i].canOpen),
+        isLockedToOpen: trueOrFalse(this.scene.arrayObjectsToSave[i].isLockedToOpen),
+        isOpen: trueOrFalse(this.scene.arrayObjectsToSave[i].isOpen),
+        objectOpenImg: this.scene.arrayObjectsToSave[i].objectOpenImg,
+        objectClosedImg: this.scene.arrayObjectsToSave[i].objectClosedImg,
+        finished: trueOrFalse(this.scene.arrayObjectsToSave[i].finished),
+        displayWidth: this.scene.arrayObjectsToSave[i].picture.displayWidth,
+        displayHeight: this.scene.arrayObjectsToSave[i].picture.displayHeight,
+        fixed: trueOrFalse(this.scene.arrayObjectsToSave[i].fixed),
+        isFull: trueOrFalse(this.scene.arrayObjectsToSave[i].isFull),
+        isAcid: trueOrFalse(this.scene.arrayObjectsToSave[i].isAcid),
+        isInScene: trueOrFalse(this.scene.arrayObjectsToSave[i].isInScene),
+        isInInventory: trueOrFalse(this.scene.arrayObjectsToSave[i].isInInventory),
+      };
+      // console.log('isInScene = ' + this.scene.arrayObjectsToSave[i].isInScene)
+      // console.log('isInInventory = '+ this.scene.arrayObjectsToSave[i].isInInventory)
+      arraySavedObjects.push(obj);
+    }
+    // console.log(arraySavedObjects)
+    return arraySavedObjects;
+  }
+
+  resetGame() {
+    this.scene.registry.destroy(); // destroy registry
+    this.scene.events.off(); // disable all active events
+    this.scene.scene.restart(); // restart current scene
+  }
+
+  deleteDBObjects(objectsArray) {
+    const transaction = this.scene.con.db.transaction(['objects'], 'readwrite');
+    const objStore = transaction.objectStore('objects');
+    objStore.openCursor().onsuccess = (event) => {
+      const cursor = event.target.result;
+      if (cursor) {
+        if (cursor.value.userName === this.scene.con.userNameSession) {
+          const request = cursor.delete();
+          request.onsuccess = () => {
+            console.log('Deleted')
+          };
+        }
+        cursor.continue();
+      } else {
+        this.fillObjects(this.scene.con.db, objectsArray);
+      }
+    };
+  }
+
+  fillObjects(db, objectsArray) {
+    const transaction = db.transaction(['objects'], 'readwrite');
+    const objStore = transaction.objectStore('objects');
+    for (var i in objectsArray) {
+      objStore.put(objectsArray[i]);
+    }
+    this.resetGame();
+  }
+
+  saveGameState(obj) {
+    const transaction = this.scene.con.db.transaction(['users'], 'readwrite');
+    const objStore = transaction.objectStore('users');
+    objStore.openCursor().onsuccess = (event) => {
+      const cursor = event.target.result;
+      if (cursor) {
+        if (cursor.value.userName === this.scene.con.userNameSession) {
+          const updateData = cursor.value;
+          updateData.tutorialFirstTime = obj[0];
+          updateData.windowEvent = obj[1];
+          updateData.gameProgress = obj[2];
+          const request = cursor.update(updateData);
+        }
+        cursor.continue();
+      }
+    };
+  }
+
+  // setGameState() {
+  //   // const obj = [this.scene.tutorialFirstTime, this.scene.windowEvent, this.scene.gameProgress];
+  //   const transaction2 = this.scene.con.db.transaction(['users'], 'readwrite');
+  //   const objStore2 = transaction2.objectStore('userss');
+  //   objStore2.openCursor().onsuccess = (event) => {
+  //     const cursor = event.target.result;
+  //     if (cursor) {
+  //       if (cursor.value.userName === this.scene.con.userNameSession) {
+  //         this.scene.tutorialFirstTime = cursor.value.tutorialFirstTime;
+  //         this.scene.menuContainer.windowEvent = cursor.value.windowEvent;
+  //         this.scene.gameProgress = cursor.value.gameProgress;
+  //       }
+  //       cursor.continue();
+  //     }
+  //   };
+  // }
 
   gameMenuAppears() {
     let varY = -75;
