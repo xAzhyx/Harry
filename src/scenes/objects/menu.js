@@ -32,7 +32,7 @@ export default class Menu extends Phaser.GameObjects.Container {
         this.disableInteractive();
       }
     }, this);
-    this.setDepth(5);
+    this.setDepth(8);
 
     this.menu = this.scene.add.sprite(0, 0, 'assets', 'menu.png');
     this.menu.displayWidth = 230;
@@ -76,7 +76,7 @@ export default class Menu extends Phaser.GameObjects.Container {
         fontFamily: 'Arial',
         color: 'black',
         align: 'center',
-      }).setDepth(6).setVisible(false).setOrigin(0.5, 0.5);
+      }).setDepth(8).setVisible(false).setOrigin(0.5, 0.5);
       textButton.defaultScale = textButton.scale;
       this.arrayText.push(textButton);
     }

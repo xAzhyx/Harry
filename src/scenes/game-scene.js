@@ -163,12 +163,12 @@ class GameScene extends Phaser.Scene {
 
     // Books
     const utilBooks = this.setObjectFunction('utilBooks');
-    utilBooks.picture.setPosition(327, 149);
+    utilBooks.picture.setPosition(327, 145);
     utilBooks.setImg = true;
     utilBooks.imgUsed = 'booksTaken.png';
 
     const notUtilBooks = {
-      picture: this.add.sprite(500, 146, 'assets', 'books2.png'),
+      picture: this.add.sprite(500, 140, 'assets', 'books2.png'),
       name: 'nonUtilsBooks',
       information: 'Libros de literatura, ahora mismo no me interesan.',
       canTake: false,
@@ -416,6 +416,16 @@ class GameScene extends Phaser.Scene {
     this.drawer.setDepth(3);
     this.drawer.setVisible(false);
 
+    this.burn = this.add.sprite(this.drawer.x + 60, this.drawer.y - 60, 'assets', 'burn.png');
+    this.burn.displayWidth = 190;
+    this.burn.displayHeight = 90;
+    this.burn.setRotation(0.5);
+    this.burn.setDepth(3);
+    this.burn.setVisible(false);
+    this.burn.on('pointerdown', () => {
+      this.menuContainer.generalText('Soy un poco patoso. Prefiero no tocar eso por si acaso...');
+    });
+
     this.openBook = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 50, 'assets2', 'openBook.png');
     this.openBook.setDepth(6);
     this.openBook.setVisible(false);
@@ -441,8 +451,36 @@ class GameScene extends Phaser.Scene {
     fly.displayWidth = 60;
     fly.displayHeight = 40;
     fly.angle = -30;
-    fly.setDepth(2);
+    fly.setDepth(7);
+    this.flyStop = 0;
     this.flyingFunction(fly);
+    fly.setInteractive().on('pointerover', () => {
+      let goRandomX = 0;
+      let goRandomY = 0;
+      const randomScapeXmin = Phaser.Math.Between(-30, -50);
+      const randomScapeXmax = Phaser.Math.Between(30, 50);
+      const randomMinMaxX = Phaser.Math.Between(0, 1);
+      if (randomMinMaxX === 0) goRandomX = randomScapeXmin;
+      else goRandomX = randomScapeXmax;
+      const randomScapeYmin = Phaser.Math.Between(-30, -50);
+      const randomScapeYmax = Phaser.Math.Between(30, 50);
+      const randomMinMaxY = Phaser.Math.Between(0, 1);
+      if (randomMinMaxY === 0) goRandomY = randomScapeYmin;
+      else goRandomY = randomScapeYmax;
+      this.flyStop.stop();
+      fly.disableInteractive();
+      this.tweens.add({
+        targets: fly,
+        x: fly.x + goRandomX,
+        y: fly.y + goRandomY,
+        duration: 100,
+        ease: 'Sine.easeOut',
+        onComplete: () => {
+          fly.setInteractive();
+          this.flyingFunction(fly);
+        },
+      });
+    }, this);
 
     this.tweens.add({
       targets: fly,
@@ -838,23 +876,20 @@ class GameScene extends Phaser.Scene {
   flyingFunction(fly) {
     const randomFly = {
       x: Phaser.Math.Between(100, 1000),
-      y: Phaser.Math.Between(20, 300),
+      y: Phaser.Math.Between(20, 600),
     };
     const dis = Phaser.Math.Distance.Between(fly.x, fly.y, randomFly.x, randomFly.y);
-    const flyVelocity = dis / 0.2;
-    this.tweens.add({
+    const flyVelocity = dis / 0.12;
+    this.flyStop = this.tweens.add({
       targets: fly,
-      x: randomFly.x,
-      duration: flyVelocity,
+      x: { value: randomFly.x, ease: 'Back.easeOut', duration: flyVelocity },
       y: randomFly.y,
-      ease: 'Sine.easeInOut',
+      delay: 300,
+      duration: flyVelocity * 1.1,
+      ease: 'Back.easeOut',
       onComplete: () => {
         this.flyingFunction(fly);
       },
-      // yoyo: true,
-      // hold: 2000,
-      // repeatDelay: 2000,
-      // repeat: -1,
     });
   }
 
@@ -871,6 +906,8 @@ class GameScene extends Phaser.Scene {
     this.setObjectsInteractive();
     this.keyObj.picture.setVisible(false);
     this.drawer.setVisible(false);
+    this.burn.setVisible(false);
+    this.burn.disableInteractive();
     this.openBook.setVisible(false);
     this.code.setVisible(false);
     this.laserDevice.setVisible(false);

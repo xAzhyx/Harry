@@ -22,6 +22,8 @@ export default class ClosetFunctions extends Phaser.GameObjects.Sprite {
       this.scene.drawer.setVisible(true);
       this.scene.exit.setVisible(true);
       this.scene.exit.setInteractive();
+      this.scene.burn.setVisible(true);
+      this.scene.burn.setInteractive();
       if (this.scene.keyObj.finished === false) {
         this.scene.keyObj.picture.setVisible(true);
         this.scene.keyObj.picture.setInteractive();

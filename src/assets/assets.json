@@ -768,24 +768,24 @@
         "y": 0.5
       }
     },
-    "glassAcid.png": {
+    "burn.png": {
       "frame": {
         "x": 1017,
         "y": 645,
-        "w": 94,
-        "h": 138
+        "w": 97,
+        "h": 46
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 94,
-        "h": 138
+        "w": 97,
+        "h": 46
       },
       "sourceSize": {
-        "w": 94,
-        "h": 138
+        "w": 97,
+        "h": 46
       },
       "pivot": {
         "x": 0.5,
@@ -794,7 +794,7 @@
     },
     "arrow.png": {
       "frame": {
-        "x": 1113,
+        "x": 1116,
         "y": 645,
         "w": 54,
         "h": 85
@@ -818,7 +818,7 @@
     },
     "newGame.png": {
       "frame": {
-        "x": 1169,
+        "x": 1172,
         "y": 692,
         "w": 161,
         "h": 50
@@ -840,48 +840,240 @@
         "y": 0.5
       }
     },
-    "save.png": {
+    "laserGreen.png": {
       "frame": {
-        "x": 1169,
-        "y": 744,
-        "w": 161,
-        "h": 50
+        "x": 1,
+        "y": 1051,
+        "w": 180,
+        "h": 694
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 161,
-        "h": 50
+        "w": 180,
+        "h": 694
       },
       "sourceSize": {
-        "w": 161,
-        "h": 50
+        "w": 180,
+        "h": 694
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "apparatBrk.png": {
+    "tuto/tuto0.png": {
       "frame": {
-        "x": 1169,
-        "y": 796,
-        "w": 160,
-        "h": 150
+        "x": 1,
+        "y": 871,
+        "w": 228,
+        "h": 178
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 160,
-        "h": 150
+        "w": 228,
+        "h": 178
       },
       "sourceSize": {
-        "w": 160,
-        "h": 150
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "book.png": {
+      "frame": {
+        "x": 1,
+        "y": 744,
+        "w": 80,
+        "h": 125
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 125
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 125
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "exitX.png": {
+      "frame": {
+        "x": 1,
+        "y": 676,
+        "w": 70,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 70,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 70,
+        "h": 66
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Numbers/4.png": {
+      "frame": {
+        "x": 73,
+        "y": 676,
+        "w": 77,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 77,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 77,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Numbers/5.png": {
+      "frame": {
+        "x": 152,
+        "y": 676,
+        "w": 75,
+        "h": 65
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 75,
+        "h": 65
+      },
+      "sourceSize": {
+        "w": 75,
+        "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto1.png": {
+      "frame": {
+        "x": 1,
+        "y": 493,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto10.png": {
+      "frame": {
+        "x": 229,
+        "y": 676,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "apparatBrkOp.png": {
+      "frame": {
+        "x": 459,
+        "y": 673,
+        "w": 252,
+        "h": 153
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 252,
+        "h": 153
+      },
+      "sourceSize": {
+        "w": 252,
+        "h": 153
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto11.png": {
+      "frame": {
+        "x": 459,
+        "y": 493,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
       },
       "pivot": {
         "x": 0.5,
@@ -890,8 +1082,8 @@
     },
     "bar.png": {
       "frame": {
-        "x": 1331,
-        "y": 871,
+        "x": 713,
+        "y": 676,
         "w": 286,
         "h": 28
       },
@@ -914,8 +1106,8 @@
     },
     "progressBar.png": {
       "frame": {
-        "x": 1331,
-        "y": 901,
+        "x": 713,
+        "y": 706,
         "w": 286,
         "h": 28
       },
@@ -930,6 +1122,30 @@
       "sourceSize": {
         "w": 286,
         "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "save.png": {
+      "frame": {
+        "x": 1001,
+        "y": 732,
+        "w": 161,
+        "h": 50
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 161,
+        "h": 50
+      },
+      "sourceSize": {
+        "w": 161,
+        "h": 50
       },
       "pivot": {
         "x": 0.5,
@@ -938,8 +1154,8 @@
     },
     "doorOpen.png": {
       "frame": {
-        "x": 1331,
-        "y": 931,
+        "x": 713,
+        "y": 736,
         "w": 283,
         "h": 366
       },
@@ -954,366 +1170,6 @@
       "sourceSize": {
         "w": 283,
         "h": 366
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "glassWater.png": {
-      "frame": {
-        "x": 1616,
-        "y": 1028,
-        "w": 94,
-        "h": 138
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 94,
-        "h": 138
-      },
-      "sourceSize": {
-        "w": 94,
-        "h": 138
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "harry1.png": {
-      "frame": {
-        "x": 1616,
-        "y": 1168,
-        "w": 81,
-        "h": 203
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 81,
-        "h": 203
-      },
-      "sourceSize": {
-        "w": 81,
-        "h": 203
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "laserGreen.png": {
-      "frame": {
-        "x": 1,
-        "y": 1299,
-        "w": 180,
-        "h": 694
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 180,
-        "h": 694
-      },
-      "sourceSize": {
-        "w": 180,
-        "h": 694
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "laser.png": {
-      "frame": {
-        "x": 1,
-        "y": 785,
-        "w": 63,
-        "h": 506
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 63,
-        "h": 506
-      },
-      "sourceSize": {
-        "w": 63,
-        "h": 506
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "fly0.png": {
-      "frame": {
-        "x": 1,
-        "y": 676,
-        "w": 208,
-        "h": 107
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 208,
-        "h": 107
-      },
-      "sourceSize": {
-        "w": 208,
-        "h": 107
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto0.png": {
-      "frame": {
-        "x": 1,
-        "y": 493,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "bookBig.png": {
-      "frame": {
-        "x": 66,
-        "y": 948,
-        "w": 203,
-        "h": 319
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 203,
-        "h": 319
-      },
-      "sourceSize": {
-        "w": 203,
-        "h": 319
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "apparatBrkOp.png": {
-      "frame": {
-        "x": 66,
-        "y": 785,
-        "w": 252,
-        "h": 153
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 252,
-        "h": 153
-      },
-      "sourceSize": {
-        "w": 252,
-        "h": 153
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "exitX.png": {
-      "frame": {
-        "x": 211,
-        "y": 676,
-        "w": 70,
-        "h": 66
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 70,
-        "h": 66
-      },
-      "sourceSize": {
-        "w": 70,
-        "h": 66
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto1.png": {
-      "frame": {
-        "x": 271,
-        "y": 493,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "apparatFix.png": {
-      "frame": {
-        "x": 501,
-        "y": 493,
-        "w": 160,
-        "h": 150
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 160,
-        "h": 150
-      },
-      "sourceSize": {
-        "w": 160,
-        "h": 150
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "doorLock.png": {
-      "frame": {
-        "x": 501,
-        "y": 645,
-        "w": 181,
-        "h": 369
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 181,
-        "h": 369
-      },
-      "sourceSize": {
-        "w": 181,
-        "h": 369
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto10.png": {
-      "frame": {
-        "x": 271,
-        "y": 940,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "phantom.png": {
-      "frame": {
-        "x": 320,
-        "y": 673,
-        "w": 171,
-        "h": 237
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 171,
-        "h": 237
-      },
-      "sourceSize": {
-        "w": 171,
-        "h": 237
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "laserRed.png": {
-      "frame": {
-        "x": 183,
-        "y": 1299,
-        "w": 180,
-        "h": 694
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 180,
-        "h": 694
-      },
-      "sourceSize": {
-        "w": 180,
-        "h": 694
       },
       "pivot": {
         "x": 0.5,
@@ -1322,8 +1178,8 @@
     },
     "apparatFixOp.png": {
       "frame": {
-        "x": 271,
-        "y": 1120,
+        "x": 459,
+        "y": 828,
         "w": 252,
         "h": 153
       },
@@ -1344,11 +1200,107 @@
         "y": 0.5
       }
     },
-    "Numbers/4.png": {
+    "apparatBrk.png": {
       "frame": {
-        "x": 501,
-        "y": 1016,
-        "w": 77,
+        "x": 1164,
+        "y": 744,
+        "w": 160,
+        "h": 150
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 160,
+        "h": 150
+      },
+      "sourceSize": {
+        "w": 160,
+        "h": 150
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "apparatFix.png": {
+      "frame": {
+        "x": 998,
+        "y": 784,
+        "w": 160,
+        "h": 150
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 160,
+        "h": 150
+      },
+      "sourceSize": {
+        "w": 160,
+        "h": 150
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "buttonGameMenuShadow.png": {
+      "frame": {
+        "x": 998,
+        "y": 936,
+        "w": 158,
+        "h": 54
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 158,
+        "h": 54
+      },
+      "sourceSize": {
+        "w": 158,
+        "h": 54
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fly0.png": {
+      "frame": {
+        "x": 231,
+        "y": 493,
+        "w": 208,
+        "h": 107
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 208,
+        "h": 107
+      },
+      "sourceSize": {
+        "w": 208,
+        "h": 107
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Numbers/9.png": {
+      "frame": {
+        "x": 231,
+        "y": 602,
+        "w": 75,
         "h": 65
       },
       "rotated": false,
@@ -1356,12 +1308,60 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 77,
+        "w": 75,
         "h": 65
       },
       "sourceSize": {
-        "w": 77,
+        "w": 75,
         "h": 65
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Numbers/1.png": {
+      "frame": {
+        "x": 308,
+        "y": 602,
+        "w": 76,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 76,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 76,
+        "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bookBig.png": {
+      "frame": {
+        "x": 231,
+        "y": 856,
+        "w": 203,
+        "h": 319
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 203,
+        "h": 319
+      },
+      "sourceSize": {
+        "w": 203,
+        "h": 319
       },
       "pivot": {
         "x": 0.5,
@@ -1370,8 +1370,8 @@
     },
     "button.png": {
       "frame": {
-        "x": 684,
-        "y": 676,
+        "x": 436,
+        "y": 983,
         "w": 249,
         "h": 54
       },
@@ -1386,30 +1386,6 @@
       "sourceSize": {
         "w": 249,
         "h": 54
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "book.png": {
-      "frame": {
-        "x": 935,
-        "y": 676,
-        "w": 80,
-        "h": 125
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 80,
-        "h": 125
-      },
-      "sourceSize": {
-        "w": 80,
-        "h": 125
       },
       "pivot": {
         "x": 0.5,
@@ -1418,8 +1394,8 @@
     },
     "buttonShadow.png": {
       "frame": {
-        "x": 684,
-        "y": 732,
+        "x": 436,
+        "y": 1039,
         "w": 249,
         "h": 54
       },
@@ -1442,8 +1418,8 @@
     },
     "window.png": {
       "frame": {
-        "x": 684,
-        "y": 788,
+        "x": 436,
+        "y": 1095,
         "w": 234,
         "h": 245
       },
@@ -1464,34 +1440,58 @@
         "y": 0.5
       }
     },
-    "laserDevice.png": {
+    "laserRed.png": {
       "frame": {
-        "x": 920,
-        "y": 803,
-        "w": 229,
-        "h": 371
+        "x": 183,
+        "y": 1342,
+        "w": 180,
+        "h": 694
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 229,
-        "h": 371
+        "w": 180,
+        "h": 694
       },
       "sourceSize": {
-        "w": 229,
-        "h": 371
+        "w": 180,
+        "h": 694
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "phantom2.png": {
+    "laser.png": {
       "frame": {
-        "x": 1151,
-        "y": 1016,
+        "x": 365,
+        "y": 1177,
+        "w": 63,
+        "h": 506
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 63,
+        "h": 506
+      },
+      "sourceSize": {
+        "w": 63,
+        "h": 506
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "phantom.png": {
+      "frame": {
+        "x": 1,
+        "y": 1747,
         "w": 171,
         "h": 237
       },
@@ -1512,312 +1512,24 @@
         "y": 0.5
       }
     },
-    "Numbers/5.png": {
+    "glassAcid.png": {
       "frame": {
-        "x": 1151,
-        "y": 948,
-        "w": 75,
-        "h": 65
+        "x": 183,
+        "y": 1177,
+        "w": 94,
+        "h": 138
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 75,
-        "h": 65
+        "w": 94,
+        "h": 138
       },
       "sourceSize": {
-        "w": 75,
-        "h": 65
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "Numbers/9.png": {
-      "frame": {
-        "x": 1228,
-        "y": 948,
-        "w": 75,
-        "h": 65
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 75,
-        "h": 65
-      },
-      "sourceSize": {
-        "w": 75,
-        "h": 65
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "harry2.png": {
-      "frame": {
-        "x": 580,
-        "y": 1016,
-        "w": 81,
-        "h": 203
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 81,
-        "h": 203
-      },
-      "sourceSize": {
-        "w": 81,
-        "h": 203
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto11.png": {
-      "frame": {
-        "x": 663,
-        "y": 1035,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto12.png": {
-      "frame": {
-        "x": 663,
-        "y": 1215,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto13.png": {
-      "frame": {
-        "x": 893,
-        "y": 1176,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "doorUnlock.png": {
-      "frame": {
-        "x": 1123,
-        "y": 1255,
-        "w": 181,
-        "h": 369
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 181,
-        "h": 369
-      },
-      "sourceSize": {
-        "w": 181,
-        "h": 369
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto2.png": {
-      "frame": {
-        "x": 893,
-        "y": 1373,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "harry3.png": {
-      "frame": {
-        "x": 525,
-        "y": 1221,
-        "w": 81,
-        "h": 203
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 81,
-        "h": 203
-      },
-      "sourceSize": {
-        "w": 81,
-        "h": 203
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "buttonGameMenuShadow.png": {
-      "frame": {
-        "x": 365,
-        "y": 1275,
-        "w": 158,
-        "h": 54
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 158,
-        "h": 54
-      },
-      "sourceSize": {
-        "w": 158,
-        "h": 54
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto3.png": {
-      "frame": {
-        "x": 608,
-        "y": 1395,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto4.png": {
-      "frame": {
-        "x": 365,
-        "y": 1426,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "Numbers/1.png": {
-      "frame": {
-        "x": 365,
-        "y": 1331,
-        "w": 76,
-        "h": 64
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 76,
-        "h": 64
-      },
-      "sourceSize": {
-        "w": 76,
-        "h": 64
+        "w": 94,
+        "h": 138
       },
       "pivot": {
         "x": 0.5,
@@ -1826,8 +1538,8 @@
     },
     "Numbers/7.png": {
       "frame": {
-        "x": 443,
-        "y": 1331,
+        "x": 279,
+        "y": 1177,
         "w": 76,
         "h": 64
       },
@@ -1842,174 +1554,6 @@
       "sourceSize": {
         "w": 76,
         "h": 64
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto5.png": {
-      "frame": {
-        "x": 838,
-        "y": 1553,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto6.png": {
-      "frame": {
-        "x": 595,
-        "y": 1575,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto7.png": {
-      "frame": {
-        "x": 365,
-        "y": 1606,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "phantom3.png": {
-      "frame": {
-        "x": 365,
-        "y": 1786,
-        "w": 171,
-        "h": 237
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 171,
-        "h": 237
-      },
-      "sourceSize": {
-        "w": 171,
-        "h": 237
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "harry4.png": {
-      "frame": {
-        "x": 538,
-        "y": 1786,
-        "w": 81,
-        "h": 203
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 81,
-        "h": 203
-      },
-      "sourceSize": {
-        "w": 81,
-        "h": 203
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "harry5.png": {
-      "frame": {
-        "x": 621,
-        "y": 1786,
-        "w": 81,
-        "h": 203
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 81,
-        "h": 203
-      },
-      "sourceSize": {
-        "w": 81,
-        "h": 203
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "tuto/tuto8.png": {
-      "frame": {
-        "x": 1306,
-        "y": 1299,
-        "w": 228,
-        "h": 178
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 228,
-        "h": 178
-      },
-      "sourceSize": {
-        "w": 228,
-        "h": 178
       },
       "pivot": {
         "x": 0.5,
@@ -2018,8 +1562,8 @@
     },
     "keyShadow.png": {
       "frame": {
-        "x": 1536,
-        "y": 1299,
+        "x": 279,
+        "y": 1243,
         "w": 76,
         "h": 64
       },
@@ -2042,8 +1586,8 @@
     },
     "Numbers/2.png": {
       "frame": {
-        "x": 1536,
-        "y": 1365,
+        "x": 83,
+        "y": 743,
         "w": 75,
         "h": 64
       },
@@ -2064,24 +1608,72 @@
         "y": 0.5
       }
     },
-    "harry6.png": {
+    "laserDevice.png": {
       "frame": {
-        "x": 704,
-        "y": 1755,
-        "w": 81,
-        "h": 203
+        "x": 1326,
+        "y": 871,
+        "w": 229,
+        "h": 371
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 81,
-        "h": 203
+        "w": 229,
+        "h": 371
       },
       "sourceSize": {
-        "w": 81,
-        "h": 203
+        "w": 229,
+        "h": 371
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "phantom2.png": {
+      "frame": {
+        "x": 1557,
+        "y": 1028,
+        "w": 171,
+        "h": 237
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 171,
+        "h": 237
+      },
+      "sourceSize": {
+        "w": 171,
+        "h": 237
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "phantom3.png": {
+      "frame": {
+        "x": 1557,
+        "y": 1267,
+        "w": 171,
+        "h": 237
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 171,
+        "h": 237
+      },
+      "sourceSize": {
+        "w": 171,
+        "h": 237
       },
       "pivot": {
         "x": 0.5,
@@ -2090,8 +1682,8 @@
     },
     "Numbers/3.png": {
       "frame": {
-        "x": 704,
-        "y": 1960,
+        "x": 1557,
+        "y": 871,
         "w": 75,
         "h": 64
       },
@@ -2114,8 +1706,8 @@
     },
     "Numbers/0.png": {
       "frame": {
-        "x": 781,
-        "y": 1960,
+        "x": 1557,
+        "y": 937,
         "w": 74,
         "h": 64
       },
@@ -2136,10 +1728,34 @@
         "y": 0.5
       }
     },
-    "harry7.png": {
+    "glassWater.png": {
       "frame": {
-        "x": 787,
-        "y": 1755,
+        "x": 1160,
+        "y": 896,
+        "w": 94,
+        "h": 138
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 94,
+        "h": 138
+      },
+      "sourceSize": {
+        "w": 94,
+        "h": 138
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "harry1.png": {
+      "frame": {
+        "x": 998,
+        "y": 992,
         "w": 81,
         "h": 203
       },
@@ -2162,8 +1778,8 @@
     },
     "Numbers/6.png": {
       "frame": {
-        "x": 857,
-        "y": 1960,
+        "x": 1081,
+        "y": 992,
         "w": 74,
         "h": 64
       },
@@ -2184,10 +1800,154 @@
         "y": 0.5
       }
     },
-    "tuto/tuto9.png": {
+    "tuto/tuto12.png": {
       "frame": {
-        "x": 870,
-        "y": 1733,
+        "x": 1081,
+        "y": 1058,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto13.png": {
+      "frame": {
+        "x": 1081,
+        "y": 1238,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto2.png": {
+      "frame": {
+        "x": 1081,
+        "y": 1418,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto3.png": {
+      "frame": {
+        "x": 1081,
+        "y": 1598,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto4.png": {
+      "frame": {
+        "x": 1081,
+        "y": 1778,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto5.png": {
+      "frame": {
+        "x": 1311,
+        "y": 1244,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto6.png": {
+      "frame": {
+        "x": 1311,
+        "y": 1424,
         "w": 228,
         "h": 178
       },
@@ -2210,8 +1970,8 @@
     },
     "Numbers/8.png": {
       "frame": {
-        "x": 1068,
-        "y": 1626,
+        "x": 365,
+        "y": 1958,
         "w": 74,
         "h": 64
       },
@@ -2234,8 +1994,8 @@
     },
     "enter.png": {
       "frame": {
-        "x": 933,
-        "y": 1913,
+        "x": 441,
+        "y": 1958,
         "w": 74,
         "h": 64
       },
@@ -2258,8 +2018,8 @@
     },
     "reset.png": {
       "frame": {
-        "x": 933,
-        "y": 1979,
+        "x": 517,
+        "y": 1958,
         "w": 74,
         "h": 64
       },
@@ -2274,6 +2034,270 @@
       "sourceSize": {
         "w": 74,
         "h": 64
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "harry2.png": {
+      "frame": {
+        "x": 365,
+        "y": 1685,
+        "w": 81,
+        "h": 203
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 203
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 203
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "harry3.png": {
+      "frame": {
+        "x": 448,
+        "y": 1685,
+        "w": 81,
+        "h": 203
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 203
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 203
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "doorLock.png": {
+      "frame": {
+        "x": 1311,
+        "y": 1604,
+        "w": 181,
+        "h": 369
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 181,
+        "h": 369
+      },
+      "sourceSize": {
+        "w": 181,
+        "h": 369
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "doorUnlock.png": {
+      "frame": {
+        "x": 1494,
+        "y": 1604,
+        "w": 181,
+        "h": 369
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 181,
+        "h": 369
+      },
+      "sourceSize": {
+        "w": 181,
+        "h": 369
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto7.png": {
+      "frame": {
+        "x": 1730,
+        "y": 1051,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "harry4.png": {
+      "frame": {
+        "x": 1960,
+        "y": 1051,
+        "w": 81,
+        "h": 203
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 203
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 203
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto8.png": {
+      "frame": {
+        "x": 1730,
+        "y": 1231,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "harry5.png": {
+      "frame": {
+        "x": 1960,
+        "y": 1256,
+        "w": 81,
+        "h": 203
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 203
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 203
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "tuto/tuto9.png": {
+      "frame": {
+        "x": 1730,
+        "y": 1411,
+        "w": 228,
+        "h": 178
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 228,
+        "h": 178
+      },
+      "sourceSize": {
+        "w": 228,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "harry6.png": {
+      "frame": {
+        "x": 1960,
+        "y": 1461,
+        "w": 81,
+        "h": 203
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 203
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 203
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "harry7.png": {
+      "frame": {
+        "x": 430,
+        "y": 1342,
+        "w": 81,
+        "h": 203
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 203
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 203
       },
       "pivot": {
         "x": 0.5,
@@ -2360,7 +2384,7 @@
     "format": "RGBA8888",
     "size": {
       "w": 2048,
-      "h": 2044
+      "h": 2037
     },
     "scale": 1
   }
