@@ -63,7 +63,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
         { nameObject: 'key', userName: this.scene.con.userNameSession, picture: 'key.png', information: 'Una pequeña llave.', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 80, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
         { nameObject: 'laser', userName: this.scene.con.userNameSession, picture: 'laserRed.png', information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 145, displayHeight: 500, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
       ];
-      const arrayNewGameState = [0, 0, 0];
+      const arrayNewGameState = [0, 0, 0, 150];
       this.saveGameState(arrayNewGameState);
       this.deleteDBObjects(objectsArray);
     }, this);
@@ -77,7 +77,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
     this.save.on('pointerdown', () => {
       this.buttonGameTween(this.save);
       this.scene.stop = true;
-      const arrayGameState = [this.scene.tutorialFirstTime, this.scene.menuContainer.windowEvent, this.scene.gameProgress];
+      const arrayGameState = [this.scene.tutorialFirstTime, this.scene.menuContainer.windowEvent, this.scene.gameProgress, this.scene.initialTime];
       const arraySavedGameState = [];
       arrayGameState.forEach((element) => {
         if (element === false) arraySavedGameState.push(0);
@@ -182,6 +182,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
           updateData.tutorialFirstTime = obj[0];
           updateData.windowEvent = obj[1];
           updateData.gameProgress = obj[2];
+          updateData.gameTimer = obj[3];
           const request = cursor.update(updateData);
         }
         cursor.continue();

@@ -51,6 +51,7 @@ import assetsAtlas from '../assets/assets.png';
 import assetsJson2 from '../assets/assets2.json';
 import assetsAtlas2 from '../assets/assets2.png';
 import room from '../Images/room3.png';
+import ctaBG from '../Images/finalBg.png';
 
 // <?php
 // include '../scenes/phpConection.php';
@@ -67,6 +68,7 @@ class PreloaderScene extends Phaser.Scene {
     this.load.atlas('assets', assetsAtlas, assetsJson);
     this.load.atlas('assets2', assetsAtlas2, assetsJson2);
     this.load.image('room', room);
+    this.load.image('ctaBG', ctaBG);
     // this.load.image('openDoor', openDoor);
     // this.load.image('closedDoor', closedDoor);
     // this.load.image('closedDoorLock', closedDoorLock);

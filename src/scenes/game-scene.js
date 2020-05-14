@@ -12,10 +12,6 @@ class GameScene extends Phaser.Scene {
   }
 
   dbCallback() {
-    // console.log(this.con.objectsToPass[0].information)
-    // console.log(this.arrayObjectsInteractive.door.information)
-
-
     // - First time => Create db
     // - Register => Take userName && pass
     //             -> Ask security question && Security answer
@@ -60,6 +56,51 @@ class GameScene extends Phaser.Scene {
     this.gameMenu = new GameMenuClass(this, 0, 0);
 
     // this.input.mouse.disableContextMenu();
+    // Timer
+    this.initialTime = 5;
+    this.timerTittle = this.make.text({
+      x: 320,
+      y: 60,
+      text: 'Tiempo restante:',
+      style: {
+        fontStyle: 'bold',
+        fontSize: '30px',
+        fontFamily: 'Arial',
+        color: 'black',
+        align: 'center',
+        wordWrap: { width: 1100 },
+      },
+    });
+    this.timerTittle.setOrigin(0.5);
+    this.timerTittle.setDepth(4);
+
+    this.timeText = this.make.text({
+      x: 320,
+      y: 90,
+      text: this.formatTime(this.initialTime),
+      style: {
+        fontStyle: 'bold',
+        fontSize: '30px',
+        fontFamily: 'Arial',
+        color: 'black',
+        align: 'center',
+        wordWrap: { width: 1100 },
+      },
+    });
+    this.timeText.setOrigin(0.5);
+    this.timeText.setDepth(4);
+
+    this.gameTimer = this.time.addEvent({
+      delay: 1000,
+      callback: this.onEvent,
+      callbackScope: this,
+      loop: true,
+    });
+
+    this.looseBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'ctaBG');
+    this.looseBG.displayHeight = 500;
+    this.looseBG.setDepth(7);
+    this.looseBG.setOrigin(0.5);
 
 
     // Var for cancel things
@@ -69,7 +110,7 @@ class GameScene extends Phaser.Scene {
     this.using = false;
     this.objectToCompare = 0;
     this.gameProgress = this.con.prog;
-    console.log(this.gameProgress);
+    // console.log(this.gameProgress);
     let gameMenuOpen = false;
 
     // CAMBIAR
@@ -121,46 +162,6 @@ class GameScene extends Phaser.Scene {
     door.picture.setOrigin(1, 0.5);
     door.picture.setDepth(2);
 
-    // door.setImg = false;
-    // door.imgUsed = '';
-    // door.picture.setOrigin(1, 0.5);
-    // door.picture.setDepth(2);   
-    // ------------------------------------------------------------------------------------------------
-    // Door
-    // const door = {
-    //   picture: this.add.sprite(this.scale.width - 60, 335, 'assets', 'doorLock.png'),
-    //   name: 'door',
-    //   information: 'La salida. Hay que deshacerse de ese candado de alguna forma.',
-    //   canTake: false,
-    //   canOpen: true,
-    //   isLockedToOpen: true,
-    //   isOpen: false,
-    //   objectOpenImg: 'doorOpen.png',
-    //   objectClosedImg: 'doorUnlock.png',
-    //   setImg: false,
-    //   imgUsed: '',
-    //   finished: false,
-    // };
-    // door.picture.displayWidth = 85;
-    // door.picture.displayHeight = 400;
-
-    // const utilBooks = {
-    //   picture: this.add.sprite(327, 149, 'assets', 'books.png'),
-    //   name: 'utilBooks',
-    //   information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...',
-    //   canTake: true,
-    //   canOpen: false,
-    //   isLockedToOpen: false,
-    //   isOpen: false,
-    //   objectOpenImg: '',
-    //   objectClosedImg: '',
-    //   setImg: true,
-    //   imgUsed: 'booksTaken.png',
-    //   finished: false,
-    // };
-    // utilBooks.picture.displayWidth = 70;
-    // utilBooks.picture.displayHeight = 60;
-
     // Books
     const utilBooks = this.setObjectFunction('utilBooks');
     utilBooks.picture.setPosition(327, 145);
@@ -184,26 +185,6 @@ class GameScene extends Phaser.Scene {
     notUtilBooks.picture.displayWidth = 120;
     notUtilBooks.picture.displayHeight = 70;
 
-    // const book = {
-    //   picture: this.add.sprite(0, 0, 'assets', 'book.png'),
-    //   name: 'book',
-    //   information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...',
-    //   canTake: false,
-    //   canOpen: true,
-    //   isLockedToOpen: true,
-    //   isOpen: false,
-    //   objectOpenImg: 'openBook.png',
-    //   objectClosedImg: 'book.png',
-    //   setImg: false,
-    //   imgUsed: '',
-    //   finished: true,
-    //   inventoryDisplayW: 55,
-    //   inventoryDisplayH: 75,
-    // };
-    // book.picture.displayWidth = 55;
-    // book.picture.displayHeight = 75;
-
-
     // The taken book
     const book = this.setObjectFunction('book');
     book.inventoryDisplayW = 55;
@@ -222,52 +203,12 @@ class GameScene extends Phaser.Scene {
     this.table.picture.displayHeight = 170;
     this.table.picture.setOrigin(0.5, 0);
 
-
-    // const brokenCable = {
-    //   picture: this.add.sprite(500, 350, 'assets', 'cableBrk.png'),
-    //   name: 'brokenCable',
-    //   information: 'Un cable roto. Si lo arreglara igual podría usarlo para algo.',
-    //   canTake: true,
-    //   canOpen: false,
-    //   isLockedToOpen: true,
-    //   isOpen: false,
-    //   objectOpenImg: '',
-    //   objectClosedImg: '',
-    //   setImg: false,
-    //   imgUsed: 'cableFix.png',
-    //   finished: false,
-    //   inventoryDisplayW: 60,
-    //   inventoryDisplayH: 40,
-    //   angle: 30,
-    //   fixed: false,
-    // };
-    // brokenCable.picture.displayWidth = 70;
-    // brokenCable.picture.displayHeight = 50;
-
     // Cable
     const brokenCable = this.setObjectFunction('brokenCable');
     brokenCable.picture.setPosition(500, 370);
     brokenCable.angle = 30;
     brokenCable.inventoryDisplayW = 60;
     brokenCable.inventoryDisplayH = 40;
-
-    // const glass = {
-    //   picture: this.add.sprite(438, 320, 'assets', 'glass.png'),
-    //   name: 'glass',
-    //   isFull: false,
-    //   isAcid: false,
-    //   inventoryDisplayW: 40,
-    //   inventoryDisplayH: 60,
-    //   information: 'Parece un vaso especial para mezclar o tratar líquidos.',
-    //   canTake: true,
-    //   canOpen: false,
-    //   isLockedToOpen: true,
-    //   setImg: false,
-    //   imgUsed: 'glassWater.png',
-    //   finished: false,
-    // };
-    // glass.picture.displayWidth = 50;
-    // glass.picture.displayHeight = 70;
 
     // Glass
     const glass = this.setObjectFunction('glass');
@@ -295,48 +236,15 @@ class GameScene extends Phaser.Scene {
     window.picture.displayWidth = 180;
     window.picture.displayHeight = 200;
 
-    // const osc = {
-    //   picture: this.add.sprite(550, 270, 'assets', 'osc.png'),
-    //   name: 'osc',
-    //   information: 'Parece un osciloscopio mejorado con mas funcionalidades. Quizás pueda arreglar algo con él.',
-    //   canTake: false,
-    //   canOpen: false,
-    //   isLockedToOpen: false,
-    //   setImg: false,
-    //   finished: false,
-    // };
-    // osc.picture.setOrigin(0, 0);
-    // osc.picture.displayWidth = 100;
-    // osc.picture.displayHeight = 100;
-
     // osc
     const osc = this.setObjectFunction('osc');
     osc.picture.setOrigin(0, 0);
     osc.picture.setPosition(550, 280);
 
-    // const apparat = {
-    //   picture: this.add.sprite(660, 270, 'assets', 'apparatBrk.png'),
-    //   name: 'apparat',
-    //   fixed: false,
-    //   information: 'No se para que sirve este aparato pero tiene una etiqueta que pone "Inserte el líquido que desea transformar".',
-    //   canTake: false,
-    //   canOpen: true,
-    //   isOpen: false,
-    //   isLockedToOpen: false,
-    //   objectOpenImg: 'apparatBrkOp.png',
-    //   objectClosedImg: 'apparatBrk.png',
-    //   setImg: false,
-    //   finished: false,
-    // };
-    // apparat.picture.setOrigin(0, 0);
-    // apparat.picture.displayWidth = 100;
-    // apparat.picture.displayHeight = 100;
-
     // apparat
     const apparat = this.setObjectFunction('apparat');
     apparat.picture.setOrigin(0, 0);
     apparat.picture.setPosition(660, 280);
-
 
     // closet
     const closet = {
@@ -384,22 +292,6 @@ class GameScene extends Phaser.Scene {
     this.exit.setDepth(7);
     this.exit.visible = false;
     this.exit.setInteractive();
-
-    // this.keyObj = {
-    //   picture: this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'assets', 'key.png'),
-    //   inventoryDisplayW: 40,
-    //   inventoryDisplayH: 60,
-    //   name: 'key',
-    //   information: 'Una pequeña llave.',
-    //   canTake: true,
-    //   canOpen: false,
-    //   isLockedToOpen: false,
-    //   setImg: false,
-    //   imgUsed: '',
-    //   finished: false,
-    // };
-    // this.keyObj.picture.displayWidth = 80;
-    // this.keyObj.picture.displayHeight = 100;
 
     // Key
     this.keyObj = this.setObjectFunction('key');
@@ -490,19 +382,6 @@ class GameScene extends Phaser.Scene {
       repeat: -1,
     });
 
-
-    // this.laser = {
-    //   picture: this.add.sprite(this.scale.width - 30, 40, 'assets', 'laserRed.png'),
-    //   information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.',
-    //   name: 'laser',
-    //   canTake: false,
-    //   canOpen: false,
-    //   setImg: true,
-    //   imgUsed: 'greenLaser.png',
-    //   finished: false,
-    // };
-    // this.laser.picture.displayHeight = 500;
-    // this.laser.picture.displayWidth = 145;
 
     this.laser = this.setObjectFunction('laser');
     this.laser.picture.setPosition(this.scale.width - 30, 40);
@@ -778,10 +657,6 @@ class GameScene extends Phaser.Scene {
         element.picture.displayWidth = element.inventoryDisplayW;
         element.picture.displayHeight = element.inventoryDisplayH;
       }, this);
-      // element.picture.on('pointerdown', (pointer) => {
-      // this.menuContainer.menuAppears(pointer, element);
-      // }
-      // }, this);
     });
   }
 
@@ -794,14 +669,15 @@ class GameScene extends Phaser.Scene {
       case 2: this.progressBar.displayWidth = 81.14;
         break;
       case 3: this.progressBar.displayWidth = 121.71;
-        this.progressBar.setPosition(this.progressBar.x - 1, this.progressBar.y, 65);
+        this.progressBar.setPosition(this.progressBar.x - 1, this.progressBar.y);
         break;
       case 4: this.progressBar.displayWidth = 162.28;
         break;
       case 5: this.progressBar.displayWidth = 202.85;
-        this.progressBar.setPosition(this.progressBar.x - 1, this.progressBar.y, 65);
+        this.progressBar.setPosition(this.progressBar.x - 1, this.progressBar.y);
         break;
       case 6: this.progressBar.displayWidth = 243.42;
+        this.progressBar.setPosition(this.progressBar.x - 1, this.progressBar.y);
         break;
       case 7: this.progressBar.displayWidth = 283.99;
         break;
@@ -917,6 +793,126 @@ class GameScene extends Phaser.Scene {
     this.inventoryBag.setActive(false).setVisible(false);
     // this.bag.setInteractive();
     this.exit.disableInteractive().setVisible(false);
+  }
+
+  formatTime(seconds) {
+    // Minutes
+    const minutes = Phaser.Math.FloorTo(seconds / 60);
+    // var minutes = Math.floor(seconds / 60);
+    // Seconds
+    let partInSeconds = seconds % 60;
+    // Adds left zeros to seconds
+    partInSeconds = partInSeconds.toString().padStart(2, '0');
+    // Returns formated time
+    return `${minutes}:${partInSeconds}`;
+  }
+
+  onEvent() {
+    this.initialTime -= 1; // One second
+    // console.log(this.gameTimer)
+    if (this.initialTime === 0) {
+      this.exitFunction();
+      this.stop = true;
+      this.disableObjectsInteractive();
+      this.timerTittle.setVisible(false);
+      // this.timeText.setVisible(false);
+      // this.timeText.setAlpha(0);
+      this.timeText.setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+      this.timeText.setDepth(9);
+      // console.log(textToShow)
+      // console.log(textToShow.length)
+      this.finalTextSum = '';
+      let timeForNext = 0;
+      const textToShow = ['Vaya!', '\nNo lo has conseguido...', '\n\nCrees que podrás...', ' al menos...', '\n Cazar esta \npesada mosca?'];
+      this.textCharByChar(textToShow[0], this.timeText);
+      for (let i = 1; i < textToShow.length; i += 1) {
+        switch (i) {
+          case 0: timeForNext = 0;
+            break;
+          case 1: timeForNext += textToShow[i - 1].length * 80 + 500;
+            break;
+          case 2: timeForNext += textToShow[i - 1].length * 80 + 700;
+            break;
+          default: timeForNext += textToShow[i - 1].length * 80 + 900;
+            break;
+        }
+        this.time.delayedCall(timeForNext, () => {
+          if (i === textToShow.length - 1) {
+            this.timeText.setAlpha(0);
+            this.finalTextSum = '';
+            this.textCharByChar(textToShow[i], this.timeText);
+            this.tweens.add({
+              targets: this.timeText,
+              alpha: { value: 1, duration: 200, yoyo: false },
+              scaleX: { from: 1.3, to: 2 },
+              scaleY: { from: 1.3, to: 2 },
+              yoyo: true,
+              hold: textToShow[i].length * 80,
+              duration: 800,
+            });
+          } else {
+            this.textCharByChar(textToShow[i], this.timeText);
+          }
+        }, this);
+      }
+
+
+      // this.tweens.add({
+      //   targets: this.timeText,
+      //   scaleX: { value: 1.3, duration: 300, yoyo: true },
+      //   scaleY: { value: 1.3, duration: 300, yoyo: true },
+      //   alpha: 1,
+      //   duration: 200,
+      //   onStart: () => {
+      //     this.timeText.setVisible(true);
+      //   },
+      //   onComplete: () => {
+      // const finishText = this.make.text({
+      //   x: this.cameras.main.centerX,
+      //   y: this.cameras.main.centerY / 2,
+      //   text: '',
+      //   style: {
+      //     fontStyle: 'bold',
+      //     fontSize: '30px',
+      //     fontFamily: 'Arial',
+      //     color: 'black',
+      //     align: 'center',
+      //     wordWrap: { width: 1100 },
+      //   },
+      // });
+      // this.timerTittle.setOrigin(0.5);
+      // this.timerTittle.setDepth(4);
+      //   },
+      // });
+      this.gameTimer.remove();
+    } else {
+      if (this.initialTime < 60 && this.initialTime > 0) {
+        this.tweens.add({
+          targets: this.timeText,
+          scaleX: 1.5,
+          scaleY: 1.5,
+          duration: 200,
+          ease: 'Cubic.easeInOut',
+          yoyo: true,
+          onStart: () => {
+            this.timeText.setColor('red');
+          },
+          onComplete: () => {
+            this.timeText.setColor('black');
+          },
+        });
+      }
+      this.timeText.setText(this.formatTime(this.initialTime));
+    }
+  }
+
+  textCharByChar(textToShow, timeText) {
+    for (let i = 0; i < textToShow.length; i += 1) {
+      this.time.delayedCall(80 * i, () => {
+        this.finalTextSum += textToShow.substr(i, 1);
+        timeText.setText(this.finalTextSum);
+      }, this);
+    }
   }
 
   update() {

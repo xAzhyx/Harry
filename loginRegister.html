@@ -98,9 +98,10 @@
       userStore.createIndex('gameProgress', 'gameProgress', { unique: false });
       userStore.createIndex('windowEvent', 'windowEvent', { unique: false });
       userStore.createIndex('tutorialFirstTime', 'tutorialFirstTime', { unique: false });
+      userStore.createIndex('gameTimer', 'gameTimer', { unique: false });
       // transaction = db.transaction(['users'], 'readwrite');
       const users = [
-        { userName: 'Fatima', pass: 1234, secQuest: '¿?', secAnsw: 'yes', gameProgress: 0, windowEvent: 0, tutorialFirstTime: 0 }
+        { userName: 'Fatima', pass: 1234, secQuest: '¿?', secAnsw: 'yes', gameProgress: 0, windowEvent: 0, tutorialFirstTime: 0, gameTimer: 150 }
       ];
       userStore.transaction.addEventListener('complete', (event) => {
         const userObjectStore = db.transaction('users', 'readwrite').objectStore('users');
@@ -200,7 +201,8 @@
           secAnsw: secAnswGet,
           gameProgress: 0,
           windowEvent: 0,
-          tutorialFirstTime: 0
+          tutorialFirstTime: 0,
+          gameTimer: 150
         }
       ];
       transaction = db.transaction(['users'], 'readwrite');

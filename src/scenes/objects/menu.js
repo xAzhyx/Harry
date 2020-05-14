@@ -152,8 +152,13 @@ export default class Menu extends Phaser.GameObjects.Container {
         } else if (this.objectO.name === 'book') {
           this.bookFunction();
         } else {
+          if (this.objectO.name === 'door') {
+            this.generalText('Lo has conseguido!! Por fin podemos irnos!!');
+            this.openFinalDoor();
+          } else {
+            this.generalText('Hecho, lo he abierto.');
+          }
           this.objectO.picture.setTexture('assets', this.objectO.objectOpenImg);
-          this.generalText('Hecho, lo he abierto.');
           this.menuTweenOut();
           this.objectO.isOpen = true;
           if (this.objectO.name === 'window' && this.windowEvent === true) {
@@ -247,6 +252,10 @@ export default class Menu extends Phaser.GameObjects.Container {
       this.generalText('Un momento... algo raro está pasando!');
     }, this);
     this.windowEvent = false;
+  }
+
+  openFinalDoor() {
+    
   }
 
   menuAppears(pointer, objectSelected) {

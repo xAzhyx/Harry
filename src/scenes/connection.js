@@ -11,7 +11,8 @@ export default class ConnectionDB extends Phaser.GameObjects.Sprite {
 
     this.tuto = '';
     this.wEvent = '';
-    this.prog = '';
+    this.prog = 0;
+    this.gTimer = 0;
     this.objectsToPass = [];
 
     // const cookieString = document.cookie.split(';', document.cookie.length);
@@ -130,6 +131,7 @@ export default class ConnectionDB extends Phaser.GameObjects.Sprite {
         if (cursor.value.windowEvent === 0) this.wEvent = false;
         else this.wEvent = true;
         this.prog = cursor.value.gameProgress;
+        this.gTimer = cursor.value.gameTimer;
       }
       cursor.continue();
     } else {
