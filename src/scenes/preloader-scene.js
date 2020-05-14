@@ -50,7 +50,7 @@ import assetsJson from '../assets/assets.json';
 import assetsAtlas from '../assets/assets.png';
 import assetsJson2 from '../assets/assets2.json';
 import assetsAtlas2 from '../assets/assets2.png';
-import room from '../Images/room.png';
+import room from '../Images/room3.png';
 
 // <?php
 // include '../scenes/phpConection.php';

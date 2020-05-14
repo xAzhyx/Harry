@@ -165,6 +165,11 @@
       "folder": ""
     },
     {
+      "name": "gameMenuBg.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/gameMenuBg.png",
+      "folder": ""
+    },
+    {
       "name": "glass.png",
       "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/glass.png",
       "folder": ""
@@ -267,6 +272,11 @@
     {
       "name": "newGame.png",
       "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/newGame.png",
+      "folder": ""
+    },
+    {
+      "name": "openGameMenu.png",
+      "path": "C:/Users/Fátima/Documents/Harry/harry02051124/src/Images/openGameMenu.png",
       "folder": ""
     },
     {

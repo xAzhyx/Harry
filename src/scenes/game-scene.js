@@ -41,8 +41,8 @@ class GameScene extends Phaser.Scene {
 
     // Marco
     const border = this.add.graphics();
-    border.lineStyle(4, 0xF20F0F, 1);
-    border.fillStyle(0xF20F0F, 0.8);
+    border.lineStyle(4, 0x960000, 1);
+    border.fillStyle(0x960000, 0.8);
     border.fillRect(0, 0, 1280, 720);
     border.fillStyle(0x000000, 1);
     border.fillRoundedRect(25, 25, 1228, 570, 15);
@@ -117,7 +117,7 @@ class GameScene extends Phaser.Scene {
 
     const door = this.setObjectFunction('door');
     // console.log(this.con.objectsToPass.length)
-    door.picture.setPosition(this.scale.width - 60, 335);
+    door.picture.setPosition(this.scale.width - 55, 348);
     door.picture.setOrigin(1, 0.5);
     door.picture.setDepth(2);
 
@@ -212,7 +212,7 @@ class GameScene extends Phaser.Scene {
 
     // Table
     this.table = {
-      picture: this.add.sprite(600, 330, 'assets', 'table.png'),
+      picture: this.add.sprite(600, 347, 'assets', 'table.png'),
       information: 'Una mesa llena de objetos útiles.',
       canTake: false,
       canOpen: false,
@@ -246,7 +246,7 @@ class GameScene extends Phaser.Scene {
 
     // Cable
     const brokenCable = this.setObjectFunction('brokenCable');
-    brokenCable.picture.setPosition(500, 350);
+    brokenCable.picture.setPosition(500, 370);
     brokenCable.angle = 30;
     brokenCable.inventoryDisplayW = 60;
     brokenCable.inventoryDisplayH = 40;
@@ -271,7 +271,7 @@ class GameScene extends Phaser.Scene {
 
     // Glass
     const glass = this.setObjectFunction('glass');
-    glass.picture.setPosition(438, 320);
+    glass.picture.setPosition(438, 335);
     glass.inventoryDisplayW = 40;
     glass.inventoryDisplayH = 60;
 
@@ -312,7 +312,7 @@ class GameScene extends Phaser.Scene {
     // osc
     const osc = this.setObjectFunction('osc');
     osc.picture.setOrigin(0, 0);
-    osc.picture.setPosition(550, 270);
+    osc.picture.setPosition(550, 280);
 
     // const apparat = {
     //   picture: this.add.sprite(660, 270, 'assets', 'apparatBrk.png'),
@@ -335,12 +335,12 @@ class GameScene extends Phaser.Scene {
     // apparat
     const apparat = this.setObjectFunction('apparat');
     apparat.picture.setOrigin(0, 0);
-    apparat.picture.setPosition(660, 270);
+    apparat.picture.setPosition(660, 280);
 
 
     // closet
     const closet = {
-      picture: this.add.sprite(190, 190, 'assets', 'closet.png'),
+      picture: this.add.sprite(190, 205, 'assets', 'closet.png'),
       name: 'closet',
       information: 'Un armario bastante grande.',
       canTake: false,
@@ -436,6 +436,21 @@ class GameScene extends Phaser.Scene {
     this.code.setDepth(7);
     this.code.setAngle(-40);
     this.code.setVisible(false);
+
+    const fly = this.add.sprite(800, 180, 'assets', 'fly0.png');
+    fly.displayWidth = 60;
+    fly.displayHeight = 40;
+    fly.angle = -30;
+    fly.setDepth(2);
+    this.flyingFunction(fly);
+
+    this.tweens.add({
+      targets: fly,
+      angle: +30,
+      duration: 20,
+      yoyo: true,
+      repeat: -1,
+    });
 
 
     // this.laser = {
@@ -818,6 +833,29 @@ class GameScene extends Phaser.Scene {
     this.codeArray.length = 0;
     this.codeDevice.setText('');
     this.codeDevice.x = this.laserDevice.x + 110;
+  }
+
+  flyingFunction(fly) {
+    const randomFly = {
+      x: Phaser.Math.Between(100, 1000),
+      y: Phaser.Math.Between(20, 300),
+    };
+    const dis = Phaser.Math.Distance.Between(fly.x, fly.y, randomFly.x, randomFly.y);
+    const flyVelocity = dis / 0.2;
+    this.tweens.add({
+      targets: fly,
+      x: randomFly.x,
+      duration: flyVelocity,
+      y: randomFly.y,
+      ease: 'Sine.easeInOut',
+      onComplete: () => {
+        this.flyingFunction(fly);
+      },
+      // yoyo: true,
+      // hold: 2000,
+      // repeatDelay: 2000,
+      // repeat: -1,
+    });
   }
 
   exitFunction() {
