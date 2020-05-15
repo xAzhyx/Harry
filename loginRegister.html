@@ -82,7 +82,7 @@
       sessionStorage.clear();
       sessionStorage.removeItem("userName");
     }
-    let userStore;
+    // let userStore;
     let userNameValue;
     let secQuestGet;
     let secAnswGet;
@@ -91,7 +91,7 @@
     // -------------------- Create User Table -------------------------
     // console.log(document.cookie)
     function createUsersTable(db) {
-      userStore = db.createObjectStore('users', { keyPath: 'userName' });
+     let userStore = db.createObjectStore('users', { keyPath: 'userName' });
       userStore.createIndex('pass', 'pass', { unique: false });
       userStore.createIndex('secQuest', 'secQuest', { unique: false });
       userStore.createIndex('secAnsw', 'secAnsw', { unique: false });
@@ -113,8 +113,8 @@
 
     // ---------------------Create Objects Table ---------------------
     function createObjectsTable(db) {
-      let objectstore;
-      objectStore = db.createObjectStore('objects', { autoIncrement: true });
+      // let objectstore;
+      let objectStore = db.createObjectStore('objects', { autoIncrement: true });
       objectStore.createIndex('nameObject', 'nameObject', { unique: false });
       objectStore.createIndex('userName', 'userName', { unique: false });
       objectStore.createIndex('picture', 'picture', { unique: false });

@@ -54,10 +54,11 @@ class GameScene extends Phaser.Scene {
     this.menuContainer = new Menu(this, 0, 0);
     this.objUse = new Use(this);
     this.gameMenu = new GameMenuClass(this, 0, 0);
+    // this.initialTime = 0;
+    this.initialTime = this.con.gTimer;
 
     // this.input.mouse.disableContextMenu();
     // Timer
-    this.initialTime = 5;
     this.timerTittle = this.make.text({
       x: 320,
       y: 60,
@@ -72,7 +73,7 @@ class GameScene extends Phaser.Scene {
       },
     });
     this.timerTittle.setOrigin(0.5);
-    this.timerTittle.setDepth(4);
+    this.timerTittle.setDepth(2);
 
     this.timeText = this.make.text({
       x: 320,
@@ -88,7 +89,7 @@ class GameScene extends Phaser.Scene {
       },
     });
     this.timeText.setOrigin(0.5);
-    this.timeText.setDepth(4);
+    this.timeText.setDepth(2);
 
     this.gameTimer = this.time.addEvent({
       delay: 1000,
@@ -100,6 +101,7 @@ class GameScene extends Phaser.Scene {
     this.looseBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'ctaBG');
     this.looseBG.displayHeight = 500;
     this.looseBG.setDepth(7);
+    this.looseBG.setVisible(false);
     this.looseBG.setOrigin(0.5);
 
 
@@ -119,6 +121,9 @@ class GameScene extends Phaser.Scene {
 
     // Inventory
     this.inventory = [];
+
+    // Drawer objects
+    this.drawerObjects = [];
 
     // Array laser buttons
     this.laserKeys = [];
@@ -308,15 +313,47 @@ class GameScene extends Phaser.Scene {
     this.drawer.setDepth(3);
     this.drawer.setVisible(false);
 
-    this.burn = this.add.sprite(this.drawer.x + 60, this.drawer.y - 60, 'assets', 'burn.png');
+    this.paper = this.add.sprite(this.drawer.x, this.drawer.y + 50, 'assets', 'paper.png');
+    this.paper.firstTime = true;
+    this.paper.setScale(1.8);
+    this.paper.setDepth(4);
+    this.paper.setVisible(false);
+    this.paper.on('pointerdown', () => {
+      if (this.paper.firstTime === true) {
+        this.tweens.add({
+          targets: this.paper,
+          x: this.paper.x - 120,
+          y: this.paper.y + 10,
+          duration: 400,
+        });
+        this.paper.firstTime = false;
+      }
+      this.menuContainer.generalText('Papeles en blanco.');
+    });
+
+    this.burn = this.add.sprite(this.drawer.x + 100, this.drawer.y - 60, 'assets', 'closedBurn.png');
     this.burn.displayWidth = 190;
     this.burn.displayHeight = 90;
     this.burn.setRotation(0.5);
     this.burn.setDepth(3);
     this.burn.setVisible(false);
     this.burn.on('pointerdown', () => {
+      this.burn.setTexture('assets', 'burn.png');
       this.menuContainer.generalText('Soy un poco patoso. Prefiero no tocar eso por si acaso...');
     });
+
+    this.wallet = this.add.sprite(this.drawer.x - 100, this.drawer.y - 60, 'assets', 'wallet.png');
+    this.wallet.displayWidth = 160;
+    this.wallet.displayHeight = 140;
+    this.wallet.setRotation(-0.5);
+    this.wallet.setDepth(3);
+    this.wallet.setVisible(false);
+    this.wallet.on('pointerdown', () => {
+      this.wallet.setTexture('assets', 'walletOut.png');
+      this.menuContainer.generalText('No quiero quitarle el dinero a nadie...');
+    });
+
+    this.drawerObjects.push(this.burn, this.wallet, this.paper);
 
     this.openBook = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 50, 'assets2', 'openBook.png');
     this.openBook.setDepth(6);
@@ -771,8 +808,12 @@ class GameScene extends Phaser.Scene {
 
   exitFunction() {
     // eslint-disable-next-line no-plusplus
-    for (let m = 0; m < this.inventory.length; m++) {
+    for (let m = 0; m < this.inventory.length; m += 1) {
       this.inventory[m].picture.visible = false;
+    }
+    for (let m = 0; m < this.drawerObjects.length; m += 1) {
+      this.drawerObjects[m].setVisible(false);
+      this.drawerObjects[m].disableInteractive();
     }
     this.laserKeys.forEach((element) => {
       element.setVisible(false);
@@ -782,8 +823,6 @@ class GameScene extends Phaser.Scene {
     this.setObjectsInteractive();
     this.keyObj.picture.setVisible(false);
     this.drawer.setVisible(false);
-    this.burn.setVisible(false);
-    this.burn.disableInteractive();
     this.openBook.setVisible(false);
     this.code.setVisible(false);
     this.laserDevice.setVisible(false);
@@ -808,22 +847,19 @@ class GameScene extends Phaser.Scene {
   }
 
   onEvent() {
-    this.initialTime -= 1; // One second
-    // console.log(this.gameTimer)
     if (this.initialTime === 0) {
       this.exitFunction();
       this.stop = true;
+      this.menuContainer.dontSetInteractive = true;
+      this.menuContainer.menuTweenOut();
       this.disableObjectsInteractive();
       this.timerTittle.setVisible(false);
-      // this.timeText.setVisible(false);
-      // this.timeText.setAlpha(0);
+      this.looseBG.setVisible(true);
       this.timeText.setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
       this.timeText.setDepth(9);
-      // console.log(textToShow)
-      // console.log(textToShow.length)
       this.finalTextSum = '';
       let timeForNext = 0;
-      const textToShow = ['Vaya!', '\nNo lo has conseguido...', '\n\nCrees que podrás...', ' al menos...', '\n Cazar esta \npesada mosca?'];
+      const textToShow = ['Vaya!', '\nNo lo has conseguido...', '\n\nCrees que podrás...', ' al menos...', 'Cazar esta \nmaldita mosca?'];
       this.textCharByChar(textToShow[0], this.timeText);
       for (let i = 1; i < textToShow.length; i += 1) {
         switch (i) {
@@ -856,36 +892,9 @@ class GameScene extends Phaser.Scene {
         }, this);
       }
 
-
-      // this.tweens.add({
-      //   targets: this.timeText,
-      //   scaleX: { value: 1.3, duration: 300, yoyo: true },
-      //   scaleY: { value: 1.3, duration: 300, yoyo: true },
-      //   alpha: 1,
-      //   duration: 200,
-      //   onStart: () => {
-      //     this.timeText.setVisible(true);
-      //   },
-      //   onComplete: () => {
-      // const finishText = this.make.text({
-      //   x: this.cameras.main.centerX,
-      //   y: this.cameras.main.centerY / 2,
-      //   text: '',
-      //   style: {
-      //     fontStyle: 'bold',
-      //     fontSize: '30px',
-      //     fontFamily: 'Arial',
-      //     color: 'black',
-      //     align: 'center',
-      //     wordWrap: { width: 1100 },
-      //   },
-      // });
-      // this.timerTittle.setOrigin(0.5);
-      // this.timerTittle.setDepth(4);
-      //   },
-      // });
       this.gameTimer.remove();
     } else {
+      this.initialTime -= 1; // One second
       if (this.initialTime < 60 && this.initialTime > 0) {
         this.tweens.add({
           targets: this.timeText,
