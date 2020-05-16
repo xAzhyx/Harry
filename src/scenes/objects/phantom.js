@@ -8,6 +8,7 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
     this.linesControl = 0;
     this.textSumCloud = '';
     this.scene.stop = true;
+    this.animRepeat = 9;
 
     this.alpha = 0;
     this.scene.tweens.add({
@@ -22,7 +23,12 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
       repeat: -1,
       duration: 1500,
     }, this);
-
+    this.scene.anims.create({
+      key: 'talk',
+      frames: [{ key: 'assets', frame: 'phantom.png' }, { key: 'assets', frame: 'phantom3.png' }, { key: 'assets', frame: 'phantom.png' }],
+      frameRate: 6,
+      repeat: this.animRepeat,
+    });
     // Cloud for conversation
     this.cloud = this.scene.add.sprite(this.x - 250, this.y - 40, 'assets', 'cloud.png');
     this.cloud.setDepth(5);
@@ -114,6 +120,10 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
 
   conversationSwitch() {
     if (this.linesControl !== Conversation.phantomConversation.length) {
+      if (this.linesControl === Conversation.phantomConversation.length - 1) {
+        this.animRepeat = 0;
+      }
+      this.play('talk');
       this.txtConfig.setText('');
       this.txtConfig.setAlpha(0);
       this.textSumCloud = '';
@@ -188,6 +198,7 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
           this.scene.stopMenu = false;
           this.scene.setObjectsInteractive();
           this.scene.phan = false;
+          this.scene.startContdown();
         },
       });
     }

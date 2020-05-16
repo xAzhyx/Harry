@@ -30,18 +30,18 @@ export default class Intro extends Phaser.GameObjects.Sprite {
     this.arrow.alpha = 0;
     this.arrow.setDepth(6);
     this.arrow.setRotation(-0.55);
-    
+
     this.circle = this.scene.add.sprite(this.arrow.x - this.arrow.width / 2, this.arrow.y - this.arrow.height / 2, 'assets', 'circle.png');
     this.circle.setDepth(5);
     this.circle.alpha = 0;
     this.circle.setScale(0);
-    
+
     this.info = this.scene.add.sprite(this.scene.cameras.main.centerX + this.width / 4 + 10, this.scene.cameras.main.centerY + 50, 'assets', 'Information/info0.png');
     this.info.setDepth(5);
     this.info.setScale(0.7);
     this.info.setAlpha(0);
-    
-    
+
+
     // -------------------------Text---------------------------------
     this.txtIntro = this.scene.make.text({
       x: this.scene.cameras.main.centerX + 60,
@@ -123,6 +123,7 @@ export default class Intro extends Phaser.GameObjects.Sprite {
 
 
     // -------------------Pointers --------------------
+
     this.on('pointerdown', () => {
       this.disableInteractive();
       this.scene.tweens.add({
@@ -153,9 +154,14 @@ export default class Intro extends Phaser.GameObjects.Sprite {
               duration: 1000,
               delay: 1000,
             });
-            this.scene.stop = false;
-            this.scene.stopMenu = false;
-            this.scene.setObjectsInteractive();
+            // this.scene.stop = false;
+            // this.scene.stopMenu = false;
+            // this.scene.setObjectsInteractive();
+            this.scene.arrayObjectsInteractive.forEach((element) => {
+              if (element.name === 'window') {
+                element.picture.setInteractive();
+              }
+            });
           },
         });
       }

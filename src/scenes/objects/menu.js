@@ -19,6 +19,7 @@ export default class Menu extends Phaser.GameObjects.Container {
 
     // CAMBIAR
     this.windowEvent = this.scene.con.wEvent;
+    if (this.scene.con.tuto === false) this.windowEvent = false;
     this.stay = false;
     this.arrayText = [];
     this.shadows = [];
@@ -255,7 +256,7 @@ export default class Menu extends Phaser.GameObjects.Container {
   }
 
   openFinalDoor() {
-    
+
   }
 
   menuAppears(pointer, objectSelected) {
@@ -331,7 +332,7 @@ export default class Menu extends Phaser.GameObjects.Container {
       this.scene.tweens.add({
         targets: [this.menu, ...this.actions, ...this.arrayText, ...this.shadows],
         alpha: 1,
-        duration: 300,
+        duration: 200,
       });
       this.scaleMenu();
     }
@@ -394,7 +395,7 @@ export default class Menu extends Phaser.GameObjects.Container {
       scaleY: 0.70,
       ease: Phaser.Math.Easing.Sine.InOut,
       yoyo: true,
-      duration: 100,
+      duration: 80,
     });
     this.butTween[1] = this.scene.tweens.add({
       targets: this.arrayText[currentButton.number],
@@ -402,7 +403,7 @@ export default class Menu extends Phaser.GameObjects.Container {
       scaleY: 0.92,
       ease: 'linear',
       yoyo: true,
-      duration: 100,
+      duration: 80,
     });
     this.butTween[2] = this.scene.tweens.add({
       targets: this.shadows[currentButton.number],
@@ -419,7 +420,7 @@ export default class Menu extends Phaser.GameObjects.Container {
         }, this);
       },
       yoyo: true,
-      duration: 100,
+      duration: 80,
     });
   }
 
@@ -456,7 +457,7 @@ export default class Menu extends Phaser.GameObjects.Container {
       targets: this.objectOTexts,
       alpha: 0,
       ease: Phaser.Math.Easing.Sine.InOut,
-      duration: 400,
+      duration: 300,
     });
   }
 }

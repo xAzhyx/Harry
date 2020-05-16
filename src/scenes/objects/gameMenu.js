@@ -12,6 +12,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
     this.gameMenu.displayHeight = 220;
     this.gameMenu.alpha = 0;
     this.gameMenu.visible = false;
+    this.itsForSave = false;
     this.add(this.gameMenu);
 
     this.newGame = this.scene.add.sprite(0, 0, 'assets', 'newGame.png');
@@ -63,7 +64,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
         { nameObject: 'key', userName: this.scene.con.userNameSession, picture: 'key.png', information: 'Una pequeña llave.', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 80, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
         { nameObject: 'laser', userName: this.scene.con.userNameSession, picture: 'laserRed.png', information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 145, displayHeight: 500, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
       ];
-      const arrayNewGameState = [0, 0, 0, 150];
+      const arrayNewGameState = [1, 1, 0, 150];
       this.saveGameState(arrayNewGameState);
       this.deleteDBObjects(objectsArray);
     }, this);
@@ -77,6 +78,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
     this.save.on('pointerdown', () => {
       this.buttonGameTween(this.save);
       this.scene.stop = true;
+      this.itsForSave = true;
       const arrayGameState = [this.scene.tutorialFirstTime, this.scene.menuContainer.windowEvent, this.scene.gameProgress, this.scene.initialTime];
       const arraySavedGameState = [];
       arrayGameState.forEach((element) => {
@@ -168,7 +170,8 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
     for (var i in objectsArray) {
       objStore.put(objectsArray[i]);
     }
-    this.resetGame();
+    if (this.itsForSave === false) this.resetGame();
+    else this.itsForSave = false;
   }
 
   saveGameState(obj) {
@@ -177,7 +180,8 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
     objStore.openCursor().onsuccess = (event) => {
       const cursor = event.target.result;
       if (cursor) {
-        if (cursor.value.userName === this.scene.con.userNameSession) {
+        if (cursor.value.userName === sessionStorage.getItem('userName')) {
+          // if (cursor.value.userName === this.scene.con.userNameSession) {
           const updateData = cursor.value;
           updateData.tutorialFirstTime = obj[0];
           updateData.windowEvent = obj[1];

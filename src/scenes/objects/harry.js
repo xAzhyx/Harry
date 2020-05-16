@@ -16,6 +16,7 @@ export default class Harry extends Phaser.GameObjects.Sprite {
       prefix: 'harry',
       suffix: '.png',
     });
+    console.log("Harry -> constructor -> this.harryFrames", this.harryFrames)
 
     // ----------------------------------Movement--------------------------------------
     this.scene.input.on('pointerdown', (pointer) => {

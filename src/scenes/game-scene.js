@@ -78,7 +78,8 @@ class GameScene extends Phaser.Scene {
     this.timeText = this.make.text({
       x: 320,
       y: 90,
-      text: this.formatTime(this.initialTime),
+      // text: this.formatTime(this.initialTime),
+      text: '',
       style: {
         fontStyle: 'bold',
         fontSize: '30px',
@@ -90,13 +91,6 @@ class GameScene extends Phaser.Scene {
     });
     this.timeText.setOrigin(0.5);
     this.timeText.setDepth(2);
-
-    this.gameTimer = this.time.addEvent({
-      delay: 1000,
-      callback: this.onEvent,
-      callbackScope: this,
-      loop: true,
-    });
 
     this.looseBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'ctaBG');
     this.looseBG.displayHeight = 500;
@@ -117,6 +111,9 @@ class GameScene extends Phaser.Scene {
 
     // CAMBIAR
     this.tutorialFirstTime = this.con.tuto;
+    if (this.tutorialFirstTime === false) {
+      this.startContdown();
+    }
     // this.tutorialFirstTime = false;
 
     // Inventory
@@ -161,8 +158,8 @@ class GameScene extends Phaser.Scene {
 
     // --------------------------- Set objects with load profile --------------------------------------
 
+    console.log(this.scale.width)
     const door = this.setObjectFunction('door');
-    // console.log(this.con.objectsToPass.length)
     door.picture.setPosition(this.scale.width - 55, 348);
     door.picture.setOrigin(1, 0.5);
     door.picture.setDepth(2);
@@ -324,7 +321,7 @@ class GameScene extends Phaser.Scene {
           targets: this.paper,
           x: this.paper.x - 120,
           y: this.paper.y + 10,
-          duration: 400,
+          duration: 300,
         });
         this.paper.firstTime = false;
       }
@@ -402,7 +399,7 @@ class GameScene extends Phaser.Scene {
         targets: fly,
         x: fly.x + goRandomX,
         y: fly.y + goRandomY,
-        duration: 100,
+        duration: 80,
         ease: 'Sine.easeOut',
         onComplete: () => {
           fly.setInteractive();
@@ -411,9 +408,25 @@ class GameScene extends Phaser.Scene {
       });
     }, this);
 
+    const flyAnimAssets = this.anims.generateFrameNames('assets', {
+      start: 0,
+      end: 2,
+      zeroPad: 1,
+      prefix: 'fly',
+      suffix: '.png',
+    });
+
+    this.anims.create({
+      key: 'fly',
+      frames: flyAnimAssets,
+      frameRate: 28,
+      repeat: -1,
+    });
+    fly.play('fly');
+
     this.tweens.add({
       targets: fly,
-      angle: +30,
+      angle: 1,
       duration: 20,
       yoyo: true,
       repeat: -1,
@@ -564,6 +577,26 @@ class GameScene extends Phaser.Scene {
       this.intro = new Intro(this, this.cameras.main.centerX, this.cameras.main.centerY - 50, 'assets2', 'bookIntro0.png');
       // }, this);
       this.tutorialFirstTime = false;
+
+      this.time.delayedCall(5000, () => {
+        this.skip = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.intro.height / 2 + 50, 'assets', 'skip.png');
+        this.skip.setDepth(5);
+        this.skip.setInteractive({ useHandCursor: true });
+
+        this.skip.on('pointerdown', () => {
+          this.menuContainer.windowEvent = false;
+          const arrayGameState = [this.tutorialFirstTime, this.menuContainer.windowEvent, this.gameProgress, this.initialTime];
+          const arraySavedGameState = [];
+          arrayGameState.forEach((element) => {
+            if (element === false) arraySavedGameState.push(0);
+            else if (element === true) arraySavedGameState.push(1);
+            else arraySavedGameState.push(element);
+          });
+          // console.log(arraySavedGameState)
+          this.gameMenu.saveGameState(arraySavedGameState);
+          this.gameMenu.resetGame();
+        });
+      });
     }
   }
 
@@ -671,28 +704,52 @@ class GameScene extends Phaser.Scene {
         if (k < this.inventory.length) {
           this.inventory[k].picture.setInteractive();
           this.inventory[k].picture.x = this.cameras.main.centerX - this.inventoryBag.displayWidth / 3 + 40 + posColumn;
-          this.inventory[k].picture.y = this.cameras.main.centerY - this.inventoryBag.displayHeight / 3 + posRow;
-          this.inventory[k].picture.displayWidth = this.inventory[k].inventoryDisplayW;
-          this.inventory[k].picture.displayHeight = this.inventory[k].inventoryDisplayH;
+          this.inventory[k].picture.y = this.cameras.main.centerY - this.inventoryBag.displayHeight / 3 + 40 + posRow;
+          this.inventory[k].picture.displayWidth = this.inventory[k].inventoryDisplayW * 1.3;
+          this.inventory[k].picture.displayHeight = this.inventory[k].inventoryDisplayH * 1.3;
           this.inventory[k].picture.visible = true;
-          console.log(this.inventory[k]);
+          this.inventory[k].scaleObject = {
+            x: this.inventory[k].picture.scaleX,
+            y: this.inventory[k].picture.scaleY,
+          };
+          // console.log(this.inventory[k]);
           this.inventory[k].picture.setDepth(3);
         }
         k += 1;
-        posColumn += 100;
+        posColumn += 120;
       }
       posColumn = 0;
-      posRow += 105;
+      posRow += 130;
     }
+    this.tweenIn = 0;
     this.inventory.forEach((element) => {
       this.menuContainer.dontSetInteractive = true;
+
       element.picture.on('pointerover', () => {
-        element.picture.displayWidth = element.inventoryDisplayW + 50;
-        element.picture.displayHeight = element.inventoryDisplayH + 50;
+        element.picture.setScale(element.scaleObject.x, element.scaleObject.y);
+        this.scaleElement = {
+          x: element.picture.scaleX,
+          y: element.picture.scaleY,
+        };
+
+        this.tweenIn = this.tweens.add({
+          targets: element.picture,
+          scaleX: element.picture.scaleX * 1.6,
+          scaleY: element.picture.scaleY * 1.6,
+          duration: 100,
+        });
+        // element.picture.displayWidth = element.inventoryDisplayW + 50;
+        // element.picture.displayHeight = element.inventoryDisplayH + 50;
       }, this);
       element.picture.on('pointerout', () => {
-        element.picture.displayWidth = element.inventoryDisplayW;
-        element.picture.displayHeight = element.inventoryDisplayH;
+        this.tweenOut = this.tweens.add({
+          targets: element.picture,
+          scaleX: this.scaleElement.x,
+          scaleY: this.scaleElement.y,
+          duration: 100,
+          // element.picture.displayWidth = element.inventoryDisplayW;
+          // element.picture.displayHeight = element.inventoryDisplayH;
+        });
       }, this);
     });
   }
@@ -792,7 +849,7 @@ class GameScene extends Phaser.Scene {
       y: Phaser.Math.Between(20, 600),
     };
     const dis = Phaser.Math.Distance.Between(fly.x, fly.y, randomFly.x, randomFly.y);
-    const flyVelocity = dis / 0.12;
+    const flyVelocity = dis / 0.15;
     this.flyStop = this.tweens.add({
       targets: fly,
       x: { value: randomFly.x, ease: 'Back.easeOut', duration: flyVelocity },
@@ -895,7 +952,7 @@ class GameScene extends Phaser.Scene {
       this.gameTimer.remove();
     } else {
       this.initialTime -= 1; // One second
-      if (this.initialTime < 60 && this.initialTime > 0) {
+      if (this.initialTime < 30 && this.initialTime > 0) {
         this.tweens.add({
           targets: this.timeText,
           scaleX: 1.5,
@@ -913,6 +970,17 @@ class GameScene extends Phaser.Scene {
       }
       this.timeText.setText(this.formatTime(this.initialTime));
     }
+  }
+
+  startContdown() {
+    this.timeText.setText(this.formatTime(this.initialTime));
+    this.gameTimer = this.time.addEvent({
+      delay: 1000,
+      callback: this.onEvent,
+      callbackScope: this,
+      loop: true,
+    });
+
   }
 
   textCharByChar(textToShow, timeText) {
