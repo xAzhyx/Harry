@@ -64,7 +64,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
         { nameObject: 'key', userName: this.scene.con.userNameSession, picture: 'key.png', information: 'Una pequeña llave.', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 80, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
         { nameObject: 'laser', userName: this.scene.con.userNameSession, picture: 'laserRed.png', information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 145, displayHeight: 500, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
       ];
-      const arrayNewGameState = [1, 1, 0, 150];
+      const arrayNewGameState = [1, 1, 0, 900];
       this.saveGameState(arrayNewGameState);
       this.deleteDBObjects(objectsArray);
     }, this);
@@ -142,7 +142,8 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
   resetGame() {
     this.scene.registry.destroy(); // destroy registry
     this.scene.events.off(); // disable all active events
-    this.scene.scene.restart(); // restart current scene
+    // this.scene.scene.restart(); // restart current scene
+    window.location.reload();
   }
 
   deleteDBObjects(objectsArray) {

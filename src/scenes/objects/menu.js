@@ -155,7 +155,7 @@ export default class Menu extends Phaser.GameObjects.Container {
         } else {
           if (this.objectO.name === 'door') {
             this.generalText('Lo has conseguido!! Por fin podemos irnos!!');
-            this.openFinalDoor();
+            this.openFinalDoor(this.objectO);
           } else {
             this.generalText('Hecho, lo he abierto.');
           }
@@ -255,8 +255,16 @@ export default class Menu extends Phaser.GameObjects.Container {
     this.windowEvent = false;
   }
 
-  openFinalDoor() {
-
+  openFinalDoor(objectO) {
+    this.scene.finalEvent = true;
+    // this.scene.gameTime.gameTimer.remove();
+    const disToDoor = Phaser.Math.Distance.Between(this.scene.harry.x - 50, this.scene.harry.y, objectO.picture.x, objectO.picture.y + objectO.picture.height / 2);
+    const timeForWalk = (3000 * disToDoor) / 1100;
+    this.scene.harry.harrysWalk(objectO.picture.x - 50, objectO.picture.y + objectO.picture.height / 2, timeForWalk);
+    this.scene.harry.play('walk');
+    this.scene.time.delayedCall(timeForWalk, () => {
+      this.scene.gameTime.finalBg.setVisible(true);
+    });
   }
 
   menuAppears(pointer, objectSelected) {

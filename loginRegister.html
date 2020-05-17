@@ -97,7 +97,6 @@
       sessionStorage.clear();
       sessionStorage.removeItem("userName");
     }
-    // let userStore;
     let userNameValue;
     let secQuestGet;
     let secAnswGet;
@@ -106,7 +105,6 @@
     let userNameForCheck;
     let answ;
     // -------------------- Create User Table -------------------------
-    // console.log(document.cookie)
     function createUsersTable(db) {
       let userStore = db.createObjectStore('users', { keyPath: 'userName' });
       userStore.createIndex('pass', 'pass', { unique: false });
@@ -118,7 +116,7 @@
       userStore.createIndex('gameTimer', 'gameTimer', { unique: false });
       // transaction = db.transaction(['users'], 'readwrite');
       const users = [
-        { userName: 'Fatima', pass: 1234, secQuest: '¿?', secAnsw: 'yes', gameProgress: 0, windowEvent: 1, tutorialFirstTime: 1, gameTimer: 150 }
+        { userName: 'Fatima', pass: '1234', secQuest: '¿?', secAnsw: 'yes', gameProgress: 0, windowEvent: 1, tutorialFirstTime: 1, gameTimer: 150 }
       ];
       userStore.transaction.addEventListener('complete', (event) => {
         const userObjectStore = db.transaction('users', 'readwrite').objectStore('users');
@@ -208,7 +206,7 @@
               updateData.tutorialFirstTime = 1;
               updateData.windowEvent = 1;
               updateData.gameProgress = 0;
-              updateData.gameTimer = 150;
+              updateData.gameTimer = 900;
               const request = cursor.update(updateData);
             }
             cursor.continue();
@@ -446,8 +444,6 @@
 
     // -------------------------- Register Button --------------------------------
     register.onpointerdown = () => {
-      // console.log('userName: ' + document.getElementById('name').value);
-      // console.log('Pass: ' + document.getElementById('pass').value);
       registerName = document.getElementById('name').value;
       registerPass = document.getElementById('pass').value;
 

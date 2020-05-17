@@ -16,30 +16,33 @@ export default class Harry extends Phaser.GameObjects.Sprite {
       prefix: 'harry',
       suffix: '.png',
     });
-    console.log("Harry -> constructor -> this.harryFrames", this.harryFrames)
 
     // ----------------------------------Movement--------------------------------------
     this.scene.input.on('pointerdown', (pointer) => {
-      if (this.walkTween != null) {
-        this.stopAnimation();
-      }
-
-      if (this.scene.bagIsOpen === false && this.scene.stop === false) {
-        if (pointer.y > 450 && pointer.y < 600 && pointer.x > 100 && pointer.x < 1110) {
-          if (pointer.x > this.x) {
-            this.setFlipX(false);
-          } else {
-            this.setFlipX(true);
-          }
-          dis = Phaser.Math.Distance.Between(this.x, this.y, pointer.x, pointer.y);
-          this.time = (3000 * dis) / 1100;
-
-          // Animation
-          this.harrysWalk(pointer.x, pointer.y);
-          this.play('walk');
-        } else if (this.walkTween != null) {
+      if (!this.scene.finalEvent) {
+        if (this.walkTween != null) {
           this.stopAnimation();
         }
+
+        if (this.scene.bagIsOpen === false && this.scene.stop === false) {
+          if (pointer.y > 450 && pointer.y < 600 && pointer.x > 100 && pointer.x < 1110) {
+            if (pointer.x > this.x) {
+              this.setFlipX(false);
+            } else {
+              this.setFlipX(true);
+            }
+            dis = Phaser.Math.Distance.Between(this.x, this.y, pointer.x, pointer.y);
+            this.time = (3000 * dis) / 1100;
+
+            // Animation
+            this.harrysWalk(pointer.x, pointer.y, this.time);
+            this.play('walk');
+          } else if (this.walkTween != null) {
+            this.stopAnimation();
+          }
+        }
+      } else {
+        this.setFlipX(false);
       }
     }, this);
   }
@@ -53,7 +56,7 @@ export default class Harry extends Phaser.GameObjects.Sprite {
   }
 
   // Harrys Walk Function --------------------------------------------
-  harrysWalk(pointerX, pointerY) {
+  harrysWalk(pointerX, pointerY, time) {
     this.scene.anims.create({
       key: 'walk',
       frames: this.harryFrames,
@@ -68,8 +71,12 @@ export default class Harry extends Phaser.GameObjects.Sprite {
       onComplete: () => {
         this.anims.stop();
         this.setTexture('assets', 'harry.png');
+        if (this.scene.finalEvent === true) {
+          this.setVisible(false);
+          this.scene.finalEvent = false;
+        }
       },
-      duration: this.time,
+      duration: time,
     });
   }
 }

@@ -114,6 +114,11 @@ export default class Intro extends Phaser.GameObjects.Sprite {
     }, this);
 
     this.scene.time.delayedCall(3000, () => {
+      // this.openBookSound = this.scene.sound.add('openBook', {
+      //   volume: 0.6,
+      //   loop: true,
+      // });
+      this.scene.sound.play('openBook');
       this.play('intro');
     }, this);
 
@@ -275,6 +280,13 @@ export default class Intro extends Phaser.GameObjects.Sprite {
       this.txtIntro.setAlpha(1);
       for (let i = 0; i < this.introExplication.length; i += 1) {
         this.delayedCallTextIntro[i] = this.scene.time.delayedCall(Introduction.textInfoVelocity * i, () => {
+          // this.scene.sound.play('tecla3');
+          this.charSound = this.scene.sound.add('type', {
+            volume: 1,
+            seek: 0.1,
+            // loop: true,
+          });
+          this.charSound.play();
           this.txtSumIntro += this.introExplication.substr(i, 1);
           this.txtIntro.setText(this.txtSumIntro);
         }, this);

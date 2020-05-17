@@ -5,6 +5,7 @@ import Use from './objects/MenuFunctions/use';
 import Code from './gameConfig.json';
 import GameMenuClass from './objects/gameMenu';
 import ConnectionDB from './connection';
+import GameTime from './objects/gameTime';
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -35,6 +36,13 @@ class GameScene extends Phaser.Scene {
     //            -> Modify objects profile with default values
     //            -> Reliad game page
 
+    this.input.mouse.disableContextMenu();
+    this.gameMusic = this.sound.add('music', {
+      volume: 0.6,
+      loop: true,
+    });
+    this.gameMusic.play();
+
     // Marco
     const border = this.add.graphics();
     border.lineStyle(4, 0x960000, 1);
@@ -54,50 +62,10 @@ class GameScene extends Phaser.Scene {
     this.menuContainer = new Menu(this, 0, 0);
     this.objUse = new Use(this);
     this.gameMenu = new GameMenuClass(this, 0, 0);
-    // this.initialTime = 0;
     this.initialTime = this.con.gTimer;
-
-    // this.input.mouse.disableContextMenu();
-    // Timer
-    this.timerTittle = this.make.text({
-      x: 320,
-      y: 60,
-      text: 'Tiempo restante:',
-      style: {
-        fontStyle: 'bold',
-        fontSize: '30px',
-        fontFamily: 'Arial',
-        color: 'black',
-        align: 'center',
-        wordWrap: { width: 1100 },
-      },
-    });
-    this.timerTittle.setOrigin(0.5);
-    this.timerTittle.setDepth(2);
-
-    this.timeText = this.make.text({
-      x: 320,
-      y: 90,
-      // text: this.formatTime(this.initialTime),
-      text: '',
-      style: {
-        fontStyle: 'bold',
-        fontSize: '30px',
-        fontFamily: 'Arial',
-        color: 'black',
-        align: 'center',
-        wordWrap: { width: 1100 },
-      },
-    });
-    this.timeText.setOrigin(0.5);
-    this.timeText.setDepth(2);
-
-    this.looseBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'ctaBG');
-    this.looseBG.displayHeight = 500;
-    this.looseBG.setDepth(7);
-    this.looseBG.setVisible(false);
-    this.looseBG.setOrigin(0.5);
-
+    // this.initialTime = 2;
+    this.finalEvent = false;
+    this.gameTime = new GameTime(this);
 
     // Var for cancel things
     this.stop = false;
@@ -112,7 +80,7 @@ class GameScene extends Phaser.Scene {
     // CAMBIAR
     this.tutorialFirstTime = this.con.tuto;
     if (this.tutorialFirstTime === false) {
-      this.startContdown();
+      this.gameTime.startContdown();
     }
     // this.tutorialFirstTime = false;
 
@@ -568,7 +536,7 @@ class GameScene extends Phaser.Scene {
     this.table.picture.on('pointerdown', (pointer) => {
       this.menuContainer.menuAppears(pointer, this.table);
     }, this);
-    this.algo = new Phaser.Geom.Rectangle(0, 0, 500, 90);
+    this.tableArea = new Phaser.Geom.Rectangle(0, 0, 500, 90);
 
 
     if (this.tutorialFirstTime === true) {
@@ -579,7 +547,7 @@ class GameScene extends Phaser.Scene {
       this.tutorialFirstTime = false;
 
       this.time.delayedCall(5000, () => {
-        this.skip = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.intro.height / 2 + 50, 'assets', 'skip.png');
+        this.skip = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.intro.height / 2, 'assets', 'skip.png');
         this.skip.setDepth(5);
         this.skip.setInteractive({ useHandCursor: true });
 
@@ -643,7 +611,9 @@ class GameScene extends Phaser.Scene {
 
   setObjectsInteractive() {
     this.bag.setInteractive();
-    this.table.picture.setInteractive(this.algo, Phaser.Geom.Rectangle.Contains);
+    // this.input.enableDebug(this.bag, 0x00FF00)
+    this.table.picture.setInteractive(this.tableArea, Phaser.Geom.Rectangle.Contains);
+    // this.input.enableDebug(this.table.picture, 0x00FF00)
     this.arrayObjectsInteractive.forEach((element) => {
       element.picture.setInteractive();
       element.picture.input.hitArea.setTo(0, 0, element.picture.width, element.picture.height);
@@ -891,106 +861,106 @@ class GameScene extends Phaser.Scene {
     this.exit.disableInteractive().setVisible(false);
   }
 
-  formatTime(seconds) {
-    // Minutes
-    const minutes = Phaser.Math.FloorTo(seconds / 60);
-    // var minutes = Math.floor(seconds / 60);
-    // Seconds
-    let partInSeconds = seconds % 60;
-    // Adds left zeros to seconds
-    partInSeconds = partInSeconds.toString().padStart(2, '0');
-    // Returns formated time
-    return `${minutes}:${partInSeconds}`;
-  }
+  // formatTime(seconds) {
+  //   // Minutes
+  //   const minutes = Phaser.Math.FloorTo(seconds / 60);
+  //   // var minutes = Math.floor(seconds / 60);
+  //   // Seconds
+  //   let partInSeconds = seconds % 60;
+  //   // Adds left zeros to seconds
+  //   partInSeconds = partInSeconds.toString().padStart(2, '0');
+  //   // Returns formated time
+  //   return `${minutes}:${partInSeconds}`;
+  // }
 
-  onEvent() {
-    if (this.initialTime === 0) {
-      this.exitFunction();
-      this.stop = true;
-      this.menuContainer.dontSetInteractive = true;
-      this.menuContainer.menuTweenOut();
-      this.disableObjectsInteractive();
-      this.timerTittle.setVisible(false);
-      this.looseBG.setVisible(true);
-      this.timeText.setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
-      this.timeText.setDepth(9);
-      this.finalTextSum = '';
-      let timeForNext = 0;
-      const textToShow = ['Vaya!', '\nNo lo has conseguido...', '\n\nCrees que podrás...', ' al menos...', 'Cazar esta \nmaldita mosca?'];
-      this.textCharByChar(textToShow[0], this.timeText);
-      for (let i = 1; i < textToShow.length; i += 1) {
-        switch (i) {
-          case 0: timeForNext = 0;
-            break;
-          case 1: timeForNext += textToShow[i - 1].length * 80 + 500;
-            break;
-          case 2: timeForNext += textToShow[i - 1].length * 80 + 700;
-            break;
-          default: timeForNext += textToShow[i - 1].length * 80 + 900;
-            break;
-        }
-        this.time.delayedCall(timeForNext, () => {
-          if (i === textToShow.length - 1) {
-            this.timeText.setAlpha(0);
-            this.finalTextSum = '';
-            this.textCharByChar(textToShow[i], this.timeText);
-            this.tweens.add({
-              targets: this.timeText,
-              alpha: { value: 1, duration: 200, yoyo: false },
-              scaleX: { from: 1.3, to: 2 },
-              scaleY: { from: 1.3, to: 2 },
-              yoyo: true,
-              hold: textToShow[i].length * 80,
-              duration: 800,
-            });
-          } else {
-            this.textCharByChar(textToShow[i], this.timeText);
-          }
-        }, this);
-      }
+  // onEvent() {
+  //   if (this.initialTime === 0) {
+  //     this.exitFunction();
+  //     this.stop = true;
+  //     this.menuContainer.dontSetInteractive = true;
+  //     this.menuContainer.menuTweenOut();
+  //     this.disableObjectsInteractive();
+  //     this.timerTittle.setVisible(false);
+  //     this.looseBG.setVisible(true);
+  //     this.timeText.setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
+  //     this.timeText.setDepth(9);
+  //     this.finalTextSum = '';
+  //     let timeForNext = 0;
+  //     const textToShow = ['Vaya!', '\nNo lo has conseguido...', '\n\nCrees que podrás...', ' al menos...', 'Cazar esta \nmaldita mosca?'];
+  //     this.textCharByChar(textToShow[0], this.timeText);
+  //     for (let i = 1; i < textToShow.length; i += 1) {
+  //       switch (i) {
+  //         case 0: timeForNext = 0;
+  //           break;
+  //         case 1: timeForNext += textToShow[i - 1].length * 80 + 500;
+  //           break;
+  //         case 2: timeForNext += textToShow[i - 1].length * 80 + 700;
+  //           break;
+  //         default: timeForNext += textToShow[i - 1].length * 80 + 900;
+  //           break;
+  //       }
+  //       this.time.delayedCall(timeForNext, () => {
+  //         if (i === textToShow.length - 1) {
+  //           this.timeText.setAlpha(0);
+  //           this.finalTextSum = '';
+  //           this.textCharByChar(textToShow[i], this.timeText);
+  //           this.tweens.add({
+  //             targets: this.timeText,
+  //             alpha: { value: 1, duration: 200, yoyo: false },
+  //             scaleX: { from: 1.3, to: 2 },
+  //             scaleY: { from: 1.3, to: 2 },
+  //             yoyo: true,
+  //             hold: textToShow[i].length * 80,
+  //             duration: 800,
+  //           });
+  //         } else {
+  //           this.textCharByChar(textToShow[i], this.timeText);
+  //         }
+  //       }, this);
+  //     }
 
-      this.gameTimer.remove();
-    } else {
-      this.initialTime -= 1; // One second
-      if (this.initialTime < 30 && this.initialTime > 0) {
-        this.tweens.add({
-          targets: this.timeText,
-          scaleX: 1.5,
-          scaleY: 1.5,
-          duration: 200,
-          ease: 'Cubic.easeInOut',
-          yoyo: true,
-          onStart: () => {
-            this.timeText.setColor('red');
-          },
-          onComplete: () => {
-            this.timeText.setColor('black');
-          },
-        });
-      }
-      this.timeText.setText(this.formatTime(this.initialTime));
-    }
-  }
+  //     this.gameTimer.remove();
+  //   } else {
+  //     this.initialTime -= 1; // One second
+  //     if (this.initialTime < 30 && this.initialTime > 0) {
+  //       this.tweens.add({
+  //         targets: this.timeText,
+  //         scaleX: 1.5,
+  //         scaleY: 1.5,
+  //         duration: 200,
+  //         ease: 'Cubic.easeInOut',
+  //         yoyo: true,
+  //         onStart: () => {
+  //           this.timeText.setColor('red');
+  //         },
+  //         onComplete: () => {
+  //           this.timeText.setColor('black');
+  //         },
+  //       });
+  //     }
+  //     this.timeText.setText(this.formatTime(this.initialTime));
+  //   }
+  // }
 
-  startContdown() {
-    this.timeText.setText(this.formatTime(this.initialTime));
-    this.gameTimer = this.time.addEvent({
-      delay: 1000,
-      callback: this.onEvent,
-      callbackScope: this,
-      loop: true,
-    });
+  // startContdown() {
+  //   this.timeText.setText(this.formatTime(this.initialTime));
+  //   this.gameTimer = this.time.addEvent({
+  //     delay: 1000,
+  //     callback: this.onEvent,
+  //     callbackScope: this,
+  //     loop: true,
+  //   });
 
-  }
+  // }
 
-  textCharByChar(textToShow, timeText) {
-    for (let i = 0; i < textToShow.length; i += 1) {
-      this.time.delayedCall(80 * i, () => {
-        this.finalTextSum += textToShow.substr(i, 1);
-        timeText.setText(this.finalTextSum);
-      }, this);
-    }
-  }
+  // textCharByChar(textToShow, timeText) {
+  //   for (let i = 0; i < textToShow.length; i += 1) {
+  //     this.time.delayedCall(80 * i, () => {
+  //       this.finalTextSum += textToShow.substr(i, 1);
+  //       timeText.setText(this.finalTextSum);
+  //     }, this);
+  //   }
+  // }
 
   update() {
     const pointer = this.input.activePointer;

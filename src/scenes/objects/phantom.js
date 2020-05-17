@@ -9,6 +9,8 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
     this.textSumCloud = '';
     this.scene.stop = true;
     this.animRepeat = 9;
+    this.sounds = ['phan1', 'phan2', 'phan3', 'phan4'];
+    this.soundsPos = 0;
 
     this.alpha = 0;
     this.scene.tweens.add({
@@ -123,6 +125,13 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
       if (this.linesControl === Conversation.phantomConversation.length - 1) {
         this.animRepeat = 0;
       }
+      // this.scene.sound.play(this.sounds[this.soundsPos]);
+      this.phantomSound = this.scene.sound.add(this.sounds[this.soundsPos], {
+        volume: 0.3,
+        loop: true,
+      });
+      this.phantomSound.play();
+      this.soundsPos += 1;
       this.play('talk');
       this.txtConfig.setText('');
       this.txtConfig.setAlpha(0);
@@ -135,6 +144,7 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
       for (let i = 0; i < this.conver.length; i += 1) {
         this.delayedCallTextCloud[i] = this.scene.time.delayedCall(Conversation.textInfoVelocity * i, () => {
           if (i === this.conver.length - 1) {
+            this.phantomSound.stop();
             if (this.linesControl === 1) {
               this.scene.intro.arrow.setPosition(this.scene.bag.x + 20 + this.scene.bag.width / 2, this.scene.bag.y + this.scene.bag.height / 2 + 40);
               this.scene.intro.arrow.setDepth(7);
@@ -198,7 +208,7 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
           this.scene.stopMenu = false;
           this.scene.setObjectsInteractive();
           this.scene.phan = false;
-          this.scene.startContdown();
+          this.scene.gameTime.startContdown();
         },
       });
     }
