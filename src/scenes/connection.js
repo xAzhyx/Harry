@@ -4,7 +4,7 @@ export default class ConnectionDB extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
 
     if (sessionStorage.getItem('userName') === null) {
-      document.location.href = 'loginRegister.html';
+      document.location.href = 'https://xazhyx.github.io/index.html';
     } else {
       this.userNameSession = sessionStorage.getItem('userName');
     }
@@ -41,7 +41,7 @@ export default class ConnectionDB extends Phaser.GameObjects.Sprite {
       // let i = 0;
       request.onerror = () => {
         alert('Ha ocurrido un error. Por favor vuelva a loguearse.');
-        document.location.href = 'loginRegister.html';
+        document.location.href = 'https://xazhyx.github.io/';
       };
       this.loadGame(request);
 

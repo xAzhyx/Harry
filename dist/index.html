@@ -1,17 +1,503 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <style>
-      body{
-        margin:0px;
-        padding: 0px;
-        background-color: black;
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+      background-color: black;
+    }
+
+    img {
+      position: absolute;
+      width: 60vw;
+      height: 40vw;
+      left: 18%;
+      top: 5%;
+    }
+
+    fieldset {
+      /* border: 5px solid black;
+      border-radius: 20px; */
+      padding: 3vw;
+      border-style: none;
+      width: 18vw;
+      margin-top: 4%;
+      margin-left: 53vw;
+      /* background-color: white; */
+      position: relative;
+      font-size: 1.6vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .buttons {
+      font-size: 1.4vw;
+      font-weight: bold;
+      text-align: center;
+      width: 8vw;
+      background-color: rgb(190, 1, 1);
+    }
+
+    .forgot {
+      font-size: 1vw;
+      text-align: center;
+      font-weight: bold;
+      background-color: rgb(190, 1, 1);
+    }
+
+    .textBox {
+      width: 12vw;
+    }
+
+    .p1 {
+      font-size: 1.2vw;
+    }
+
+    input {
+      border: 2px solid;
+      border-radius: 5px;
+      font-size: 1.5vw;
+    }
+
+    textarea {
+      font-size: 1.2vw;
+    }
+    
+  </style>
+  <!-- 
+  - First time => Create db
+  - Register => Take userName && pass
+              -> Ask security question && Security answer
+              -> Save in users profile
+              -> Create new objects profile with userName
+              -> Reload page
+  - Login => Search userName 
+  (game user profile) in objects table -> 
+                        => New Game => Drop objects profile where this userName
+                                    -> Fill new objects profile with userName with default values
+                                    -> Start session with userName
+                        => Load Game => Start session with userName
+                                      -> Go to game
+-->
+</head>
+
+<body>
+  <script>
+    // const queryString = window.location.search;
+    // if(queryString === '') {
+    //   console.log('dont have parameters')
+    // } else {
+    //   console.log(queryString)
+    // }
+    // let objectStore;
+    if (sessionStorage.getItem("userName")) {
+      sessionStorage.clear();
+      sessionStorage.removeItem("userName");
+    }
+    let userNameValue;
+    let secQuestGet;
+    let secAnswGet;
+    let registerName;
+    let registerPass;
+    let userNameForCheck;
+    let answ;
+    // -------------------- Create User Table -------------------------
+    function createUsersTable(db) {
+      let userStore = db.createObjectStore('users', { keyPath: 'userName' });
+      userStore.createIndex('pass', 'pass', { unique: false });
+      userStore.createIndex('secQuest', 'secQuest', { unique: false });
+      userStore.createIndex('secAnsw', 'secAnsw', { unique: false });
+      userStore.createIndex('gameProgress', 'gameProgress', { unique: false });
+      userStore.createIndex('windowEvent', 'windowEvent', { unique: false });
+      userStore.createIndex('tutorialFirstTime', 'tutorialFirstTime', { unique: false });
+      userStore.createIndex('gameTimer', 'gameTimer', { unique: false });
+      // transaction = db.transaction(['users'], 'readwrite');
+      const users = [
+        { userName: 'Fatima', pass: '1234', secQuest: '¿?', secAnsw: 'yes', gameProgress: 0, windowEvent: 1, tutorialFirstTime: 1, gameTimer: 600 }
+      ];
+      userStore.transaction.addEventListener('complete', (event) => {
+        const userObjectStore = db.transaction('users', 'readwrite').objectStore('users');
+        for (var i in users) {
+          userObjectStore.add(users[i]);
+        }
+      });
+    }
+
+    // ---------------------Create Objects Table ---------------------
+    function createObjectsTable(db) {
+      // let objectstore;
+      let objectStore = db.createObjectStore('objects', { autoIncrement: true });
+      objectStore.createIndex('nameObject', 'nameObject', { unique: false });
+      objectStore.createIndex('userName', 'userName', { unique: false });
+      objectStore.createIndex('picture', 'picture', { unique: false });
+      objectStore.createIndex('information', 'information', { unique: false });
+      objectStore.createIndex('canTake', 'canTake', { unique: false });
+      objectStore.createIndex('canOpen', 'canOpen', { unique: false });
+      objectStore.createIndex('isLockedToOpen', 'isLockedToOpen', { unique: false });
+      objectStore.createIndex('isOpen', 'isOpen', { unique: false });
+      objectStore.createIndex('objectOpenImg', 'objectOpenImg', { unique: false });
+      objectStore.createIndex('objectClosedImg', 'objectClosedImg', { unique: false });
+      objectStore.createIndex('finished', 'finished', { unique: false });
+      objectStore.createIndex('displayWidth', 'displayWidth', { unique: false });
+      objectStore.createIndex('displayHeight', 'displayHeight', { unique: false });
+      objectStore.createIndex('fixed', 'fixed', { unique: false });
+      objectStore.createIndex('isFull', 'isFull', { unique: false });
+      objectStore.createIndex('isAcid', 'isAcid', { unique: false });
+      objectStore.createIndex('isInScene', 'isInScene', { unique: false });
+      objectStore.createIndex('isInInventory', 'isInInventory', { unique: false });
+
+
+      objectStore.transaction.addEventListener('complete', (event) => {
+        fillDefaultObjects(db, '');
+      });
+    }
+
+    function fillDefaultObjects(db, nameParam) {
+      const objectsArray = [
+        { nameObject: 'door', userName: nameParam, picture: 'doorLock.png', information: 'La salida. Hay que deshacerse de ese candado de alguna forma.', canTake: 0, canOpen: 1, isLockedToOpen: 1, isOpen: 0, objectOpenImg: 'doorOpen.png', objectClosedImg: 'doorUnlock.png', finished: 0, displayWidth: 98, displayHeight: 400, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'utilBooks', userName: nameParam, picture: 'books.png', information: 'Parecen libros de ciencia muy complejos. Uno de ellos tiene menos polvo que el resto, parece que se ha movido hace poco...', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'book', userName: nameParam, picture: 'book.png', information: 'Tiene un pequeño candado, debe de estar ocultando algo importante...', canTake: 1, canOpen: 1, isLockedToOpen: 1, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 60, fixed: 0, isFull: 0, isAcid: 0, isInScene: 0, isInInventory: 0 },
+        { nameObject: 'brokenCable', userName: nameParam, picture: 'cableBrk.png', information: 'Un cable roto. Si lo arreglara igual podría usarlo para algo.', canTake: 1, canOpen: 0, isLockedToOpen: 1, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 70, displayHeight: 50, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'glass', userName: nameParam, picture: 'glass.png', information: 'Parece un vaso especial para mezclar o tratar líquidos.', canTake: 1, canOpen: 0, isLockedToOpen: 1, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 50, displayHeight: 70, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'osc', userName: nameParam, picture: 'osc.png', information: 'Parece un osciloscopio mejorado con mas funcionalidades. Quizás pueda arreglar algo con él.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 100, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'apparat', userName: nameParam, picture: 'apparatBrk.png', information: 'No se para que sirve este aparato pero tiene una etiqueta que pone "Inserte el líquido que desea transformar".', canTake: 0, canOpen: 1, isLockedToOpen: 0, isOpen: 0, objectOpenImg: 'apparatBrkOp.png', objectClosedImg: 'apparatBrk.png', finished: 0, displayWidth: 100, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'key', userName: nameParam, picture: 'key.png', information: 'Una pequeña llave.', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 80, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+        { nameObject: 'laser', userName: nameParam, picture: 'laserRed.png', information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 145, displayHeight: 500, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
+      ];
+
+      transaction = db.transaction(['objects'], 'readwrite');
+      const objStore = transaction.objectStore('objects');
+      for (var i in objectsArray) {
+        objStore.put(objectsArray[i]);
+      }
+    }
+
+    function confirmNewGame(userNameValue) {
+      if (confirm("¿Está seguro? Perderá todo el progreso y empezará de nuevo.")) {
+        // document.cookie = "typeOfGame = newGame";
+        // document.cookie = "typeOfGame2 = newGame2";
+        sessionStorage.setItem("userName", userNameValue);
+        const objStore = db.transaction(["objects"], "readwrite")
+          .objectStore("objects");
+        objStore.openCursor().onsuccess = (event) => {
+          var cursor = event.target.result;
+          if (cursor) {
+            if (cursor.value.userName === userNameValue) {
+              var request = cursor.delete();
+              request.onsuccess = () => {
+                console.log('Deleted')
+              };
+            }
+            cursor.continue();
+          } else {
+            fillDefaultObjects(db, sessionStorage.getItem('userName'));
+          }
+        };
+        const userStore = db.transaction(["users"], "readwrite")
+          .objectStore("users");
+        userStore.openCursor().onsuccess = (event) => {
+          var cursor = event.target.result;
+          if (cursor) {
+            if (cursor.value.userName === userNameValue) {
+              const updateData = cursor.value;
+              updateData.tutorialFirstTime = 1;
+              updateData.windowEvent = 1;
+              updateData.gameProgress = 0;
+              updateData.gameTimer = 600;
+              const request = cursor.update(updateData);
+            }
+            cursor.continue();
+          } else {
+            setTimeout(() => {
+              window.location.href = "https://xazhyx.github.io/game.html";
+            }, 1000);
+          }
+        };
+      }
+    }
+
+    function loadGameFunction() {
+      sessionStorage.setItem("userName", userNameValue);
+      window.location.href = "https://xazhyx.github.io/game.html";
+    }
+
+    function secQuestFunction() {
+      secQuestGet = document.getElementById("secQuest").value;
+      secAnswGet = document.getElementById("secAnsw").value;
+      const userAdd = [
+        {
+          userName: registerName,
+          pass: registerPass,
+          secQuest: secQuestGet,
+          secAnsw: secAnswGet,
+          gameProgress: 0,
+          windowEvent: 1,
+          tutorialFirstTime: 1,
+          gameTimer: 600
+        }
+      ];
+      transaction = db.transaction(['users'], 'readwrite');
+      var request = transaction.objectStore('users').add(userAdd[0]);
+      request.onsuccess = (event) => {
+        alert("Te has registrado correctamente!");
+        fillDefaultObjects(db, userAdd[0].userName);
+
+        location.reload();
+      };
+    }
+
+    function validateText(txt) {
+      let validate;
+      const regex = /^\w{3,8}$/g;
+      validate = regex.test(txt);
+      return validate;
+    }
+
+    function reloadPage(){
+      location.reload();
+    }
+
+    function clearContent(content) {
+      content.value = '';
+    }
+
+    function saveNewPass() {
+      var newPass = document.getElementById('newPass').value;
+      if (newPass === '') {
+        alert('Los campos no pueden quedar en blanco.');
+      } else if (!validateText(userNameForCheck)) {
+        alert('El nombre de usuario debe tener entre 3 y 8 caracteres alfanuméricos exclusivamente.');
+      } else {
+        const userStore = db.transaction(["users"], "readwrite")
+          .objectStore("users");
+        userStore.openCursor().onsuccess = (event) => {
+          var cursor = event.target.result;
+          if (cursor) {
+            if (cursor.value.userName === userNameForCheck) {
+              const updateData = cursor.value;
+              updateData.pass = newPass;
+              const request = cursor.update(updateData);
+              request.onsuccess = (event2) => {
+                alert('Su nueva contraseña se ha guardado correctamente.');
+                reloadPage();
+              };
+              request.onerror = (event2) => {
+                alert('Ha ocurrido algún error, inténtelo de nuevo.');
+                reloadPage();
+              };
+            }
+            cursor.continue();
+          }
+        };
+      }
+    }
+
+    function checkAnswFunction(userNameForCheck, answ) {
+      if (answ === document.getElementById('secAnswCheck').value) {
+          console.log('si funciona')
+          document.getElementsByTagName('p')[0].innerHTML = 'Respuesta correcta! Escriba una nueva contraseña:';
+          // console.log(document.getElementsByTagName('form')[0])
+          document.getElementsByTagName('form')[0].outerHTML = '<form><input type = "text" class = "textBox" id = "newPass" autofocus>'
+            + '<input type = "button" class = "buttons" id = "checkNewPass" value = "Guardar" onclick = "saveNewPass();"><br>'
+            + '<input type = "button" class = "buttons" id = "reload2" value = "Volver" onclick = "reloadPage();"><br></form>';
+            console.log(document.getElementsByTagName('form')[0].outerHTML)
+      } else{
+        alert('Respuesta incorrecta. Inténtelo de nuevo.');
+      } 
+    }
+
+    function forgotPass() {
+      // pass = parseInt(pass);
+      userNameForCheck = document.getElementById('name').value;
+      console.log(userNameForCheck)
+      if (userNameForCheck === '') {
+        alert('Los campos no pueden quedar en blanco.');
+      } else if (!validateText(userNameForCheck)) {
+        alert('El nombre de usuario debe tener entre 3 y 8 caracteres alfanuméricos exclusivamente.');
+      } else {
+        transaction = db.transaction('users');
+        var findIt = 0;
+        var request = transaction.objectStore('users').openCursor();
+        request.onsuccess = (event) => {
+          var cursor = event.target.result;
+          if (cursor) {
+            if (cursor.value.userName === userNameForCheck) {
+              findIt = 1;
+              answ = cursor.value.secAnsw;
+              // console.log(cursor.value.secQuest)
+              document.getElementsByTagName('p')[0].innerHTML = 'Responda a su pregunta:';
+              document.getElementsByTagName('p')[1].innerHTML = '';
+              document.getElementsByTagName('form')[0].outerHTML = '<form><label>' + cursor.value.secQuest + '</label><br>'
+                + '<textarea id="secAnswCheck" name ="secAnswCheck" class="textBox" rows="5" cols="30" onfocus = "clearContent(this);">Escribe aquí tu respuesta.</textarea><br>'
+                + '<input type = "button" class = "buttons" id = "checkAnsw" name = "checkAnsw" value = "Enviar" onclick = "checkAnswFunction(userNameForCheck, answ);"><br>'
+                + '<input type = "button" class = "buttons" id = "reload" value = "Volver" onclick = "reloadPage();"><br></form>';
+                console.log(document.getElementsByTagName('form')[0].outerHTML)
+            } else {
+              cursor.continue();
+            }
+          } else if (findIt === 0) {
+            alert('No se ha encontrado el usuario.');
+            document.getElementById('name').value = '';
+            document.getElementById('pass').value = '';
+          } else {
+            findIt = 0;
+          }
+        }
+      }
+    }
+
+    function showInputPass(){
+      var showPass = document.getElementById('pass');
+      if(showPass.type === 'password'){
+        showPass.type = 'text';
+      } else {
+        showPass.type = 'password';
+      }
+    }
+
+  </script>
+  <div>
+    <img src = "src/Images/BookIntro/bookIntro15.png">
+    <fieldset>
+      <h3>Bienvenido la aventura de Harry!</h3>
+      <p>Logueate o regístrate.</p>
+      <p class = "p1">El nombre de usuario o contraseña deben tener entre 3 y 8 caracteres alfanuméricos (menos la ñ).</p>
+      <form><label for = "name">Usuario:</label><br>
+        <input type = "text" class = "textBox" id = "name" name = "name" autofocus><br>
+        <label for = "pass">Contraseña:</label><br>
+        <input type = "password" class = "textBox" id = "pass" name = "pass">
+        <input type = "checkbox" class = "show" onclick = "showInputPass();"><br><br>
+        <input type = "button" class = "buttons" id = "login" value = "Loguear">
+        <input type = "button" class = "buttons" id = "register" value = "Registrar"></br>
+        <input type = "button" class = "forgot" id = "forgot" value = "Olvidé mi contraseña" onclick = "forgotPass();">
+      </form>
+    </fieldset>
+  </div>
+
+  <script>
+    // console.log(document.getElementById('login').outerHTML);
+    var login = document.getElementById('login');
+    var register = document.getElementById('register');
+    var db = '';
+    var transaction = '';
+
+    const dbName = 'harry';
+
+    // OnError
+    var connection = indexedDB.open(dbName, 3);
+    connection.onerror = (event) => {
+      console.log(`Error:${event}`);
+    };
+
+    // OnSuccess
+    connection.onsuccess = (event) => {
+      db = event.target.result;
+    };
+    // If is the first time.
+    connection.onupgradeneeded = (event) => {
+      db = event.target.result;
+      createUsersTable(db);
+      createObjectsTable(db);
+
+      document.getElementById('login').outerHTML = '<input type="button" class="buttons" id="login" value="Loguear"'
+        + 'disabled >';
+    }
+
+
+    // -------------------------- Login Button --------------------------------
+    login.onpointerdown = () => {
+      var userName = document.getElementById('name').value;
+      var pass = document.getElementById('pass').value;
+      if (userName === '' || pass === '') {
+        alert('Los campos no pueden quedar en blanco.');
+      } else if (!validateText(userName) || !validateText(pass)) {
+        alert('El nombre de usuario o contraseña deben tener entre 3 y 8 caracteres alfanuméricos exclusivamente.');
+      } else {
+        transaction = db.transaction('users');
+        var request = transaction.objectStore('users').openCursor();
+        var findIt = 0;
+        request.onsuccess = (event) => {
+          var cursor = event.target.result;
+          if (cursor) {
+            if (cursor.value.userName === userName) {
+              findIt = 1;
+              if (pass === cursor.value.pass) {
+                userNameValue = cursor.value.userName;
+                // alert('Logueado correctamente');
+                document.getElementById('login').outerHTML = '<input type = "button" class="buttons" id="newGame" value="Nuevo"'
+                  + 'onclick = "confirmNewGame(userNameValue);">';
+                document.getElementById('register').outerHTML = '<input type = "button" class="buttons" id="loadGame" value="Cargar"'
+                  + 'onclick = "loadGameFunction();">';
+              } else {
+                alert('Contraseña incorrecta');
+                document.getElementById('pass').value = '';
+              }
+            } else {
+              cursor.continue();
+            }
+          } else if (findIt === 0) {
+            alert('No se ha encontrado el usuario.');
+            document.getElementById('name').value = '';
+            document.getElementById('pass').value = '';
+          } else {
+            findIt = 0;
+          }
+        }
       }
 
-  </style>
-  </head>
-  <body>
-    <div id="phaser-div"></div>
-  <script type="text/javascript" src="bundle.min.js"></script></body>
-  </html>
+      // var request = transaction.objectStore('users').get(document.getElementById('name').value);
+      // request.onsuccess = () => {
+      //   console.log(request.result.pass);
+      // }
+    };
+
+    // -------------------------- Register Button --------------------------------
+    register.onpointerdown = () => {
+      registerName = document.getElementById('name').value;
+      registerPass = document.getElementById('pass').value;
+
+      if (registerName === '' || registerPass === '') {
+        alert('Los campos no pueden quedar en blanco.');
+      } else if (!validateText(registerName) || !validateText(registerPass)) {
+        alert('El nombre de usuario o contraseña deben tener entre 3 y 8 caracteres alfanuméricos exclusivamente.');
+        document.getElementById('name').value = '';
+        document.getElementById('pass').value = '';
+      } else {
+        transaction = db.transaction('users');
+        var request = transaction.objectStore('users').openCursor();
+        var findIt = 0;
+        request.onsuccess = (event) => {
+          var cursor = event.target.result;
+          if (cursor) {
+            if (cursor.value.userName === registerName) {
+              console.log(cursor.value.userName);
+              console.log(registerName);
+              console.log('-------------------');
+              findIt = 1;
+            }
+            cursor.continue();
+          } else if (findIt === 1) {
+            alert('El nombre que ha escrito ya se encuenta en la base de datos.'
+              + '\nPor favor, inserte otro diferente.');
+            document.getElementById('name').value = '';
+            document.getElementById('pass').value = '';
+            findIt = 0;
+          } else {
+            document.getElementsByTagName('p')[0].outerHTML = '';
+            document.getElementsByTagName('form')[0].outerHTML = '<form><textarea id="secQuest" name ="secQuest" class="textBox" rows="5" cols="30" onfocus = "clearContent(this);">Por si olvidas tu contraseña escribe aquí una pregunta que solo tú puedas saber.</textarea><br>'
+              + '<textarea id="secAnsw" name ="secAnsw" class="textBox" rows="5" cols="30" onfocus = "clearContent(this);">Escribe aquí tu pregunta.</textarea><br>'
+              + '<input type = "button" class = "buttons" id = "send" name = "send" value = "Send" onclick = "secQuestFunction();"><br></form>';
+          }
+        };
+      }
+      // TODO
+    };
+
+  </script>
+</body>
+
+</html>

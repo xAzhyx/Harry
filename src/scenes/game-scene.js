@@ -115,6 +115,9 @@ class GameScene extends Phaser.Scene {
     const openGameMenu = this.add.sprite(this.cameras.main.centerX + bar.displayWidth / 2 + 50, 65, 'assets', 'openGameMenu.png');
     openGameMenu.setInteractive({ useHandCursor: true });
     openGameMenu.on('pointerdown', () => {
+      this.sound.add('tecla2', {
+        volume: 0.4,
+      }).play();
       if (gameMenuOpen === false) {
         this.gameMenu.gameMenuAppears();
         gameMenuOpen = true;
@@ -284,6 +287,7 @@ class GameScene extends Phaser.Scene {
     this.paper.setDepth(4);
     this.paper.setVisible(false);
     this.paper.on('pointerdown', () => {
+      this.sound.play('closet');
       if (this.paper.firstTime === true) {
         this.tweens.add({
           targets: this.paper,
@@ -303,6 +307,7 @@ class GameScene extends Phaser.Scene {
     this.burn.setDepth(3);
     this.burn.setVisible(false);
     this.burn.on('pointerdown', () => {
+      this.sound.play('page');
       this.burn.setTexture('assets', 'burn.png');
       this.menuContainer.generalText('Soy un poco patoso. Prefiero no tocar eso por si acaso...');
     });
@@ -314,6 +319,7 @@ class GameScene extends Phaser.Scene {
     this.wallet.setDepth(3);
     this.wallet.setVisible(false);
     this.wallet.on('pointerdown', () => {
+      this.sound.play('openBook');
       this.wallet.setTexture('assets', 'walletOut.png');
       this.menuContainer.generalText('No quiero quitarle el dinero a nadie...');
     });
@@ -349,6 +355,16 @@ class GameScene extends Phaser.Scene {
     this.flyStop = 0;
     this.flyingFunction(fly);
     fly.setInteractive().on('pointerover', () => {
+      const flySound = this.sound.add('fly', {
+        volume: 0.7,
+        rate: 1.2,
+      });
+      if (flySound.isPlaying === true) {
+        flySound.pause();
+        flySound.resume();
+      } else {
+        flySound.play();
+      }
       let goRandomX = 0;
       let goRandomY = 0;
       const randomScapeXmin = Phaser.Math.Between(-30, -50);
@@ -475,6 +491,9 @@ class GameScene extends Phaser.Scene {
     this.codeDevice.setVisible(false);
     for (let h = 0; h < 10; h += 1) {
       this.laserKeys[h].on('pointerdown', () => {
+        this.sound.add('tecla3', {
+          volume: 0.8,
+        }).play();
         if (this.codeArray.length < 5) {
           this.codeDevice.x -= 40;
           this.codeArray.push(`${h}`);
@@ -486,9 +505,15 @@ class GameScene extends Phaser.Scene {
       }, this);
     }
     this.laserKeys[10].on('pointerdown', () => {
+      this.sound.add('tecla3', {
+        volume: 0.8,
+      }).play();
       this.resetFunction();
     }, this);
     this.laserKeys[11].on('pointerdown', () => {
+      this.sound.add('tecla3', {
+        volume: 0.8,
+      }).play();
       this.enterFunction();
     }, this);
 
@@ -513,12 +538,17 @@ class GameScene extends Phaser.Scene {
       }, this);
     });
     this.input.keyboard.addKey('i').on('down', () => {
+      this.sound.add('tecla2', {
+        volume: 0.5,
+      }).play();
       this.openInventory();
     });
 
     this.input.keyboard.addKey('ESC').on('down', () => {
-      this.menuContainer.menuTweenOut();
       this.menuContainer.dontSetInteractive = false;
+      this.sound.add('tecla2', {
+        volume: 0.5,
+      }).play();
       if (this.drawer) {
         this.drawer.setVisible(false);
       }
@@ -527,6 +557,9 @@ class GameScene extends Phaser.Scene {
     });
 
     this.exit.on('pointerdown', () => {
+      this.sound.add('tecla2', {
+        volume: 0.5,
+      }).play();
       this.exitFunction();
       // this.setObjectsInteractive();
       this.stop = false;
@@ -552,6 +585,9 @@ class GameScene extends Phaser.Scene {
         this.skip.setInteractive({ useHandCursor: true });
 
         this.skip.on('pointerdown', () => {
+          this.sound.add('tecla2', {
+            volume: 0.5,
+          }).play();
           this.menuContainer.windowEvent = false;
           const arrayGameState = [this.tutorialFirstTime, this.menuContainer.windowEvent, this.gameProgress, this.initialTime];
           const arraySavedGameState = [];
@@ -571,9 +607,9 @@ class GameScene extends Phaser.Scene {
   create() {
     this.con = new ConnectionDB(this);
 
-    this.text = '';
+    // this.text = '';
     // Datos x, y, buttons
-    this.text = this.add.text(35, 35, '', { fill: '#00ff00' }).setDepth(1);
+    // this.text = this.add.text(35, 35, '', { fill: '#00ff00' }).setDepth(1);
   }
 
   setObjectFunction(nameObject) {
@@ -611,13 +647,10 @@ class GameScene extends Phaser.Scene {
 
   setObjectsInteractive() {
     this.bag.setInteractive();
-    // this.input.enableDebug(this.bag, 0x00FF00)
     this.table.picture.setInteractive(this.tableArea, Phaser.Geom.Rectangle.Contains);
-    // this.input.enableDebug(this.table.picture, 0x00FF00)
     this.arrayObjectsInteractive.forEach((element) => {
       element.picture.setInteractive();
       element.picture.input.hitArea.setTo(0, 0, element.picture.width, element.picture.height);
-      // this.input.enableDebug(element.picture, 0x00ff00);
     });
   }
 
@@ -632,6 +665,10 @@ class GameScene extends Phaser.Scene {
 
   openInventory() {
     this.disableObjectsInteractive();
+    this.sound.add('tecla2', {
+      volume: 0.4,
+    }).play();
+
     this.exit.setPosition(this.cameras.main.centerX + this.inventoryBag.displayWidth / 2 - 40, this.cameras.main.centerY - this.inventoryBag.displayHeight / 2 + 40);
     this.exit.setInteractive();
 
@@ -682,7 +719,6 @@ class GameScene extends Phaser.Scene {
             x: this.inventory[k].picture.scaleX,
             y: this.inventory[k].picture.scaleY,
           };
-          // console.log(this.inventory[k]);
           this.inventory[k].picture.setDepth(3);
         }
         k += 1;
@@ -708,8 +744,6 @@ class GameScene extends Phaser.Scene {
           scaleY: element.picture.scaleY * 1.6,
           duration: 100,
         });
-        // element.picture.displayWidth = element.inventoryDisplayW + 50;
-        // element.picture.displayHeight = element.inventoryDisplayH + 50;
       }, this);
       element.picture.on('pointerout', () => {
         this.tweenOut = this.tweens.add({
@@ -717,8 +751,6 @@ class GameScene extends Phaser.Scene {
           scaleX: this.scaleElement.x,
           scaleY: this.scaleElement.y,
           duration: 100,
-          // element.picture.displayWidth = element.inventoryDisplayW;
-          // element.picture.displayHeight = element.inventoryDisplayH;
         });
       }, this);
     });
@@ -753,7 +785,8 @@ class GameScene extends Phaser.Scene {
   enterFunction() {
     const codNum = Number(this.codeArray.join(''));
     if (codNum === Code.deviceCode) {
-      this.menuContainer.generalText('Correcto');
+      this.sound.play('correctCode');
+      this.menuContainer.generalText('Código correcto.');
       this.gameProgress += 1;
       this.progressFunction();
       let timeCall = 1000;
@@ -770,18 +803,18 @@ class GameScene extends Phaser.Scene {
         }, this);
         timeCall += 800;
       }
-
+      
       this.time.delayedCall(5000, () => {
         this.exitFunction();
         this.laser.picture.setTexture('assets', 'laser.png');
         this.laser.finished = true;
-        // this.setObjectsInteractive();
       }, this);
     } else {
+      this.sound.play('incorrectCode');
       this.laserKeys.forEach((element) => {
         element.disableInteractive();
       });
-      this.menuContainer.generalText('Mal');
+      this.menuContainer.generalText('Código incorrecto.');
       this.add.tween({
         targets: this.codeDevice,
         alpha: 0,
@@ -834,7 +867,6 @@ class GameScene extends Phaser.Scene {
   }
 
   exitFunction() {
-    // eslint-disable-next-line no-plusplus
     for (let m = 0; m < this.inventory.length; m += 1) {
       this.inventory[m].picture.visible = false;
     }
@@ -857,119 +889,17 @@ class GameScene extends Phaser.Scene {
     this.stop = false;
     this.stopMenu = false;
     this.inventoryBag.setActive(false).setVisible(false);
-    // this.bag.setInteractive();
     this.exit.disableInteractive().setVisible(false);
   }
 
-  // formatTime(seconds) {
-  //   // Minutes
-  //   const minutes = Phaser.Math.FloorTo(seconds / 60);
-  //   // var minutes = Math.floor(seconds / 60);
-  //   // Seconds
-  //   let partInSeconds = seconds % 60;
-  //   // Adds left zeros to seconds
-  //   partInSeconds = partInSeconds.toString().padStart(2, '0');
-  //   // Returns formated time
-  //   return `${minutes}:${partInSeconds}`;
-  // }
-
-  // onEvent() {
-  //   if (this.initialTime === 0) {
-  //     this.exitFunction();
-  //     this.stop = true;
-  //     this.menuContainer.dontSetInteractive = true;
-  //     this.menuContainer.menuTweenOut();
-  //     this.disableObjectsInteractive();
-  //     this.timerTittle.setVisible(false);
-  //     this.looseBG.setVisible(true);
-  //     this.timeText.setPosition(this.cameras.main.centerX, this.cameras.main.centerY);
-  //     this.timeText.setDepth(9);
-  //     this.finalTextSum = '';
-  //     let timeForNext = 0;
-  //     const textToShow = ['Vaya!', '\nNo lo has conseguido...', '\n\nCrees que podrás...', ' al menos...', 'Cazar esta \nmaldita mosca?'];
-  //     this.textCharByChar(textToShow[0], this.timeText);
-  //     for (let i = 1; i < textToShow.length; i += 1) {
-  //       switch (i) {
-  //         case 0: timeForNext = 0;
-  //           break;
-  //         case 1: timeForNext += textToShow[i - 1].length * 80 + 500;
-  //           break;
-  //         case 2: timeForNext += textToShow[i - 1].length * 80 + 700;
-  //           break;
-  //         default: timeForNext += textToShow[i - 1].length * 80 + 900;
-  //           break;
-  //       }
-  //       this.time.delayedCall(timeForNext, () => {
-  //         if (i === textToShow.length - 1) {
-  //           this.timeText.setAlpha(0);
-  //           this.finalTextSum = '';
-  //           this.textCharByChar(textToShow[i], this.timeText);
-  //           this.tweens.add({
-  //             targets: this.timeText,
-  //             alpha: { value: 1, duration: 200, yoyo: false },
-  //             scaleX: { from: 1.3, to: 2 },
-  //             scaleY: { from: 1.3, to: 2 },
-  //             yoyo: true,
-  //             hold: textToShow[i].length * 80,
-  //             duration: 800,
-  //           });
-  //         } else {
-  //           this.textCharByChar(textToShow[i], this.timeText);
-  //         }
-  //       }, this);
-  //     }
-
-  //     this.gameTimer.remove();
-  //   } else {
-  //     this.initialTime -= 1; // One second
-  //     if (this.initialTime < 30 && this.initialTime > 0) {
-  //       this.tweens.add({
-  //         targets: this.timeText,
-  //         scaleX: 1.5,
-  //         scaleY: 1.5,
-  //         duration: 200,
-  //         ease: 'Cubic.easeInOut',
-  //         yoyo: true,
-  //         onStart: () => {
-  //           this.timeText.setColor('red');
-  //         },
-  //         onComplete: () => {
-  //           this.timeText.setColor('black');
-  //         },
-  //       });
-  //     }
-  //     this.timeText.setText(this.formatTime(this.initialTime));
-  //   }
-  // }
-
-  // startContdown() {
-  //   this.timeText.setText(this.formatTime(this.initialTime));
-  //   this.gameTimer = this.time.addEvent({
-  //     delay: 1000,
-  //     callback: this.onEvent,
-  //     callbackScope: this,
-  //     loop: true,
-  //   });
-
-  // }
-
-  // textCharByChar(textToShow, timeText) {
-  //   for (let i = 0; i < textToShow.length; i += 1) {
-  //     this.time.delayedCall(80 * i, () => {
-  //       this.finalTextSum += textToShow.substr(i, 1);
-  //       timeText.setText(this.finalTextSum);
-  //     }, this);
-  //   }
-  // }
-
   update() {
-    const pointer = this.input.activePointer;
+    // const pointer = this.input.activePointer;
 
-    this.text.setText([
-      `x: ${pointer.worldX}`,
-      `y: ${pointer.worldY}`,
-      `isDown: ${pointer.isDown}`,
-      `rightButtonDown: ${pointer.rightButtonDown()}`]);
+    // this.text.setText([
+    //   `x: ${pointer.worldX}`,
+    //   `y: ${pointer.worldY}`,
+    //   `isDown: ${pointer.isDown}`,
+    //   `rightButtonDown: ${pointer.rightButtonDown()}`]);
   }
 }
 

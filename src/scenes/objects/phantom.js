@@ -8,7 +8,6 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
     this.linesControl = 0;
     this.textSumCloud = '';
     this.scene.stop = true;
-    this.animRepeat = 9;
     this.sounds = ['phan1', 'phan2', 'phan3', 'phan4'];
     this.soundsPos = 0;
 
@@ -25,11 +24,11 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
       repeat: -1,
       duration: 1500,
     }, this);
-    this.scene.anims.create({
+    this.talk = this.scene.anims.create({
       key: 'talk',
       frames: [{ key: 'assets', frame: 'phantom.png' }, { key: 'assets', frame: 'phantom3.png' }, { key: 'assets', frame: 'phantom.png' }],
       frameRate: 6,
-      repeat: this.animRepeat,
+      repeat: -1,
     });
     // Cloud for conversation
     this.cloud = this.scene.add.sprite(this.x - 250, this.y - 40, 'assets', 'cloud.png');
@@ -122,17 +121,15 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
 
   conversationSwitch() {
     if (this.linesControl !== Conversation.phantomConversation.length) {
-      if (this.linesControl === Conversation.phantomConversation.length - 1) {
-        this.animRepeat = 0;
-      }
-      // this.scene.sound.play(this.sounds[this.soundsPos]);
+      // if (this.linesControl === Conversation.phantomConversation.length - 1) this.talk.repeat = 0;
       this.phantomSound = this.scene.sound.add(this.sounds[this.soundsPos], {
-        volume: 0.3,
+        volume: 0.7,
         loop: true,
       });
       this.phantomSound.play();
       this.soundsPos += 1;
       this.play('talk');
+      this.talk.resume();
       this.txtConfig.setText('');
       this.txtConfig.setAlpha(0);
       this.textSumCloud = '';
@@ -145,6 +142,7 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
         this.delayedCallTextCloud[i] = this.scene.time.delayedCall(Conversation.textInfoVelocity * i, () => {
           if (i === this.conver.length - 1) {
             this.phantomSound.stop();
+            this.talk.pause();
             if (this.linesControl === 1) {
               this.scene.intro.arrow.setPosition(this.scene.bag.x + 20 + this.scene.bag.width / 2, this.scene.bag.y + this.scene.bag.height / 2 + 40);
               this.scene.intro.arrow.setDepth(7);
@@ -209,6 +207,7 @@ export default class Phantom extends Phaser.GameObjects.Sprite {
           this.scene.setObjectsInteractive();
           this.scene.phan = false;
           this.scene.gameTime.startContdown();
+          this.scene.skip.setVisible(false);
         },
       });
     }

@@ -66,6 +66,7 @@
     textarea {
       font-size: 1.2vw;
     }
+    
   </style>
   <!-- 
   - First time => Create db
@@ -116,7 +117,7 @@
       userStore.createIndex('gameTimer', 'gameTimer', { unique: false });
       // transaction = db.transaction(['users'], 'readwrite');
       const users = [
-        { userName: 'Fatima', pass: '1234', secQuest: '¿?', secAnsw: 'yes', gameProgress: 0, windowEvent: 1, tutorialFirstTime: 1, gameTimer: 150 }
+        { userName: 'Fatima', pass: '1234', secQuest: '¿?', secAnsw: 'yes', gameProgress: 0, windowEvent: 1, tutorialFirstTime: 1, gameTimer: 600 }
       ];
       userStore.transaction.addEventListener('complete', (event) => {
         const userObjectStore = db.transaction('users', 'readwrite').objectStore('users');
@@ -206,13 +207,13 @@
               updateData.tutorialFirstTime = 1;
               updateData.windowEvent = 1;
               updateData.gameProgress = 0;
-              updateData.gameTimer = 900;
+              updateData.gameTimer = 600;
               const request = cursor.update(updateData);
             }
             cursor.continue();
           } else {
             setTimeout(() => {
-              window.location.href = "http://localhost:3000/index.html";
+              window.location.href = "https://xazhyx.github.io/game.html";
             }, 1000);
           }
         };
@@ -221,7 +222,7 @@
 
     function loadGameFunction() {
       sessionStorage.setItem("userName", userNameValue);
-      window.location.href = "http://localhost:3000/index.html";
+      window.location.href = "https://xazhyx.github.io/game.html";
     }
 
     function secQuestFunction() {
@@ -236,13 +237,13 @@
           gameProgress: 0,
           windowEvent: 1,
           tutorialFirstTime: 1,
-          gameTimer: 150
+          gameTimer: 600
         }
       ];
       transaction = db.transaction(['users'], 'readwrite');
       var request = transaction.objectStore('users').add(userAdd[0]);
       request.onsuccess = (event) => {
-        alert("All done!");
+        alert("Te has registrado correctamente!");
         fillDefaultObjects(db, userAdd[0].userName);
 
         location.reload();
@@ -299,10 +300,11 @@
       if (answ === document.getElementById('secAnswCheck').value) {
           console.log('si funciona')
           document.getElementsByTagName('p')[0].innerHTML = 'Respuesta correcta! Escriba una nueva contraseña:';
-          console.log(document.getElementsByTagName('form')[0])
+          // console.log(document.getElementsByTagName('form')[0])
           document.getElementsByTagName('form')[0].outerHTML = '<form><input type = "text" class = "textBox" id = "newPass" autofocus>'
             + '<input type = "button" class = "buttons" id = "checkNewPass" value = "Guardar" onclick = "saveNewPass();"><br>'
             + '<input type = "button" class = "buttons" id = "reload2" value = "Volver" onclick = "reloadPage();"><br></form>';
+            console.log(document.getElementsByTagName('form')[0].outerHTML)
       } else{
         alert('Respuesta incorrecta. Inténtelo de nuevo.');
       } 
@@ -331,8 +333,9 @@
               document.getElementsByTagName('p')[1].innerHTML = '';
               document.getElementsByTagName('form')[0].outerHTML = '<form><label>' + cursor.value.secQuest + '</label><br>'
                 + '<textarea id="secAnswCheck" name ="secAnswCheck" class="textBox" rows="5" cols="30" onfocus = "clearContent(this);">Escribe aquí tu respuesta.</textarea><br>'
-                + '<input type = "button" class = "buttons" id = "checkAnsw" name = "checkAnsw" value = "Enviar" onclick = "checkAnswFunction(userNameForCheck, answ);"><br></form>'
+                + '<input type = "button" class = "buttons" id = "checkAnsw" name = "checkAnsw" value = "Enviar" onclick = "checkAnswFunction(userNameForCheck, answ);"><br>'
                 + '<input type = "button" class = "buttons" id = "reload" value = "Volver" onclick = "reloadPage();"><br></form>';
+                console.log(document.getElementsByTagName('form')[0].outerHTML)
             } else {
               cursor.continue();
             }
@@ -347,20 +350,30 @@
       }
     }
 
+    function showInputPass(){
+      var showPass = document.getElementById('pass');
+      if(showPass.type === 'password'){
+        showPass.type = 'text';
+      } else {
+        showPass.type = 'password';
+      }
+    }
+
   </script>
   <div>
-    <img src="src/Images/BookIntro/bookIntro15.png">
+    <img src = "src/Images/BookIntro/bookIntro15.png">
     <fieldset>
       <h3>Bienvenido la aventura de Harry!</h3>
       <p>Logueate o regístrate.</p>
-      <p class="p1">El nombre de usuario o contraseña deben tener entre 3 y 8 caracteres alfanuméricos (menos la ñ).</p>
-      <form><label for="name">Usuario:</label><br>
-        <input type="text" class="textBox" id="name" name="name" autofocus><br>
-        <label for="pass">Contraseña:</label><br>
-        <input type="text" class="textBox" id="pass" name="pass"><br><br>
-        <input type="button" class="buttons" id="login" value="Loguear">
-        <input type="button" class="buttons" id="register" value="Registrar"></br>
-        <input type="button" class="forgot" id="forgot" value="Olvidé mi contraseña" onclick="forgotPass();">
+      <p class = "p1">El nombre de usuario o contraseña deben tener entre 3 y 8 caracteres alfanuméricos (menos la ñ).</p>
+      <form><label for = "name">Usuario:</label><br>
+        <input type = "text" class = "textBox" id = "name" name = "name" autofocus><br>
+        <label for = "pass">Contraseña:</label><br>
+        <input type = "password" class = "textBox" id = "pass" name = "pass">
+        <input type = "checkbox" class = "show" onclick = "showInputPass();"><br><br>
+        <input type = "button" class = "buttons" id = "login" value = "Loguear">
+        <input type = "button" class = "buttons" id = "register" value = "Registrar"></br>
+        <input type = "button" class = "forgot" id = "forgot" value = "Olvidé mi contraseña" onclick = "forgotPass();">
       </form>
     </fieldset>
   </div>

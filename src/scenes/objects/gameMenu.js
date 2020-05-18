@@ -64,7 +64,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
         { nameObject: 'key', userName: this.scene.con.userNameSession, picture: 'key.png', information: 'Una pequeña llave.', canTake: 1, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 80, displayHeight: 100, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
         { nameObject: 'laser', userName: this.scene.con.userNameSession, picture: 'laserRed.png', information: 'Sistema láser que impide que nadie se acerque a la puerta pero puedo ver que tiene un robusto candado.', canTake: 0, canOpen: 0, isLockedToOpen: 0, isOpen: 0, objectOpenImg: '', objectClosedImg: '', finished: 0, displayWidth: 145, displayHeight: 500, fixed: 0, isFull: 0, isAcid: 0, isInScene: 1, isInInventory: 0 },
       ];
-      const arrayNewGameState = [1, 1, 0, 900];
+      const arrayNewGameState = [1, 1, 0, 600];
       this.saveGameState(arrayNewGameState);
       this.deleteDBObjects(objectsArray);
     }, this);
@@ -95,7 +95,7 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
     this.exitGame.on('pointerdown', () => {
       this.buttonGameTween(this.exitGame);
       this.scene.stop = true;
-      window.location.href = 'http://localhost:3000/loginRegister.html';
+      window.location.href = 'https://xazhyx.github.io/';
 
     }, this);
   }
@@ -266,7 +266,9 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
   gameMenuTweenOut() {
     // this.disableInteractive();
     this.scaleGameMenu();
-
+    this.scene.sound.add('tecla2', {
+      volume: 0.4,
+    }).play();
     this.menuDisappear = this.scene.tweens.add({
       targets: [this.gameMenu, ...this.options, ...this.shadows],
       alpha: 0,
@@ -279,6 +281,9 @@ export default class GameMenuClass extends Phaser.GameObjects.Container {
   }
 
   buttonGameTween(currentButton) {
+    this.scene.sound.add('tecla2', {
+      volume: 0.4,
+    }).play();
     this.options.forEach((element) => {
       element.disableInteractive();
     });

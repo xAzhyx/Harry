@@ -19,6 +19,7 @@ export default class Intro extends Phaser.GameObjects.Sprite {
       this.pages[i] = this.scene.add.sprite(this.scene.cameras.main.centerX + 29, this.y - this.height / 2, 'assets2', 'page.png');
       this.pages[i].setOrigin(0, 0);
       this.pages[i].setAlpha(0);
+      this.pages[i].setDepth(5);
     }
 
     this.tutoSprite = this.scene.add.sprite(this.scene.cameras.main.centerX + this.width / 4 + 10, this.scene.cameras.main.centerY + 50, 'assets', 'tuto/tuto0.png');
@@ -114,10 +115,6 @@ export default class Intro extends Phaser.GameObjects.Sprite {
     }, this);
 
     this.scene.time.delayedCall(3000, () => {
-      // this.openBookSound = this.scene.sound.add('openBook', {
-      //   volume: 0.6,
-      //   loop: true,
-      // });
       this.scene.sound.play('openBook');
       this.play('intro');
     }, this);
@@ -131,6 +128,10 @@ export default class Intro extends Phaser.GameObjects.Sprite {
 
     this.on('pointerdown', () => {
       this.disableInteractive();
+      const click = this.scene.sound.add('tecla1', {
+        volume: 0.8,
+      });
+      click.play();
       this.scene.tweens.add({
         targets: [this.circle, this.arrow],
         alpha: 0,
@@ -152,6 +153,7 @@ export default class Intro extends Phaser.GameObjects.Sprite {
           duration: 300,
           onComplete: () => {
             this.txtIntro.setText('');
+            this.scene.sound.play('openBook');
             this.anims.playReverse('intro');
             this.scene.tweens.add({
               targets: this,
@@ -174,12 +176,20 @@ export default class Intro extends Phaser.GameObjects.Sprite {
 
     this.tutoSprite.on('pointerdown', () => {
       this.tutoSprite.disableInteractive();
+      const click = this.scene.sound.add('tecla1', {
+        volume: 0.8,
+      });
+      click.play();
       this.nextPage();
       this.objectDisappear(this.tutoSprite);
     }, this);
 
     this.info.on('pointerdown', () => {
       this.info.disableInteractive();
+      const click = this.scene.sound.add('tecla1', {
+        volume: 0.8,
+      });
+      click.play();
       this.nextPage();
       this.objectDisappear(this.info);
     }, this);
@@ -243,6 +253,7 @@ export default class Intro extends Phaser.GameObjects.Sprite {
   }
 
   pageFunctions() {
+    this.scene.sound.play('page');
     this.pages[this.pageCount].setAlpha(1);
     this.scene.tweens.add({
       targets: this.pages[this.pageCount],
@@ -281,12 +292,10 @@ export default class Intro extends Phaser.GameObjects.Sprite {
       for (let i = 0; i < this.introExplication.length; i += 1) {
         this.delayedCallTextIntro[i] = this.scene.time.delayedCall(Introduction.textInfoVelocity * i, () => {
           // this.scene.sound.play('tecla3');
-          this.charSound = this.scene.sound.add('type', {
-            volume: 1,
-            seek: 0.1,
-            // loop: true,
+          const charSound = this.scene.sound.add('char', {
+            volume: 0.05,
           });
-          this.charSound.play();
+          charSound.play();
           this.txtSumIntro += this.introExplication.substr(i, 1);
           this.txtIntro.setText(this.txtSumIntro);
         }, this);

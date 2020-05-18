@@ -82,10 +82,17 @@ export default class Use extends Phaser.GameObjects.Sprite {
     switch (obj2.name) {
       case 'osc':
         if (obj1.fixed === false) {
+          const oscSound = this.scene.sound.add('osc', {
+            volume: 0.4,
+            detune: 1200,
+          });
+          oscSound.play();
           obj1.picture.setTexture('assets', 'cableFix.png');
           obj1.fixed = true;
           obj1.information = 'Cable funcional. Podría servirme para algo.';
-          this.scene.menuContainer.generalText('Bien hecho. Hemos arreglado el cable.');
+          this.scene.time.delayedCall(oscSound.duration * 1000, () => {
+            this.scene.menuContainer.generalText('Bien hecho. Hemos arreglado el cable.')
+          }, this);
           this.scene.gameProgress += 1;
           this.scene.progressFunction();
         } else this.scene.menuContainer.generalText('El cable ya está arreglado.');
@@ -93,6 +100,9 @@ export default class Use extends Phaser.GameObjects.Sprite {
       case 'apparat':
         if (obj1.fixed === false) this.scene.menuContainer.generalText('Primero debemos hacer algo con el cable. Está roto.');
         else {
+          this.scene.sound.add('correctCode', {
+            volume: 0.4,
+          }).play();
           obj2.picture.setTexture('assets', 'apparatFix.png');
           obj2.objectOpenImg = 'apparatFixOp.png';
           obj2.objectClosedImg = 'apparatFix.png';
@@ -101,10 +111,6 @@ export default class Use extends Phaser.GameObjects.Sprite {
           this.scene.gameProgress += 1;
           this.scene.progressFunction();
           this.deleteFromInventory(obj1);
-          // for (let i = 0; i < this.scene.inventory.length; i += 1) {
-          //   if (this.scene.inventory[i].name === obj1.name) this.scene.inventory.splice(i, 1);
-          //   obj1.isInInventory = 0;
-          // }
           this.scene.menuContainer.generalText('Bien hecho. Hemos arreglado el aparato.');
         }
         break;
@@ -121,12 +127,18 @@ export default class Use extends Phaser.GameObjects.Sprite {
         if (obj2.isOpen === false) this.scene.menuContainer.generalText('No puedo llenarlo con el cristal delante...');
         else if (obj1.isFull === true) this.scene.menuContainer.generalText('El vaso ya está lleno.');
         else {
+          const waterSound = this.scene.sound.add('glass', {
+            volume: 0.4,
+          });
+          waterSound.play();
           obj1.picture.setTexture('assets', 'glassWater.png');
           obj1.information = 'Vaso lleno de agua.';
           obj1.isFull = true;
           this.scene.gameProgress += 1;
           this.scene.progressFunction();
-          this.scene.menuContainer.generalText('Hecho. He llenado el vaso de agua.');
+          this.scene.time.delayedCall(waterSound.duration * 1000, () => {
+            this.scene.menuContainer.generalText('Hecho. He llenado el vaso de agua.');
+          }, this);
         }
         break;
 
@@ -136,6 +148,11 @@ export default class Use extends Phaser.GameObjects.Sprite {
         else if (obj1.isFull === false) this.scene.menuContainer.generalText('El vaso está vacío, no serviría de nada...');
         else if (obj1.isAcid === true) this.scene.menuContainer.generalText('Ya hemos convertido el agua.');
         else {
+          const acidSound = this.scene.sound.add('glass', {
+            volume: 0.4,
+            detune: -1200,
+          });
+          acidSound.play();
           obj1.picture.setTexture('assets', 'glassAcid.png');
           obj1.information = 'Vaso lleno de ácido.';
           obj2.information = 'Aparato para transformar líquidos en ácido.';
@@ -147,9 +164,16 @@ export default class Use extends Phaser.GameObjects.Sprite {
         break;
 
       case 'door': if (obj1.isAcid) {
+        const acidSound = this.scene.sound.add('glass', {
+          volume: 0.4,
+          detune: -1200,
+        });
+        acidSound.play();
         this.scene.menuContainer.generalText('Creo que este líquido corrosivo derretirá la cerradura.');
         obj2.isLockedToOpen = false;
-        obj2.picture.setTexture('assets', 'doorUnlock.png');
+        this.scene.time.delayedCall(acidSound.duration, () => {
+          obj2.picture.setTexture('assets', 'doorUnlock.png');
+        });
         this.scene.gameProgress += 1;
         this.scene.progressFunction();
         obj1.picture.setVisible(false);
@@ -171,6 +195,7 @@ export default class Use extends Phaser.GameObjects.Sprite {
   keyFunction(obj1, obj2) {
     if (obj2.name === 'book') {
       if (obj1.finished === false) {
+        this.scene.sound.play('char');
         obj1.picture.setVisible(false);
         obj1.finished = true;
         this.deleteFromInventory(obj1);

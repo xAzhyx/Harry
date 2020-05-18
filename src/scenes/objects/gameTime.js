@@ -54,7 +54,7 @@ export default class GameTime extends Phaser.GameObjects.Sprite {
     // Returns formated time
     return `${minutes}:${partInSeconds}`;
   }
-
+  
   onEvent() {
     if (this.scene.initialTime === 0 || this.scene.finalEvent === true) {
       this.scene.exitFunction();
@@ -78,6 +78,7 @@ export default class GameTime extends Phaser.GameObjects.Sprite {
       this.finalTextSum = '';
       this.timeForNext = 0;
       if (this.scene.initialTime === 0) {
+        this.scene.sound.play('timeOver');
         const textToShow = ['Vaya!', '\nNo lo has conseguido...', '\n\nCrees que podrás...', ' al menos...', 'Cazar esta \nmaldita mosca?'];
         this.textFunction(textToShow);
       } else {
@@ -88,6 +89,7 @@ export default class GameTime extends Phaser.GameObjects.Sprite {
     } else {
       this.scene.initialTime -= 1; // One second
       if (this.scene.initialTime < 30 && this.scene.initialTime > 0) {
+        if (this.scene.initialTime === 29) this.scene.sound.play('hurryUp');
         this.scene.tweens.add({
           targets: this.timeText,
           scaleX: 1.5,
@@ -106,7 +108,7 @@ export default class GameTime extends Phaser.GameObjects.Sprite {
       this.timeText.setText(this.formatTime(this.scene.initialTime));
     }
   }
-
+  
   textFunction(textToShow) {
     this.textCharByChar(textToShow[0], this.timeText);
     for (let i = 1; i < textToShow.length; i += 1) {

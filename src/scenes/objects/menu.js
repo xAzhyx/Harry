@@ -124,6 +124,7 @@ export default class Menu extends Phaser.GameObjects.Container {
         if (this.objectO.name === 'utilBooks') {
           this.scene.arrayObjectsInteractive.forEach((element) => {
             if (element.name === 'book') {
+              this.scene.sound.play('take');
               this.scene.inventory.push(element);
               element.isInInventory = true;
             }
@@ -234,6 +235,7 @@ export default class Menu extends Phaser.GameObjects.Container {
     this.scene.stop = true;
     this.scene.openBook.setVisible(true);
     this.scene.code.setVisible(true);
+    this.scene.sound.play('openBook');
     this.generalText('Ese código no parece formar parte del resto del contenido, debe servir para algo.');
     this.scene.menuContainer.dontSetInteractive = true;
     this.scene.disableObjectsInteractive();
@@ -249,6 +251,9 @@ export default class Menu extends Phaser.GameObjects.Container {
     this.scene.stopMenu = true;
     this.scene.phan = true;
     this.scene.time.delayedCall(2000, () => {
+      this.scene.sound.add('apparat', {
+        volume: 0.5,
+      }).play();
       const phantom = new Phantom(this.scene, 960, 200, 'assets', 'phantom.png');
       this.generalText('Un momento... algo raro está pasando!');
     }, this);
@@ -257,6 +262,9 @@ export default class Menu extends Phaser.GameObjects.Container {
 
   openFinalDoor(objectO) {
     this.scene.finalEvent = true;
+    // this.scene.sound.add('congrats', {
+    //   volume: 0.8,
+    // }).play();
     // this.scene.gameTime.gameTimer.remove();
     const disToDoor = Phaser.Math.Distance.Between(this.scene.harry.x - 50, this.scene.harry.y, objectO.picture.x, objectO.picture.y + objectO.picture.height / 2);
     const timeForWalk = (3000 * disToDoor) / 1100;
@@ -347,6 +355,9 @@ export default class Menu extends Phaser.GameObjects.Container {
   }
 
   scaleMenu() {
+    this.scene.sound.add('click', {
+      volume: 0.7,
+    }).play();
     this.scaleArray = [];
     this.scaleArray[0] = this.scene.tweens.add({
       targets: [...this.actions, ...this.shadows],
@@ -375,7 +386,7 @@ export default class Menu extends Phaser.GameObjects.Container {
   }
 
   menuTweenOut() {
-    // this.disableInteractive();
+    this.disableInteractive();
     this.scaleMenu();
 
     this.menuDisappear = this.scene.tweens.add({
@@ -396,6 +407,9 @@ export default class Menu extends Phaser.GameObjects.Container {
     this.actions.forEach((element) => {
       element.disableInteractive();
     });
+    this.scene.sound.add('tecla2', {
+      volume: 0.5,
+    }).play();
     this.butTween = [];
     this.butTween[0] = this.scene.tweens.add({
       targets: currentButton,
@@ -452,6 +466,9 @@ export default class Menu extends Phaser.GameObjects.Container {
     this.objectOTexts.alpha = 1;
     for (let i = 0; i < textObject.length; i += 1) {
       this.delayedCallText[i] = this.scene.time.delayedCall(Conversation.textInfoVelocity * i, () => {
+        this.scene.sound.add('char', {
+          volume: 0.05,
+        }).play();
         this.textSum += textObject.substr(i, 1);
         this.objectOTexts.text = this.textSum;
       }, this);
