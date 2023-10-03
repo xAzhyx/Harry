@@ -2,72 +2,9 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <style>
-    body {
-      margin: 0px;
-      padding: 0px;
-      background-color: black;
-    }
+  <meta charset="utf-8" name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-    img {
-      position: absolute;
-      width: 60vw;
-      height: 40vw;
-      left: 18%;
-      top: 5%;
-    }
-
-    fieldset {
-      /* border: 5px solid black;
-      border-radius: 20px; */
-      padding: 3vw;
-      border-style: none;
-      width: 18vw;
-      margin-top: 4%;
-      margin-left: 53vw;
-      /* background-color: white; */
-      position: relative;
-      font-size: 1.6vw;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .buttons {
-      font-size: 1.4vw;
-      font-weight: bold;
-      text-align: center;
-      width: 8vw;
-      background-color: rgb(190, 1, 1);
-    }
-
-    .forgot {
-      font-size: 1vw;
-      text-align: center;
-      font-weight: bold;
-      background-color: rgb(190, 1, 1);
-    }
-
-    .textBox {
-      width: 12vw;
-    }
-
-    .p1 {
-      font-size: 1.2vw;
-    }
-
-    input {
-      border: 2px solid;
-      border-radius: 5px;
-      font-size: 1.5vw;
-    }
-
-    textarea {
-      font-size: 1.2vw;
-    }
-    
-  </style>
+  <link rel="stylesheet" href="myStyle.css">
   <!-- 
   - First time => Create db
   - Register => Take userName && pass
@@ -360,7 +297,7 @@
     }
 
   </script>
-  <div>
+  <div id = "content">
     <img src = "src/Images/BookIntro/bookIntro15.png">
     <fieldset>
       <h3>Bienvenido la aventura de Harry!</h3>
@@ -377,7 +314,6 @@
       </form>
     </fieldset>
   </div>
-
   <script>
     // console.log(document.getElementById('login').outerHTML);
     var login = document.getElementById('login');
